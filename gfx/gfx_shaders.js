@@ -11,6 +11,7 @@ module.exports.DEFAULT_VERTEX_SHADER = `
 
   void main() {
     gl_Position = uProjectionMatrix * uViewMatrix * uModelMatrix * vPosition;
+    vNormal;
     textureCoord = vTextureCoord;
   }
 `;
