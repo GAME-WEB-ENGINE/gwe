@@ -1,7 +1,7 @@
 let { eventManager } = require('../event/event_manager');
 
 /**
- * Classe représentant un tableau avec support des evènements.
+ * Classe représentant une collection d'éléments.
  * @extends Array
  */
 class ArrayCollection extends Array {
