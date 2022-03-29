@@ -1,7 +1,6 @@
 let { Application, SizeModeEnum } = require('./application');
 let { ArrayCollection } = require('./array/array_collection');
 let { BoundingBox } = require('./bounding/bounding_box');
-let { BoundingSphere } = require('./bounding/bounding_sphere');
 let { EventSubscriber } = require('./event/event_subscriber');
 let { GfxDrawable } = require('./gfx/gfx_drawable');
 let { GfxJAMDrawable } = require('./gfx/gfx_jam_drawable');
@@ -32,7 +31,6 @@ module.exports.GWE = {
   SizeModeEnum,
   ArrayCollection,
   BoundingBox,
-  BoundingSphere,
   EventSubscriber,
   GfxDrawable,
   GfxJAMDrawable,

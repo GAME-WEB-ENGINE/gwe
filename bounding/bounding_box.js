@@ -1,5 +1,4 @@
 let { Utils } = require('../helpers');
-const { BoundingSphere } = require('./bounding_sphere');
 
 /**
  * Classe représentant une boite englobante en trois-dimensions.
@@ -136,19 +135,6 @@ class BoundingBox {
       (this.min[1] <= aabb.max[1] && this.max[1] >= aabb.min[1]) &&
       (this.min[2] <= aabb.max[2] && this.max[2] >= aabb.min[2])
     );
-  }
-
-  /**
-   * Vérifie si la boite englobante rentre en intersection avec une sphère englobante.
-   * @param {BoundingSphere} bs - sphere englobante.
-   * @return {boolean} Vrai si il y a intersection.
-   */
-  intersectBoundingSphere(bs) {
-    let closestX = Math.max(this.min[0], Math.min(bs.x, this.max[0]));
-    let closestY = Math.max(this.min[1], Math.min(bs.y, this.max[1]));
-    let closestZ = Math.max(this.min[2], Math.min(bs.z, this.max[2]));
-    let distance = Math.sqrt((closestX - bs.x) * (closestX - bs.x) + (closestY - bs.y) * (closestY - bs.y) + (closestZ - bs.z) * (closestZ - bs.z));
-    return distance < bs.radius;
   }
 }
 

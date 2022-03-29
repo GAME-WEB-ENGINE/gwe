@@ -14,8 +14,7 @@ class GfxJSSDrawable extends GfxDrawable {
    */
   constructor() {
     super();
-    this.texturePosition = [0, 0];
-    this.size = [0, 0];
+    this.textureRect = [0, 0, 0, 0];
     this.offset = [0, 0];
     this.texture = textureManager.getTexture('');
     this.boundingBox = new BoundingBox();
@@ -32,8 +31,8 @@ class GfxJSSDrawable extends GfxDrawable {
 
     let minX = 0;
     let minY = 0;
-    let maxX = this.size[0];
-    let maxY = this.size[1];
+    let maxX = this.textureRect[2];
+    let maxY = this.textureRect[3];
     this.defineVertice(minX, maxY, 0);
     this.defineVertice(minX, minY, 0);
     this.defineVertice(maxX, minY, 0);
@@ -48,10 +47,10 @@ class GfxJSSDrawable extends GfxDrawable {
     this.defineNormal(0, 0, 0);
     this.defineNormal(0, 0, 0);
 
-    let ux = (this.texturePosition[0] / this.texture.width);
-    let uy = (this.texturePosition[1] / this.texture.height);
-    let vx = (this.texturePosition[0] + this.size[0]) / this.texture.width;
-    let vy = (this.texturePosition[1] + this.size[1]) / this.texture.height;
+    let ux = (this.textureRect[0] / this.texture.width);
+    let uy = (this.textureRect[1] / this.texture.height);
+    let vx = (this.textureRect[0] + this.textureRect[2]) / this.texture.width;
+    let vy = (this.textureRect[1] + this.textureRect[3]) / this.texture.height;
     this.defineTextureCoord(ux, uy);
     this.defineTextureCoord(ux, vy);
     this.defineTextureCoord(vx, vy);
@@ -80,60 +79,70 @@ class GfxJSSDrawable extends GfxDrawable {
   }
 
   /**
-   * Retourne la position de l'uv.
-   * @return {array} Position de l'uv (2 entrées).
+   * Retourne le rectangle de texture.
+   * @return {array} Rectangle de texture (4 entrées).
    */
-  getTexturePosition() {
-    return this.texturePosition;
+  getTextureRect() {
+    return this.textureRect;
   }
 
   /**
-   * Définit la position de l'uv.
-   * @param {number} x - Position x.
-   * @param {number} y - Position y.
-   */
-  setTexturePosition(x, y) {
-    this.texturePosition = [x, y];
-  }
-
-  /**
-   * Retourne la taille de l'uv.
-   * @return {array} Taille de l'uv (2 entrées).
-   */
-  getSize() {
-    return this.size;
-  }
-
-  /**
-   * Définit la taille de l'uv.
+   * Définit le rectangle de texture.
+   * @param {number} left - Coordonnée gauche.
+   * @param {number} top - Coordonnée haut.
    * @param {number} width - Largeur.
    * @param {number} height - Hauteur.
-   */  
-  setSize(width, height) {
-    this.size = [width, height];
+   */
+  setTextureRect(left, top, width, height) {
+    this.textureRect = [left, top, width, height];
     this.boundingBox = new BoundingBox([0, 0], [width, height]);
   }
 
+  /**
+   * Retourne le décallage du sprite par rapport à l'origine.
+   * @return {array} Décallage du sprite (2 entrées).
+   */
   getOffset() {
     return this.offset;
   }
 
+  /**
+   * Définit le décallage du sprite par rapport à l'origine.
+   * @param {number} offsetX - Décallage en x.
+   * @param {number} offsetY - Décallage en y.
+   */
   setOffset(offsetX, offsetY) {
     this.offset = [offsetX, offsetY];
   }
 
+  /**
+   * Retourne la texture source.
+   * @return {Texture} La texture source.
+   */
   getTexture() {
     return this.texture;
   }
 
+  /**
+   * Définit la texture source.
+   * @param {Texture} texture - La texture source.
+   */
   setTexture(texture) {
     this.texture = texture;
   }
 
+  /**
+   * Retourne la boite englobante.
+   * @return {BoundingBox} La boite englobante.
+   */
   getBoundingBox() {
     return this.boundingBox;
   }
 
+  /**
+   * Retourne la boite englobante avec les transformations du modèle.
+   * @return {BoundingBox} La boite englobante.
+   */
   getWorldBoundingBox() {
     return this.boundingBox.transform(this.getModelMatrix());
   }

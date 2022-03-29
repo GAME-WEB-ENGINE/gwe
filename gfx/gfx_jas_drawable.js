@@ -36,7 +36,6 @@ class GfxJASDrawable extends GfxDrawable {
     super();
     this.frames = [];    
     this.animations = [];
-    this.size = [0, 0];
     this.offset = [0, 0];
     this.texture = textureManager.getTexture('');
     this.boundingBox = new BoundingBox();
@@ -125,7 +124,7 @@ class GfxJASDrawable extends GfxDrawable {
    */
   getModelMatrix() {
     let matrix = super.getModelMatrix();
-    matrix = Utils.MAT4_MULTIPLY(matrix, Utils.MAT4_TRANSLATE(this.offset[0], this.offset[1], 0));
+    matrix = Utils.MAT4_MULTIPLY(matrix, Utils.MAT4_TRANSLATE(-this.offset[0], -this.offset[1], 0));
     return matrix;
   }
 
@@ -222,6 +221,7 @@ class GfxJASDrawable extends GfxDrawable {
     if (!animation) {
       throw new Error('GfxJASDrawable::play: animation not found.');
     }
+
 
     this.boundingBox = new BoundingBox([0, 0], [animation.frames[0].width, animation.frames[0].height]);
     this.currentAnimationName = animationName;
