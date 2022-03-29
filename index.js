@@ -38,7 +38,6 @@ module.exports.GWE = {
   GfxJSMDrawable,
   GfxJSSDrawable,
   GfxShader,
-  GfxSpriteDrawable,
   GfxView,
   ProjectionModeEnum,
   GfxViewport,
