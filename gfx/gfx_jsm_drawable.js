@@ -12,7 +12,14 @@ class JSM {
   }
 }
 
+/**
+ * Classe représentant un modèle static.
+ * @extends GfxDrawable
+ */
 class GfxJSMDrawable extends GfxDrawable {
+  /**
+   * Créer un modèle static.
+   */
   constructor() {
     super();
     this.jsm = new JSM();
@@ -20,6 +27,10 @@ class GfxJSMDrawable extends GfxDrawable {
     this.boundingBox = new BoundingBox();
   }
 
+  /**
+   * Fonction de mise à jour.
+   * @param {number} ts - Temps passé depuis la dernière mise à jour.
+   */
   update(ts) {
     this.clearVertices();
     this.clearNormals();
@@ -44,27 +55,50 @@ class GfxJSMDrawable extends GfxDrawable {
     }
   }
 
-  draw() {
+  /**
+   * Fonction de dessin.
+   * @param {number} viewIndex - Index de la vue en cours.
+   */
+  draw(viewIndex) {
     gfxManager.drawDebugBoundingBox(this.getModelMatrix(), this.boundingBox.min, this.boundingBox.max, [1.0, 1.0, 0.0]);
     gfxManager.drawMesh(this.getModelMatrix(), this.vertexCount, this.vertices, this.normals, this.textureCoords, this.texture);
   }
 
+  /**
+   * Retourne la texture source.
+   * @return {Texture} La texture source.
+   */
   getTexture() {
     return this.texture;
   }
 
+  /**
+   * Définit la texture source.
+   * @param {Texture} texture - La texture source.
+   */
   setTexture(texture) {
     this.texture = texture;
   }
 
+  /**
+   * Retourne la boite englobante.
+   * @return {BoundingBox} La boite englobante.
+   */
   getBoundingBox() {
     return this.boundingBox;
   }
 
+  /**
+   * Retourne la boite englobante avec les transformations du modèle.
+   * @return {BoundingBox} La boite englobante.
+   */
   getWorldBoundingBox() {
     return this.boundingBox.transform(this.getModelMatrix());
   }
 
+  /**
+   * Charge un fichier "jsm".
+   */
   loadFromFile(path) {
     let json = JSON.parse(fs.readFileSync(path));
     if (!json.hasOwnProperty('Ident') || json['Ident'] != 'GfxJSMDrawable') {

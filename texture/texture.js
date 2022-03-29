@@ -1,3 +1,6 @@
+/**
+ * Classe représentant une texture.
+ */
 class Texture {
   constructor() {
     this.glt = null;

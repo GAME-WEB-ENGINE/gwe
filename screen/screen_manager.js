@@ -1,20 +1,34 @@
-let { Screen } = require('./screen');
-
+/**
+ * Singleton représentant un gestionnaire d'écrans.
+ */
 class ScreenManager {
+  /**
+   * Créer un gestionnaire d'écrans.
+   */
   constructor() {
     this.requests = [];
     this.stack = [];
   }
 
+  /**
+   * Répartition des entrées utilisateur à tous les écrans.
+   * Nota bene: Si un écran est bloquant, celui-ci va stopper la répartition descendante.
+   * @param {InputEvent} event - Evènement d'entrée utilisateur.
+   */
   handleEvent(event) {
     for (let i = this.stack.length - 1; i >= 0; i--) {
-      this.stack[i].onEvent(event);
+      this.stack[i].handleEvent(event);
       if (this.stack[i].blocking) {
         return;
       }
     }
   }
 
+  /**
+   * Répartition de la mise à jour à tous les écrans.
+   * Nota bene: Si un écran est bloquant, celui-ci va stopper la répartition descendante.
+   * @param {number} ts - Temps passé depuis la dernière mise à jour.
+   */
   update(ts) {
     while (this.requests.length > 0) {
       let request = this.requests.pop();
@@ -22,22 +36,32 @@ class ScreenManager {
     }
 
     for (let i = this.stack.length - 1; i >= 0; i--) {
-      this.stack[i].onUpdate(ts);
+      this.stack[i].update(ts);
       if (this.stack[i].blocking) {
         return;
       }
     }
   }
 
+  /**
+   * Répartition du rafraichissement graphique à tous les écrans.
+   * Nota bene: Si un écran est bloquant, celui-ci va stopper la répartition descendante.
+   * @param {number} viewIndex - Index de la vue en cours.
+   */
   draw(viewIndex) {
     for (let i = this.stack.length - 1; i >= 0; i--) {
-      this.stack[i].onDraw(viewIndex);
+      this.stack[i].draw(viewIndex);
       if (this.stack[i].blocking) {
         return;
       }
     }
   }
 
+  /**
+   * Commande l'ajout d'un écran.
+   * @param {Screen} newTopScreen - Ecran à ajouter.
+   * @param {object} args - Données transitoires.
+   */
   requestPushScreen(newTopScreen, args = {}) {
     this.requests.push(() => {
       if (this.stack.indexOf(newTopScreen) != -1) {
@@ -52,15 +76,23 @@ class ScreenManager {
     });
   }
 
-  requestSetScreen(state, args = {}) {
+  /**
+   * Commande l'ajout d'un écran et supprime tous les écrans courants.
+   * @param {Screen} newScreen - Ecran à ajouter.
+   * @param {object} args - Données transitoires.
+   */
+  requestSetScreen(newScreen, args = {}) {
     this.requests.push(() => {
-      this.stack.forEach((state) => state.onExit());
+      this.stack.forEach((screen) => screen.onExit());
       this.stack = [];
-      state.onEnter(args);
-      this.stack.push(state);
+      newScreen.onEnter(args);
+      this.stack.push(newScreen);
     });
   }
 
+  /**
+   * Commande la suppression du dernier écran.
+   */
   requestPopScreen() {
     this.requests.push(() => {
       if (this.stack.length == 0) {

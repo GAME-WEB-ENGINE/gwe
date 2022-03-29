@@ -24,18 +24,36 @@ class TOC {
   }
 }
 
+/**
+ * Classe représentant un outil de compression/decompression de données binaires à la volée.
+ */
 class IOFilepacker {
+  /**
+   * Ouvre un fichier cible et renvoi un descripteur.
+   * @return {number} Un entier représentant le descripteur de fichier.
+   */
   static openFile(path) {
     return Fs.openSync(path, 'r+');
   }
 
+  /**
+   * Ferme un fichier cible.
+   * @param {number} fd - Descripteur de fichier.
+   * @return {boolean} - Vrai si fermeture réussie.
+   */
   static closeFile(fd) {
     return Fs.closeSync(fd);
   }
 
+  /**
+   * Compresse le dossier cible dans le package.
+   * @param {number} fd - Descripteur de fichier.
+   * @param {string} path - Chemin cible à compresser.
+   * @param {boolean} recursive - Si vrai, l'opération est récursive.
+   */
   static empack(fd, path, recursive) {
     let toc = new TOC();
-    Filepacker.createTOC(path, recursive, toc);
+    CREATE_TOC(path, recursive, toc);
 
     let offset = HEADER_SIZE + (ENTRY_SIZE * toc.header.numEntries);
     for (let entry of toc.entries) {
@@ -48,12 +66,17 @@ class IOFilepacker {
     }
 
     toc.header.valid = 1;
-    Filepacker.writeTOC(fd, toc);
+    WRITE_TOC(fd, toc);
   }
 
+  /**
+   * Décompresse le package dans le dossier cible.
+   * @param {number} fd - Descripteur de fichier.
+   * @param {string} path - Chemin cible.
+   */
   static unpack(fd, path) {
     let toc = new TOC();
-    Filepacker.readTOC(fd, toc);
+    READ_TOC(fd, toc);
 
     let entry = toc.entries.find(entry => entry.path == path);
     if (!entry) {
@@ -66,102 +89,102 @@ class IOFilepacker {
 
     return uncompressedBuf;
   }
+}
 
-  static createTOC(directory, recursive, toc) {
-    if (!Fs.statSync(directory).isDirectory()) {
-      throw new Error('target path to empack is not a directory : ' + directory);
-    }
-
-    let files = Fs.readdirSync(directory);
-    for (let file of files) {
-      let path = directory + file;
-      let stat = Fs.statSync(path);
-      if (stat.isFile() && path.length <= PATH_SIZE) {
-        let entry = new Entry();
-        entry.path = path;
-        toc.entries.push(entry);
-        toc.header.numEntries++;
-      }
-      else if (recursive && stat.isDirectory()) {
-        Filepacker.createTOC(path, recursive, toc);
-      }
-    }
+function CREATE_TOC(directory, recursive, toc) {
+  if (!Fs.statSync(directory).isDirectory()) {
+    throw new Error('target path to empack is not a directory : ' + directory);
   }
 
-  static resetTOC(toc) {
-    toc.header.valid = 0;
-    toc.header.numEntries = 0;
-    toc.entries = [];
-  }
-
-  static writeTOC(fd, toc) {
-    let buf = new Uint8Array(1);
-    let offset = 0;
-
-    buf = new Uint8Array(1);
-    buf[0] = toc.header.valid;
-    Fs.writeSync(fd, buf, 0, buf.byteLength, offset);
-    offset += 1;
-
-    buf = new Uint32Array(1);
-    buf[0] = toc.header.numEntries;
-    Fs.writeSync(fd, buf, 0, buf.byteLength, offset);
-    offset += 4;
-
-    for (let i = 0; i < toc.header.numEntries; i++) {
-      let entry = toc.entries[i];
-
-      buf = new Uint8Array(PATH_SIZE);
-      for (let i = 0; i < PATH_SIZE; i++) buf[i] = entry.path.charCodeAt(i);
-      Fs.writeSync(fd, buf, 0, buf.byteLength, offset);
-      offset += PATH_SIZE;
-
-      buf = new Uint32Array(1);
-      buf[0] = entry.offset;
-      Fs.writeSync(fd, buf, 0, buf.byteLength, offset);
-      offset += 4;
-
-      buf = new Uint32Array(1);
-      buf[0] = entry.size;
-      Fs.writeSync(fd, buf, 0, buf.byteLength, offset);
-      offset += 4;
-    }
-  }
-
-  static readTOC(fd, toc) {
-    let buf = new Uint8Array(1);
-    let offset = 0;
-
-    buf = new Uint8Array(1);
-    Fs.readSync(fd, buf, 0, buf.byteLength, offset);
-    toc.header.valid = buf[0];
-    offset += 1;
-
-    buf = new Uint32Array(1);
-    Fs.readSync(fd, buf, 0, buf.byteLength, offset);
-    toc.header.numEntries = buf[0];
-    offset += 4;
-
-    for (let i = 0; i < toc.header.numEntries; i++) {
+  let files = Fs.readdirSync(directory);
+  for (let file of files) {
+    let path = directory + file;
+    let stat = Fs.statSync(path);
+    if (stat.isFile() && path.length <= PATH_SIZE) {
       let entry = new Entry();
-
-      buf = new Uint8Array(PATH_SIZE);
-      Fs.readSync(fd, buf, 0, buf.byteLength, offset);
-      let j = 0; while (buf[j] != 0) entry.path += String.fromCharCode(buf[j++]);
-      offset += PATH_SIZE;
-
-      buf = new Uint32Array(1);
-      Fs.readSync(fd, buf, 0, buf.byteLength, offset);
-      entry.offset = buf[0];
-      offset += 4;
-
-      buf = new Uint32Array(1);
-      Fs.readSync(fd, buf, 0, buf.byteLength, offset);
-      entry.size = buf[0];
-      offset += 4;
-
+      entry.path = path;
       toc.entries.push(entry);
+      toc.header.numEntries++;
     }
+    else if (recursive && stat.isDirectory()) {
+      CREATE_TOC(path, recursive, toc);
+    }
+  }
+}
+
+function RESET_TOC(toc) {
+  toc.header.valid = 0;
+  toc.header.numEntries = 0;
+  toc.entries = [];
+}
+
+function WRITE_TOC(fd, toc) {
+  let buf = new Uint8Array(1);
+  let offset = 0;
+
+  buf = new Uint8Array(1);
+  buf[0] = toc.header.valid;
+  Fs.writeSync(fd, buf, 0, buf.byteLength, offset);
+  offset += 1;
+
+  buf = new Uint32Array(1);
+  buf[0] = toc.header.numEntries;
+  Fs.writeSync(fd, buf, 0, buf.byteLength, offset);
+  offset += 4;
+
+  for (let i = 0; i < toc.header.numEntries; i++) {
+    let entry = toc.entries[i];
+
+    buf = new Uint8Array(PATH_SIZE);
+    for (let i = 0; i < PATH_SIZE; i++) buf[i] = entry.path.charCodeAt(i);
+    Fs.writeSync(fd, buf, 0, buf.byteLength, offset);
+    offset += PATH_SIZE;
+
+    buf = new Uint32Array(1);
+    buf[0] = entry.offset;
+    Fs.writeSync(fd, buf, 0, buf.byteLength, offset);
+    offset += 4;
+
+    buf = new Uint32Array(1);
+    buf[0] = entry.size;
+    Fs.writeSync(fd, buf, 0, buf.byteLength, offset);
+    offset += 4;
+  }
+}
+
+function READ_TOC(fd, toc) {
+  let buf = new Uint8Array(1);
+  let offset = 0;
+
+  buf = new Uint8Array(1);
+  Fs.readSync(fd, buf, 0, buf.byteLength, offset);
+  toc.header.valid = buf[0];
+  offset += 1;
+
+  buf = new Uint32Array(1);
+  Fs.readSync(fd, buf, 0, buf.byteLength, offset);
+  toc.header.numEntries = buf[0];
+  offset += 4;
+
+  for (let i = 0; i < toc.header.numEntries; i++) {
+    let entry = new Entry();
+
+    buf = new Uint8Array(PATH_SIZE);
+    Fs.readSync(fd, buf, 0, buf.byteLength, offset);
+    let j = 0; while (buf[j] != 0) entry.path += String.fromCharCode(buf[j++]);
+    offset += PATH_SIZE;
+
+    buf = new Uint32Array(1);
+    Fs.readSync(fd, buf, 0, buf.byteLength, offset);
+    entry.offset = buf[0];
+    offset += 4;
+
+    buf = new Uint32Array(1);
+    Fs.readSync(fd, buf, 0, buf.byteLength, offset);
+    entry.size = buf[0];
+    offset += 4;
+
+    toc.entries.push(entry);
   }
 }
 

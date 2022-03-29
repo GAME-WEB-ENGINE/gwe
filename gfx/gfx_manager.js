@@ -2,7 +2,13 @@ let { DEFAULT_VERTEX_SHADER, DEFAULT_PIXEL_SHADER, DEBUG_VERTEX_SHADER, DEBUG_PI
 let { ProjectionModeEnum, GfxView } = require('./gfx_view');
 let { Utils } = require('../helpers');
 
+/**
+ * Singleton représentant un gestionnaire graphique.
+ */
 class GfxManager {
+  /**
+   * Créer un gestionnaire graphique.
+   */
   constructor() {
     this.canvas = null;
     this.gl = null;
@@ -44,57 +50,108 @@ class GfxManager {
     this.canvas.addEventListener('webglcontextlost', (event) => event.preventDefault(), false);
   }
 
-  update() {
+  /**
+   * Fonction de mise à jour.
+   * @param {number} ts - Temps passé depuis la dernière mise à jour.
+   */
+  update(ts) {
     if (this.canvas.width != this.canvas.clientWidth || this.canvas.height != this.canvas.clientHeight) {
       this.canvas.width = this.canvas.clientWidth;
       this.canvas.height = this.canvas.clientHeight;
     }
   }
 
+  /**
+   * Retourne la largeur du canvas.
+   * @return {number} La largeur du canvas.
+   */
   getWidth() {
     return this.canvas.clientWidth;
   }
 
+  /**
+   * Retourne la hauteur du canvas.
+   * @return {number} La hauteur du canvas.
+   */
   getHeight() {
     return this.canvas.clientHeight;
   }
 
+  /**
+   * Retourne le context webgl.
+   * @return {WebGLRenderingContext} Le contexte webgl.
+   */
   getGLContext() {
     return this.gl;
   }
 
+  /**
+   * Retourne une vue à l'index spécifié.
+   * @return {GfxView} La vue.
+   */
   getView(index) {
     return this.views[index];
   }
 
+  /**
+   * Retourne le nombre de vues.
+   * @return {number} Le nombre de vues.
+   */
   getNumViews() {
     return this.views.length;
   }
 
+  /**
+   * Ajoute une vue.
+   */
   addView(view) {
     this.views.push(view);
   }
 
+  /**
+   * Remplace la vue à l'index spécifiée par une nouvelle.
+   * @param {number} index - L'index de la vue spécifiée.
+   * @param {GfxView} view - La nouvelle vue.
+   */
   changeView(index, view) {
     this.views[index] = view;
   }
 
+  /**
+   * Supprime une vue.
+   * @param {GfxView} view - La vue à supprimer.
+   */
   removeView(view) {
     this.views.splice(this.views.indexOf(view), 1);
   }
 
+  /**
+   * Supprime toutes les vues.
+   */
   releaseViews() {
     this.views = [];
   }
 
+  /**
+   * Récupère la valeur du drapeau d'affichage du debug.
+   * @return {boolean} Le drapeau d'affichage du debug.
+   */
   getShowDebug() {
     return this.showDebug;
   }
 
+  /**
+   * Définit la valeur du drapeau d'affichage du debug.
+   * @param {boolean} showDebug - Le drapeau d'affichage du debug.
+   */
   setShowDebug(showDebug) {
     this.showDebug = showDebug;
   }
 
+  /**
+   * Efface et prépare la vue au dessin.
+   * @param {number} viewIndex - L'index de la vue à effacer/dessiner.
+   */
   clear(viewIndex) {
     let view = this.views[viewIndex];
     let viewport = view.getViewport();
@@ -143,6 +200,15 @@ class GfxManager {
     this.gl.uniformMatrix4fv(this.debugShaderUniforms.vMatrix, false, viewMatrix);
   }
 
+  /**
+   * Dessine un mesh texturé.
+   * @param {array} matrix - La matrix de modèle (16 entrées).
+   * @param {number} numVertices - Le nombre de points.
+   * @param {array} vertices - Le tableau de points.
+   * @param {array} normals - Le tableau de normales.
+   * @param {array} textureCoords - Le tableau d'uvs.
+   * @param {Texture} texture - La texture source.
+   */
   drawMesh(matrix, numVertices, vertices, normals, textureCoords, texture) {
     this.gl.useProgram(this.defaultShader);
     this.gl.uniformMatrix4fv(this.defaultShaderUniforms.mMatrix, false, matrix);
@@ -173,6 +239,13 @@ class GfxManager {
     this.gl.drawArrays(this.gl.TRIANGLES, 0, numVertices);
   }
 
+  /**
+   * Dessine une sphere de debug.
+   * @param {array} matrix - La matrix de modèle (16 entrées).
+   * @param {number} radius - Le rayon.
+   * @param {array} step - Le nombre de pas.
+   * @param {array} color - La couleur (3 entrées).
+   */
   drawDebugSphere(matrix, radius, step, color = [1, 1, 1]) {
     if (!this.showDebug) {
       return;
@@ -216,6 +289,11 @@ class GfxManager {
     this.gl.drawArrays(this.gl.LINE_STRIP, 0, numVertices);
   }
 
+  /**
+   * Dessine un gizmo de debug.
+   * @param {array} matrix - La matrix de modèle (16 entrées).
+   * @param {number} size - La taille des axes.
+   */
   drawDebugAxes(matrix, size) {
     if (!this.showDebug) {
       return;
@@ -244,6 +322,13 @@ class GfxManager {
     }
   }
 
+  /**
+   * Dessine une grille de debug.
+   * @param {array} matrix - La matrix de modèle (16 entrées).
+   * @param {number} extend - Grandeur de la grille.
+   * @param {number} spacing - L'espacement entre les cellules.
+   * @param {array} color - La couleur (3 entrées).
+   */
   drawDebugGrid(matrix, extend, spacing, color = [1, 1, 1]) {
     if (!this.showDebug) {
       return;
@@ -286,6 +371,13 @@ class GfxManager {
     this.gl.drawArrays(this.gl.LINES, 0, numVertices);
   }
 
+  /**
+   * Dessine une boite englobante de debug.
+   * @param {array} matrix - La matrix de modèle (16 entrées).
+   * @param {array} min - Point minimum (3 entrées).
+   * @param {array} max - Point maximum (3 entrées).
+   * @param {array} color - La couleur (3 entrées).
+   */
   drawDebugBoundingBox(matrix, min, max, color = [1, 1, 1]) {
     if (!this.showDebug) {
       return;
@@ -320,6 +412,13 @@ class GfxManager {
     this.gl.drawArrays(this.gl.LINES, 0, 24);
   }
 
+  /**
+   * Dessine un ensemble de lignes de debug.
+   * @param {array} matrix - La matrix de modèle (16 entrées).
+   * @param {number} numVertices - Le nombre de points.
+   * @param {array} vertices - Le tableau de points.
+   * @param {array} color - La couleur (3 entrées).
+   */
   drawDebugLines(matrix, numVertices, vertices, color = [1, 1, 1]) {
     if (!this.showDebug) {
       return;
@@ -337,6 +436,13 @@ class GfxManager {
     this.gl.drawArrays(this.gl.LINES, 0, numVertices);
   }
 
+  /**
+   * Dessine un ensemble de points.
+   * @param {array} matrix - La matrix de modèle (16 entrées).
+   * @param {number} numVertices - Le nombre de points.
+   * @param {array} vertices - Le tableau de points.
+   * @param {array} color - La couleur (3 entrées).
+   */
   drawDebugPoints(matrix, numVertices, vertices, color = [1, 1, 1]) {
     if (!this.showDebug) {
       return;

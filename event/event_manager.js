@@ -1,10 +1,22 @@
 let { EventSubscriber } = require('./event_subscriber');
 
+/**
+ * Singleton représentant une gestionnaire d'évènements.
+ */
 class EventManager {
+  /**
+   * Créer un gestionnaire d'évènements.
+   */
   constructor() {
     this.subscribers = [];
   }
 
+  /**
+   * Attend l'arrivé d'un évènement.
+   * @param {object} emitter - L'objet émetteur.
+   * @param {string} type - Le type d'évènement.
+   * @return {Promise} Promesse.
+   */
   wait(emitter, type) {
     return new Promise(resolve => {
       this.subscribeOnce(emitter, type, this, (data) => {
@@ -13,6 +25,13 @@ class EventManager {
     });
   }
 
+  /**
+   * Inscription à un évènement.
+   * @param {object} emitter - L'objet émetteur.
+   * @param {string} type - Le type d'évènement.
+   * @param {object} listener - L'objet écouteur.
+   * @param {function} cb - La fonction à appeler
+   */
   subscribe(emitter, type, listener, cb) {
     if (!emitter) {
       throw new Error('EventManager::subscribe(): emitter is undefined !');
@@ -27,6 +46,14 @@ class EventManager {
     this.subscribers.push(new EventSubscriber(emitter, type, listener, false, cb));
   }
 
+  /**
+   * Inscription à un évènement.
+   * Attention cependant, l'inscription est supprimer après le premier appel.
+   * @param {object} emitter - L'objet émetteur.
+   * @param {string} type - Le type d'évènement.
+   * @param {object} listener - L'objet écouteur.
+   * @param {function} cb - La fonction à appeler
+   */
   subscribeOnce(emitter, type, listener, cb) {
     if (!emitter) {
       throw new Error('EventManager::subscribe(): emitter is undefined !');
@@ -41,6 +68,12 @@ class EventManager {
     this.subscribers.push(new EventSubscriber(emitter, type, listener, true, cb));
   }
 
+  /**
+   * Desinscription à un évènement.
+   * @param {object} emitter - L'objet émetteur.
+   * @param {string} type - Le type d'évènement.
+   * @param {object} listener - L'objet écouteur.
+   */
   unsubscribe(emitter, type, listener) {
     for (let subscriber of this.subscribers) {
       if (subscriber.emitter == emitter && subscriber.type == type && subscriber.listener == listener) {
@@ -50,10 +83,20 @@ class EventManager {
     }
   }
 
+  /**
+   * Desinscription de tous les évènements.
+   */
   unsubscribeAll() {
     this.subscribers = [];
   }
 
+  /**
+   * Emet un évènement.
+   * @param {object} emitter - L'objet émetteur.
+   * @param {string} type - Le type d'évènement.
+   * @param {object} data - Données transitoires.
+   * @return {Promise} Promesse resolue lorsque tous les écouteurs ont terminés.
+   */
   async emit(emitter, type, data) {
     let promises = [];
 

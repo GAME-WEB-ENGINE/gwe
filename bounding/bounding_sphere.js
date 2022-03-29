@@ -1,3 +1,6 @@
+/**
+ * Classe représentant une sphere englobante en trois-dimensions.
+ */
 class BoundingSphere {
   constructor() {
     this.x = 0;

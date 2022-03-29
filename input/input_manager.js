@@ -1,6 +1,13 @@
 let { eventManager } = require('../event/event_manager');
+let { KeydownEvent, KeydownOnceEvent, KeyupEvent, MouseButtonDownEvent, MouseButtonUpEvent, MouseDragBeginEvent, MouseDragEvent, MouseDragEndEvent, MouseMoveEvent } = require('./input_events');
 
+/**
+ * Singleton représentant un gestionnaire d'entrée utilisateur.
+ */
 class InputManager {
+  /**
+   * Créer un gestionnaire d'entrée utilisateur.
+   */
   constructor() {
     this.keymap = {};
     this.eventQueue = [];
@@ -29,14 +36,27 @@ class InputManager {
     document.addEventListener('mouseup', this.handleMouseUpCb);
   }
 
+  /**
+   * Retourne et supprime le premier évènement de la file.
+   * @return {InputEvent} Premier évènement de la file.
+   */
   pullEvents() {
     return this.eventQueue.shift();
   }
 
+  /**
+   * Vérifie si la touche {key} est enfoncée.
+   * @param {string} key - La touche à vérifier.
+   * @return {boolean} Vrai si la touche est enfoncée.
+   */
   isKeyDown(key) {
     return this.keymap[key];
   }
 
+  /**
+   * Vérifie si une touche est enfoncée.
+   * @return {boolean} Vrai si une touche est enfoncée.
+   */
   isKeyPressed() {
     return this.keyPressed;
   }
@@ -45,14 +65,14 @@ class InputManager {
     e.preventDefault();
     e.stopImmediatePropagation();
 
-    if (!this.keyPressed) {
-      this.eventQueue.push({ type: 'KEYDOWN_ONCE', key: e.which });
+    if (!this.keymap[e.which]) {
+      this.eventQueue.push(new KeydownOnceEvent(e.which));
       eventManager.emit(this, 'E_KEYDOWN_ONCE', { key: e.which });
     }
 
     this.keyPressed = true;
     this.keymap[e.which] = true;
-    this.eventQueue.push({ type: 'KEYDOWN', key: e.which });
+    this.eventQueue.push(new KeydownEvent(e.which));
     eventManager.emit(this, 'E_KEYDOWN', { key: e.which });
   }
 
@@ -62,43 +82,43 @@ class InputManager {
 
     this.keyPressed = false;
     this.keymap[e.which] = false;
-    this.eventQueue.push({ type: 'KEYUP', key: e.which });
+    this.eventQueue.push(new KeyupEvent(e.which));
     eventManager.emit(this, 'E_KEYUP', { key: e.which });
   }
 
   handleMouseDown(e) {
     this.mouseDown = true;
-    this.eventQueue.push({ type: 'MOUSEBUTTONDOWN', position: [e.clientX, e.clientY] });
-    eventManager.emit(this, 'E_MOUSEBUTTONDOWN', { position: [e.clientX, e.clientY] });
+    this.eventQueue.push(new MouseButtonDownEvent(e.button, [e.clientX, e.clientY]));
+    eventManager.emit(this, 'E_MOUSEBUTTONDOWN', { button: e.button, position: [e.clientX, e.clientY] });
   }
 
   handleMouseMove(e) {
     if (this.mouseDown) {
       if (!this.mouseDrag) {
         this.mouseDrag = true;
-        this.eventQueue.push({ type: 'MOUSEDRAG_BEGIN', position: [e.clientX, e.clientY] });
-        eventManager.emit(this, 'E_MOUSEDRAG_BEGIN', { position: [e.clientX, e.clientY] });        
+        this.eventQueue.push(new MouseDragBeginEvent(e.button, [e.clientX, e.clientY]));
+        eventManager.emit(this, 'E_MOUSEDRAG_BEGIN', { button: e.button,  position: [e.clientX, e.clientY] });        
       }
       else {
-        this.eventQueue.push({ type: 'MOUSEDRAG', position: [e.clientX, e.clientY] });
-        eventManager.emit(this, 'E_MOUSEDRAG', { position: [e.clientX, e.clientY] });
+        this.eventQueue.push(new MouseDragEvent(e.button, [e.clientX, e.clientY]));
+        eventManager.emit(this, 'E_MOUSEDRAG', { button: e.button, position: [e.clientX, e.clientY] });
       }
     }
 
-    this.eventQueue.push({ type: 'MOUSEMOVE', position: [e.clientX, e.clientY] });
+    this.eventQueue.push(new MouseMoveEvent([e.clientX, e.clientY]));
     eventManager.emit(this, 'E_MOUSEMOVE', { position: [e.clientX, e.clientY] });
   }
 
   handleMouseUp(e) {
     if (this.mouseDrag) {
       this.mouseDrag = false;
-      this.eventQueue.push({ type: 'MOUSEDRAG_END', position: [e.clientX, e.clientY] });
-      eventManager.emit(this, 'E_MOUSEDRAG_END', { position: [e.clientX, e.clientY] });
+      this.eventQueue.push(new MouseButtonUpEvent(e.button, [e.clientX, e.clientY]));
+      eventManager.emit(this, 'E_MOUSEDRAG_END', { button: e.button, position: [e.clientX, e.clientY] });
     }
 
     this.mouseDown = false;
-    this.eventQueue.push({ type: 'MOUSEBUTTONUP', position: [e.clientX, e.clientY] });
-    eventManager.emit(this, 'E_MOUSEBUTTONUP', { position: [e.clientX, e.clientY] });
+    this.eventQueue.push(new MouseButtonUpEvent(e.button, [e.clientX, e.clientY]));
+    eventManager.emit(this, 'E_MOUSEBUTTONUP', { button: e.button, position: [e.clientX, e.clientY] });
   }
 }
 

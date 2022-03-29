@@ -1,3 +1,6 @@
+/**
+ * Classe représentant la position et la taille d'un rectangle de rendu.
+ */
 class GfxViewport {
   constructor() {
     this.xFactor = 0;

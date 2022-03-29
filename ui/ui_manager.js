@@ -1,6 +1,13 @@
 let { eventManager} = require('../event/event_manager');
+const { UIWidget } = require('./ui_widget');
 
+/**
+ * Singleton représentant un gestionnaire d'interface utilisateur.
+ */
 class UIManager {
+  /**
+   * Créer un gestionnaire d'interface utilisateur.
+   */
   constructor() {
     this.root = null;
     this.fadeLayer = null;
@@ -24,12 +31,20 @@ class UIManager {
     }
   }
 
-  update() {
+  /**
+   * Fonction de mise à jour.
+   * @param {number} ts - Temps passé depuis la dernière mise à jour.
+   */
+  update(ts) {
     for (let widget of this.widgets) {
-      widget.update();
+      widget.update(ts);
     }
   }
 
+  /**
+   * Donne le focus à {widget}.
+   * @param {UIWidget} widget - L'élément d'interface utilisateur.
+   */
   focus(widget) {
     if (this.focusedWidget) {
       this.focusedWidget.unfocus();
@@ -40,6 +55,9 @@ class UIManager {
     eventManager.emit(this, 'E_FOCUSED', { widget: widget });
   }
 
+  /**
+   * Enlève le focus.
+   */
   unfocus() {
     if (!this.focusedWidget) {
       return;
@@ -50,15 +68,32 @@ class UIManager {
     eventManager.emit(this, 'E_UNFOCUSED');
   }
 
+  /**
+   * Ajoute un élément HTML au noeud racine.
+   * Nota bene: Idéal pour des éléments d'affichage simple et sans logique interne.
+   * @param {Node} node - Element HTML.
+   * @param {string} styles - Styles CSS.
+   */
   addNode(node, styles = '') {
     node.style.cssText += styles;
     this.root.appendChild(node);
   }
 
+  /**
+   * Supprime un élément HTML au noeud racine.
+   * Nota bene: Idéal pour des éléments d'affichage simple et sans logique interne.
+   * @param {Node} node - Element HTML.
+   */
   removeNode(node) {
     this.root.removeChild(node);
   }
 
+  /**
+   * Ajoute un widget au noeud racine.
+   * @param {UIWidget} widget - Element d'interface utilisateur.
+   * @param {string} styles - Styles CSS.
+   * @return {UIWidget} L'élément d'interface utilisateur.
+   */
   addWidget(widget, styles = '') {
     widget.node.style.cssText += styles;
     this.root.appendChild(widget.node);
@@ -66,6 +101,10 @@ class UIManager {
     return widget;
   }
 
+  /**
+   * Supprime un widget au noeud racine.
+   * @param {UIWidget} widget - Element d'interface utilisateur.
+   */
   removeWidget(widget) {
     let index = this.widgets.indexOf(widget);
     if (index == -1) {
@@ -81,14 +120,21 @@ class UIManager {
     return true;
   }
 
-  removeWidgetIf(cb) {
+  /**
+   * Supprime un widget au noeud racine si le fonction predicat est validée.
+   * @param {function} predicate - La fonction à évaluer pour chaque élement..
+   */
+  removeWidgetIf(predicate) {
     for (let widget of this.widgets) {
-      if (cb && cb(widget)) {
+      if (predicate && predicate(widget)) {
         this.removeWidget(widget);
       }
     }
   }
 
+  /**
+   * Supprime tous les widgets.
+   */
   clear() {
     this.root.innerHTML = '';
     this.focusedWidget = null;
@@ -99,10 +145,21 @@ class UIManager {
     }
   }
 
+  /**
+   * Active la sur-couche opaque.
+   * @param {boolean} enable - Si vrai, la sur-couche est activée.
+   */
   enableOverlayer(enable) {
     this.overLayer.style.opacity = (enable) ? '1' : '0';
   }
 
+  /**
+   * Lance une animation de fondu (invisible -> fond noir).
+   * @param {number} delay - La durée à attendre avant de débuter l'animation.
+   * @param {number} ms - La durée de l'animation.
+   * @param {string} transitionTimingFunction - Fonction d'interpolation.
+   * @param {function} cb - Fonction appelée à la fin de l'animation.
+   */
   fadeIn(delay, ms, transitionTimingFunction = 'linear', cb = () => {}) {
     this.fadeLayer.style.transitionDuration = ms + 'ms';
     this.fadeLayer.style.transitionDelay = delay + 'ms';
@@ -111,6 +168,13 @@ class UIManager {
     setTimeout(() => { cb(); }, delay + ms);
   }
 
+  /**
+   * Lance une animation de fondu (fond noir -> invisible).
+   * @param {number} delay - La durée à attendre avant de débuter l'animation.
+   * @param {number} ms - La durée de l'animation.
+   * @param {string} transitionTimingFunction - Fonction d'interpolation.
+   * @param {function} cb - Fonction appelée à la fin de l'animation.
+   */
   fadeOut(delay, ms, transitionTimingFunction = 'linear', cb = () => {}) {
     this.fadeLayer.style.transitionDuration = ms + 'ms';
     this.fadeLayer.style.transitionDelay = delay + 'ms';

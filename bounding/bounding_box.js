@@ -1,11 +1,25 @@
 let { Utils } = require('../helpers');
+const { BoundingSphere } = require('./bounding_sphere');
 
+/**
+ * Classe représentant une boite englobante en trois-dimensions.
+ */
 class BoundingBox {
+  /**
+   * Créer une boite englobante.
+   * @param {array} min - Point minimum (3 entrées).
+   * @param {array} max - Point maximum (3 entrées).
+   */
   constructor(min = [0, 0, 0], max = [0, 0, 0]) {
     this.min = min;
     this.max = max;
   }
 
+  /**
+   * Créer une boite englobante à partir d'un ensemble de points.
+   * @param {array} vertices - Ensemble de points.
+   * @return {BoundingBox} La boite englobante.
+   */
   static createFromVertices(vertices) {
     let min = vertices.slice(0, 3);
     let max = vertices.slice(0, 3);
@@ -20,6 +34,10 @@ class BoundingBox {
     return new BoundingBox(min, max);
   }
 
+  /**
+   * Retourne les coordonnées du centre.
+   * @return {array} Coordonné du centre (3 entrées).
+   */
   getCenter() {
     let w = this.max[0] - this.min[0];
     let h = this.max[1] - this.min[1];
@@ -30,6 +48,10 @@ class BoundingBox {
     return [x, y, z];
   }
 
+  /**
+   * Retourne la taille.
+   * @return {object} Avec "w" pour la largeur, "h" la hauteur et "d" la profondeur.
+   */
   getSize() {
     let w = this.max[0] - this.min[0];
     let h = this.max[1] - this.min[1];
@@ -37,16 +59,29 @@ class BoundingBox {
     return { w, h, d };
   }
 
+  /**
+   * Retourne le périmètre.
+   * @return {number} La valeur du périmètre.
+   */
   getPerimeter() {
     let w = this.max[0] - this.min[0];
     let d = this.max[2] - this.min[2];
     return w + w + d + d;
   }
 
+  /**
+   * Retourne le volume.
+   * @return {number} La valeur du volume.
+   */
   getVolume() {
     return (this.max[0] - this.min[0]) * (this.max[1] - this.min[1]) * (this.max[2] - this.min[2]);
   }
 
+  /**
+   * Retourne une nouvelle boite englobante transformé.
+   * @param {array} matrix - Matrice de transformation (16 entrées).
+   * @return {BoundingBox} La nouvelle boite englobante.
+   */
   transform(matrix) {
     let points = [];
     points.push(this.min[0], this.min[1], this.min[2]);
@@ -75,6 +110,13 @@ class BoundingBox {
     return new BoundingBox(min, max);
   }
 
+  /**
+   * Vérifie si un point est dans la boite englobante.
+   * @param {number} x - Coordonnée x du point.
+   * @param {number} y - Coordonnée y du point.
+   * @param {number} z - Coordonnée z du point.
+   * @return {boolean} Vrai si le point est dans la boite englobante.
+   */
   isPointInside(x, y, z) {
     return (
       (x >= this.min[0] && x <= this.max[0]) &&
@@ -83,6 +125,11 @@ class BoundingBox {
     );
   }
 
+  /**
+   * Vérifie si la boite englobante rentre en intersection avec une autre boite englobante.
+   * @param {BoundingBox} aabb - Autre boite englobante.
+   * @return {boolean} Vrai si il y a intersection.
+   */
   intersectBoundingBox(aabb) {
     return (
       (this.min[0] <= aabb.max[0] && this.max[0] >= aabb.min[0]) &&
@@ -91,12 +138,17 @@ class BoundingBox {
     );
   }
 
-  intersectBoundingSphere(x, y, z, radius) {
-    let closestX = Math.max(this.min[0], Math.min(x, this.max[0]));
-    let closestY = Math.max(this.min[1], Math.min(y, this.max[1]));
-    let closestZ = Math.max(this.min[2], Math.min(z, this.max[2]));
-    let distance = Math.sqrt((closestX - x) * (closestX - x) + (closestY - y) * (closestY - y) + (closestZ - z) * (closestZ - z));
-    return distance < radius;
+  /**
+   * Vérifie si la boite englobante rentre en intersection avec une sphère englobante.
+   * @param {BoundingSphere} bs - sphere englobante.
+   * @return {boolean} Vrai si il y a intersection.
+   */
+  intersectBoundingSphere(bs) {
+    let closestX = Math.max(this.min[0], Math.min(bs.x, this.max[0]));
+    let closestY = Math.max(this.min[1], Math.min(bs.y, this.max[1]));
+    let closestZ = Math.max(this.min[2], Math.min(bs.z, this.max[2]));
+    let distance = Math.sqrt((closestX - bs.x) * (closestX - bs.x) + (closestY - bs.y) * (closestY - bs.y) + (closestZ - bs.z) * (closestZ - bs.z));
+    return distance < bs.radius;
   }
 }
 

@@ -4,7 +4,14 @@ let { Utils } = require('../helpers');
 let { gfxManager } = require('./gfx_manager');
 let { textureManager } = require('../texture/texture_manager');
 
-class GfxSpriteDrawable extends GfxDrawable {
+/**
+ * Classe représentant un sprite static.
+ * @extends GfxDrawable
+ */
+class GfxJSSDrawable extends GfxDrawable {
+  /**
+   * Créer un sprite static.
+   */
   constructor() {
     super();
     this.texturePosition = [0, 0];
@@ -14,6 +21,10 @@ class GfxSpriteDrawable extends GfxDrawable {
     this.boundingBox = new BoundingBox();
   }
 
+  /**
+   * Fonction de mise à jour.
+   * @param {number} ts - Temps passé depuis la dernière mise à jour.
+   */
   update(ts) {
     this.clearVertices();
     this.clearNormals();
@@ -49,29 +60,55 @@ class GfxSpriteDrawable extends GfxDrawable {
     this.defineTextureCoord(ux, uy);
   }
 
-  draw() {
+  /**
+   * Fonction de dessin.
+   * @param {number} viewIndex - Index de la vue en cours.
+   */
+  draw(viewIndex) {
     gfxManager.drawDebugBoundingBox(this.getModelMatrix(), this.boundingBox.min, this.boundingBox.max, [1.0, 1.0, 0.0]);
     gfxManager.drawMesh(this.getModelMatrix(), this.vertexCount, this.vertices, this.normals, this.textureCoords, this.texture);
   }
 
+  /**
+   * Retourne la matrice de modèle.
+   * @return {array} Matrice de modèle.
+   */
   getModelMatrix() {
     let matrix = super.getModelMatrix();
     matrix = Utils.MAT4_MULTIPLY(matrix, Utils.MAT4_TRANSLATE(-this.offset[0], -this.offset[1], 0));
     return matrix;
   }
 
+  /**
+   * Retourne la position de l'uv.
+   * @return {array} Position de l'uv (2 entrées).
+   */
   getTexturePosition() {
     return this.texturePosition;
   }
 
+  /**
+   * Définit la position de l'uv.
+   * @param {number} x - Position x.
+   * @param {number} y - Position y.
+   */
   setTexturePosition(x, y) {
     this.texturePosition = [x, y];
   }
 
+  /**
+   * Retourne la taille de l'uv.
+   * @return {array} Taille de l'uv (2 entrées).
+   */
   getSize() {
     return this.size;
   }
 
+  /**
+   * Définit la taille de l'uv.
+   * @param {number} width - Largeur.
+   * @param {number} height - Hauteur.
+   */  
   setSize(width, height) {
     this.size = [width, height];
     this.boundingBox = new BoundingBox([0, 0], [width, height]);
@@ -102,4 +139,4 @@ class GfxSpriteDrawable extends GfxDrawable {
   }
 }
 
-module.exports.GfxSpriteDrawable = GfxSpriteDrawable;
+module.exports.GfxJSSDrawable = GfxJSSDrawable;

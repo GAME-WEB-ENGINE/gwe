@@ -29,7 +29,13 @@ class Animation {
   }
 }
 
+/**
+ * Classe représentant un modèle animé.
+ */
 class GfxJAMDrawable extends GfxDrawable {
+  /**
+   * Créer un modèle animé.
+   */
   constructor() {
     super();
     this.jam = new JAM();
@@ -41,6 +47,10 @@ class GfxJAMDrawable extends GfxDrawable {
     this.frameProgress = 0;
   }
 
+  /**
+   * Fonction de mise à jour.
+   * @param {number} ts - Temps passé depuis la dernière mise à jour.
+   */
   update(ts) {
     let currentAnimation = this.jam.animations.find(animation => animation.name == this.currentAnimationName);
     if (!currentAnimation) {
@@ -105,27 +115,50 @@ class GfxJAMDrawable extends GfxDrawable {
     }
   }
 
-  draw() {
+  /**
+   * Fonction de dessin.
+   * @param {number} viewIndex - Index de la vue en cours.
+   */
+  draw(viewIndex) {
     gfxManager.drawDebugBoundingBox(this.getModelMatrix(), this.boundingBox.min, this.boundingBox.max, [1.0, 1.0, 0.0]);
     gfxManager.drawMesh(this.getModelMatrix(), this.vertexCount, this.vertices, this.normals, this.textureCoords, this.texture);
   }
 
+  /**
+   * Retourne la texture source.
+   * @return {Texture} La texture source.
+   */
   getTexture() {
     return this.texture;
   }
 
+  /**
+   * Définit la texture source.
+   * @param {Texture} texture - La texture source.
+   */
   setTexture(texture) {
     this.texture = texture;
   }
 
+  /**
+   * Retourne la boite englobante.
+   * @return {BoudingBox} La boite englobante.
+   */
   getBoundingBox() {
     return this.boundingBox;
   }
 
+  /**
+   * Retourne la boite englobante avec les transformations du modèle.
+   * @return {BoundingBox} La boite englobante.
+   */
   getWorldBoundingBox() {
     return this.boundingBox.transform(this.getModelMatrix());
   }
 
+  /**
+   * Charge un fichier "jam".
+   */
   loadFromFile(path) {
     let json = JSON.parse(fs.readFileSync(path));
     if (!json.hasOwnProperty('Ident') || json['Ident'] != 'GfxJAMDrawable') {
@@ -159,6 +192,11 @@ class GfxJAMDrawable extends GfxDrawable {
     this.frameProgress = 0;
   }
 
+  /**
+   * Lance une animation.
+   * @param {string} animationName - Le nom de l'animation.
+   * @param {boolean} isLooped - Si vrai, l'animation est en boucle.
+   */
   play(animationName, isLooped) {
     if (animationName == this.currentAnimationName) {
       return;
