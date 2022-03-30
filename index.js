@@ -20,6 +20,7 @@ let { UIWidget } = require('./ui/ui_widget');
 let { Utils } = require('./helpers');
 
 let { gfxManager } = require('./gfx/gfx_manager');
+let { eventManager } = require('./event/event_manager');
 let { inputManager } = require('./input/input_manager');
 let { screenManager } = require('./screen/screen_manager');
 let { soundManager } = require('./sound/sound_manager');
@@ -50,6 +51,7 @@ module.exports.GWE = {
   UIWidget,
   Utils,
   gfxManager,
+  eventManager,
   inputManager,
   screenManager,
   soundManager,
