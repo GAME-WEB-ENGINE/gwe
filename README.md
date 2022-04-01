@@ -17,7 +17,16 @@ Si c'est le cas, installer cette librairie dans votre projet avec la commande su
 
 ## Commencer
 Voici le minimum requis pour commencer à travailler avec gwe.  
-Commencer par créer 3 fichiers dans votre projet.
+Commencer par créer un projet avec l'arborescence suivante.
+```
+├── assets
+    ├──
+├── src
+│   ├── app.js
+│   ├── main_screen.js
+├── index.html
+├── main.js
+```
 
 ### main.js (electron)
 ```js
