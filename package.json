@@ -1,6 +1,6 @@
 {
   "name": "gwe",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Moteur multimédia 2D/3D philosophiquement simple et léger !",
   "main": "index.js",
   "scripts": {
