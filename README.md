@@ -99,9 +99,7 @@ class MainScreen  extends  GWE.Screen {
 module.exports.MainScreen = MainScreen;
 ```
 
-Dans le fichier **app.js** ajouter l'écran au gestionnaire d'écran afin que celui-ci soit exécuté via la ligne suivante.
-
-```GWE.screenManager.requestSetScreen(new  MainScreen(app));```
+Dans le fichier **app.js** ajouter l'écran au gestionnaire d'écran afin que celui-ci soit exécuté via la ligne suivante ```GWE.screenManager.requestSetScreen(new  MainScreen(app));```.
 
 Félicitation, vous êtes prêt à commencer votre jeu.
 Je vous invite à regarder les exemples et découvrir ce qu'il est possible de faire avec gwe.
