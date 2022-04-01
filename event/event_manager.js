@@ -102,7 +102,7 @@ class EventManager {
 
     for (let subscriber of this.subscribers.slice()) {
       if (subscriber.emitter == emitter && subscriber.type == type) {
-        let res = subscriber.cb.call(subscriber.emitter, data);
+        let res = subscriber.cb.call(subscriber.listener, data);
         if (res instanceof Promise) {
           promises.push(res);
         }

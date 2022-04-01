@@ -11,8 +11,8 @@ class UIWidget {
   constructor(options = {}) {
     this.id = '';
     this.focused = false;
-    this.className = options.className || '';
-    this.template = options.template || '';
+    this.className = options.className != undefined ? options.className : '';
+    this.template = options.template != undefined ? options.template : '';
     this.node = document.createElement('div');
     this.node.className = this.className;
     this.node.innerHTML = this.template;
@@ -50,8 +50,8 @@ class UIWidget {
    * Nota bene: Souscription aux évènements utilisateur et ajout de la classe 'focused'.
    */
   focus() {
-    eventManager.subscribe(inputManager, 'E_KEYDOWN', this, false, this.onKeyDown);
-    eventManager.subscribe(inputManager, 'E_KEYDOWN_ONCE', this, false, this.onKeyDownOnce);
+    eventManager.subscribe(inputManager, 'E_KEYDOWN', this, this.onKeyDown);
+    eventManager.subscribe(inputManager, 'E_KEYDOWN_ONCE', this, this.onKeyDownOnce);
     this.node.classList.add('focused');
     this.focused = true;
     eventManager.emit(this, 'E_FOCUSED');
