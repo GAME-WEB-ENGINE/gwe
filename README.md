@@ -104,4 +104,4 @@ Dans le fichier **app.js** ajouter l'écran au gestionnaire d'écran afin que ce
 ```GWE.screenManager.requestSetScreen(new  MainScreen(app));```
 
 Félicitation, vous êtes prêt à commencer votre jeu.
-Prochaine étape, regarder les exemples et découvrez ce qu'il est possible de faire avec gwe.
+Je vous invite à regarder les exemples et découvrir ce qu'il est possible de faire avec gwe.
