@@ -109,7 +109,7 @@ Je vous invite à regarder les exemples et découvrir ce qu'il est possible de f
 
 ## Les exemples
 Voici la liste des projets d'exemples livré avec le moteur:
- - Boilerplate: Projet minimal idéal pour commencer un nouveau concept.
- - WorldSample: Navigation type RPG en 3D pré-calculer.
- - BattleSample: Gestion d'une équipe et combat tour par tour en 2D/3D.
- - GotaSample: Jeu de carte en 2D très inspiré de la saga YuGiOh.
+ - Boilerplate: *Projet minimal idéal pour commencer un nouveau concept.*
+ - WorldSample: *Navigation type RPG en 3D pré-calculer.*
+ - BattleSample: *Gestion d'une équipe et combat tour par tour en 2D/3D.*
+ - GotaSample: *Jeu de carte en 2D très inspiré de la saga YuGiOh.*
