@@ -40,68 +40,65 @@ function createWindow() {
   win.setMenuBarVisibility(false)
   win.loadFile('index.html');
   win.openDevTools();
-}
-```
+}```
 
 ## index.html
 ```html
 <!DOCTYPE html>
 <html lang="fr">
-	<head>
-		<link rel="stylesheet" type="text/css" href="node_modules/gwe/core.css" />
-		<script rel="preload" type="text/javascript" src="src/app.js"></script>
-	</head>
-	<body style="position:relative">
-		<div id="APP">
-			<canvas id="CANVAS" width="1px" height="1px"></canvas>
-			<div id="UI_ROOT"></div>
-			<div id="UI_FADELAYER"></div>
-			<div id="UI_OVERLAYER"></div>
-		</div>
-	</body>
-</html>
-```
+  <head>
+    <link rel="stylesheet" type="text/css" href="node_modules/gwe/core.css" />
+    <script rel="preload" type="text/javascript" src="src/app.js"></script>
+  </head>
+  <body style="position:relative">
+    <div id="APP">
+      <canvas id="CANVAS" width="1px" height="1px"></canvas>
+      <div id="UI_ROOT"></div>
+      <div id="UI_FADELAYER"></div>
+      <div id="UI_OVERLAYER"></div>
+    </div>
+  </body>
+</html>```
 
 ## src/app.js
 ```js
 window.addEventListener('load', async () => {
-	let { GWE } = require('gwe');
-	let app = new GWE.Application(800, 800, GWE.SizeModeEnum.FIXED);
-	requestAnimationFrame(ts => app.run(ts));
-});
-```
+  let { GWE } = require('gwe');
+  let app = new GWE.Application(800, 800, GWE.SizeModeEnum.FIXED);
+  requestAnimationFrame(ts => app.run(ts));
+});```
 
 Dernière étape, créer et ajouter votre premier écran.
 ```js
 let { GWE } = require('gwe');
 
-class  MainScreen  extends  GWE.Screen {
-	constructor(app) {
-		super(app);
-	}
+class MainScreen  extends  GWE.Screen {
+  constructor(app) {
+    super(app);
+  }
 
-	onEnter() {
-		// votre code d'initialisation doit être ici.
-	}
+  onEnter() {
+    // votre code d'initialisation doit être ici.
+  }
 
-	onExit() {
-		// votre code de destruction doit être ici.
-	}
+  onExit() {
+    // votre code de destruction doit être ici.
+  }
 	
-	update(ts) {
-		// votre code logique de mise à jour.
-	}
+  update(ts) {
+    // votre code logique de mise à jour.
+  }
 
-	draw(viewIndex) {
-		// votre code de dessin.
-	}
+  draw(viewIndex) {
+    // votre code de dessin.
+  }
 }
 
-module.exports.MainScreen = MainScreen;
-```
+module.exports.MainScreen = MainScreen;```
+
 Dans le fichier **app.js** ajouter l'écran au gestionnaire d'écran afin que celui-ci soit exécuté via la ligne suivante.
 
 ```GWE.screenManager.requestSetScreen(new  MainScreen(app));```
 
 Félicitation, vous êtes prêt à commencer votre jeu.
-Prochaine étape, regarder les exemples et découvrez ce qu'il est possible de faire et de créer avec gwe.
+Prochaine étape, regarder les exemples et découvrez ce qu'il est possible de faire avec gwe.
