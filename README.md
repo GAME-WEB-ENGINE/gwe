@@ -16,7 +16,7 @@ Tout d'abord, vérifier que Node.js est bien installé sur votre environnement.
 Si c'est le cas, installer cette librairie dans votre projet avec la commande suivante : ```npm install --save gwe```
 
 ## Commencer
-Voici le minimum requis pour commencer à travailler avec gwe.
+Voici le minimum requis pour commencer à travailler avec gwe.  
 Commencer par créer 3 fichiers dans votre projet.
 
 ### main.js (electron)
