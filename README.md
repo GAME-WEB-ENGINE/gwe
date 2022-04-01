@@ -22,7 +22,7 @@ Commencer par créer ces trois fichiers dans votre projet.
 const { app, BrowserWindow } = require('electron');
 
 app.whenReady().then(() => {
-  createWindow()
+ createWindow()
 });
 
 function createWindow() {
