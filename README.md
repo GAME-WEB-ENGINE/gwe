@@ -40,7 +40,8 @@ function createWindow() {
   win.setMenuBarVisibility(false)
   win.loadFile('index.html');
   win.openDevTools();
-}```
+}
+```
 
 ## index.html
 ```html
@@ -58,7 +59,8 @@ function createWindow() {
       <div id="UI_OVERLAYER"></div>
     </div>
   </body>
-</html>```
+</html>
+```
 
 ## src/app.js
 ```js
@@ -94,7 +96,8 @@ class MainScreen  extends  GWE.Screen {
   }
 }
 
-module.exports.MainScreen = MainScreen;```
+module.exports.MainScreen = MainScreen;
+```
 
 Dans le fichier **app.js** ajouter l'écran au gestionnaire d'écran afin que celui-ci soit exécuté via la ligne suivante.
 
