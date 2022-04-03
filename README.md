@@ -114,7 +114,7 @@ Dans le fichier **app.js** ajouter l'écran au gestionnaire d'écran afin que ce
 ## C'est à vous de jouer !
 Félicitation, vous êtes prêt à commencer votre jeu.  
 Je vous invite à regarder les quelques projets d'exemples livré avec le moteur:
- - Boilerplate: *Projet minimal idéal pour commencer un nouveau concept.*
+ - [Boilerplate](https://github.com/ra1jin/gwe-boilerplate): *Projet minimal idéal pour commencer un nouveau concept.*
  - WorldSample: *Navigation type RPG en 3D pré-calculer.*
  - BattleSample: *Gestion d'une équipe et combat tour par tour en 2D/3D.*
  - GotaSample: *Jeu de carte en 2D très inspiré de la saga YuGiOh.*
