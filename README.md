@@ -1,7 +1,5 @@
 ![Drag Racing](https://img.shields.io/badge/lang-javascript-f39f37) ![Drag Racing](https://img.shields.io/badge/npm-v0.0.4-blue) ![Drag Racing](https://img.shields.io/badge/release-v0.0.4-blue) ![Drag Racing](https://img.shields.io/badge/dependencies-electron-brightgreen) 
 
-![Sample](https://raw.githubusercontent.com/ra1jin/gwe/master/docs/images/sample.png)
-
 Copyright © 2020-2022 [Raijin].
 
 Nombreux sont les **développeurs web** qui souhaite créer leurs propre **jeu vidéo**, c'est maintenant possible grâce à **WGE**, un **moteur de jeu 2D/3D** basé sur les technologies du **web**.  
@@ -114,11 +112,11 @@ Dans le fichier **app.js** ajouter l'écran au gestionnaire d'écran afin que ce
 
 ## C'est à vous de jouer !
 Félicitation, vous êtes prêt à commencer votre jeu.  
-Je vous invite à regarder les exemples et découvrir ce qu'il est possible de faire avec gwe.
-
-## Les exemples
-Voici la liste des projets d'exemples livré avec le moteur:
+Je vous invite à regarder les quelques projets d'exemples livré avec le moteur:
  - Boilerplate: *Projet minimal idéal pour commencer un nouveau concept.*
  - WorldSample: *Navigation type RPG en 3D pré-calculer.*
  - BattleSample: *Gestion d'une équipe et combat tour par tour en 2D/3D.*
  - GotaSample: *Jeu de carte en 2D très inspiré de la saga YuGiOh.*
+
+## Comment intégrer vos modèles Blender ?
+C'est très simple, [blender-gwe-exporter](https://github.com/ra1jin/blender-gwe-exporter) vous permet d'exporter vos modèles Blender dans les formats compatible GWE !
