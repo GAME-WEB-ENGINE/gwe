@@ -119,5 +119,5 @@ Je vous invite à regarder les quelques projets d'exemples livré avec le moteur
  - BattleSample: *Gestion d'une équipe et combat tour par tour en 2D/3D.*
  - GotaSample: *Jeu de carte en 2D très inspiré de la saga YuGiOh.*
 
-## Comment intégrer vos modèles Blender ?
-C'est très simple, [blender-gwe-exporter](https://github.com/ra1jin/blender-gwe-exporter) vous permet d'exporter vos modèles Blender dans les formats compatible GWE !
+## Comment intégrer vos modèles 3D ?
+C'est très simple, [blender-gwe-exporter](https://github.com/ra1jin/blender-gwe-exporter) vous permet d'exporter vos modèles Blender (statiques et animés) dans les formats compatible GWE !
