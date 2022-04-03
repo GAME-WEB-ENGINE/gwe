@@ -77,7 +77,8 @@ window.addEventListener('load', async () => {
   let { GWE } = require('gwe');
   let app = new GWE.Application(800, 800, GWE.SizeModeEnum.FIXED);
   requestAnimationFrame(ts => app.run(ts));
-});```
+});
+```
 
 Dernière étape, créer et ajouter votre premier écran.
 ```js
