@@ -59,6 +59,14 @@ class BoundingBox {
   }
 
   /**
+   * Retourne le rayon.
+   * @return {number} La valeur du rayon.
+   */
+  getRadius() {
+    return Utils.VEC3_DISTANCE(this.min, this.max) * 0.5;
+  }
+
+  /**
    * Retourne le périmètre.
    * @return {number} La valeur du périmètre.
    */

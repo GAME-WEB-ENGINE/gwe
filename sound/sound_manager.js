@@ -16,10 +16,11 @@ class SoundManager {
    */
   async loadSound(path) {
     return new Promise(resolve => {
-      this.sounds[path] = new Audio();
-      this.sounds[path].src = path;
-      this.sounds[path].addEventListener('canplaythrough', () => {
-        resolve();
+      let sound = new Audio();
+      sound.src = path;
+      sound.addEventListener('canplaythrough', () => {
+        this.sounds[path] = sound;
+        resolve(sound);
       });
     });
   }

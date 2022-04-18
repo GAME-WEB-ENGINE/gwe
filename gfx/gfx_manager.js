@@ -32,6 +32,7 @@ class GfxManager {
     this.views[0] = new GfxView();
 
     this.defaultShader = CREATE_SHADER_PROGRAM(this.gl, DEFAULT_VERTEX_SHADER, DEFAULT_PIXEL_SHADER);
+    this.defaultShaderUniforms.cMatrix = this.gl.getUniformLocation(this.defaultShader, 'uClipMatrix');
     this.defaultShaderUniforms.pMatrix = this.gl.getUniformLocation(this.defaultShader, 'uProjectionMatrix');
     this.defaultShaderUniforms.vMatrix = this.gl.getUniformLocation(this.defaultShader, 'uViewMatrix');
     this.defaultShaderUniforms.mMatrix = this.gl.getUniformLocation(this.defaultShader, 'uModelMatrix');
@@ -41,6 +42,7 @@ class GfxManager {
     this.defaultShaderUniforms.texture = this.gl.getUniformLocation(this.defaultShader, 'uTexture');
 
     this.debugShader = CREATE_SHADER_PROGRAM(this.gl, DEBUG_VERTEX_SHADER, DEBUG_PIXEL_SHADER);
+    this.debugShaderUniforms.cMatrix = this.gl.getUniformLocation(this.debugShader, 'uClipMatrix');
     this.debugShaderUniforms.pMatrix = this.gl.getUniformLocation(this.debugShader, 'uProjectionMatrix');
     this.debugShaderUniforms.vMatrix = this.gl.getUniformLocation(this.debugShader, 'uViewMatrix');
     this.debugShaderUniforms.mMatrix = this.gl.getUniformLocation(this.debugShader, 'uModelMatrix');
@@ -149,25 +151,38 @@ class GfxManager {
   }
 
   /**
-   * Efface et prépare la vue au dessin.
-   * @param {number} viewIndex - L'index de la vue à effacer/dessiner.
+   * Récupère la position écran d'un point de l'espace mondial (normalisé en {-1;1}).
+   * @param {number} x - La coordonnée x.
+   * @param {number} y - La coordonnée y.
+   * @param {number} z - La coordonnée z.
+   * @return {array} La position écran.
    */
-  clear(viewIndex) {
+  getScreenPosition(viewIndex, x, y, z) {
+    let view = this.views[viewIndex];
+    let matrix = Utils.MAT4_IDENTITY();
+    matrix = Utils.MAT4_MULTIPLY(matrix, view.getClipMatrix());
+    matrix = Utils.MAT4_MULTIPLY(matrix, this.getProjectionMatrix(viewIndex));
+    matrix = Utils.MAT4_MULTIPLY(matrix, view.getCameraViewMatrix());
+    let pos = Utils.MAT4_MULTIPLY_BY_VEC4(matrix, [x, y, z, 1]);
+    return [pos[0] / pos[3], pos[1] / pos[3]];
+  }
+
+  /**
+   * Récupère la matrice de projection.
+   * @param {number} viewIndex - L'index de la vue.
+   * @return {array} La matrice de projection.
+   */
+  getProjectionMatrix(viewIndex) {
+    let projectionMatrix = Utils.MAT4_IDENTITY();
     let view = this.views[viewIndex];
     let viewport = view.getViewport();
-    let x = this.canvas.clientWidth * viewport.xFactor;
-    let y = this.canvas.clientHeight * viewport.yFactor;
-    let width = this.canvas.clientWidth * viewport.widthFactor;
-    let height = this.canvas.clientHeight * viewport.heightFactor;
-
-    let viewMatrix = view.getCameraViewMatrix();
-    let projectionMatrix = Utils.MAT4_IDENTITY();
-    let backgroundColor = view.getBackgroundColor();
     let projectionMode = view.getProjectionMode();
     let perspectiveFovy = view.getPerspectiveFovy();
     let perspectiveNear = view.getPerspectiveNear();
     let perspectiveFar = view.getPerspectiveFar();
     let orthographicDepth = view.getOrthographicDepth();
+    let width = this.canvas.clientWidth * viewport.widthFactor;
+    let height = this.canvas.clientHeight * viewport.heightFactor;
 
     if (projectionMode == ProjectionModeEnum.PERSPECTIVE) {
       projectionMatrix = Utils.MAT4_PERSPECTIVE(perspectiveFovy, width / height, perspectiveNear, perspectiveFar);
@@ -178,6 +193,25 @@ class GfxManager {
     else {
       throw new Error('GfxManager::setView(): ProjectionMode not valid !');
     }
+
+    return projectionMatrix;
+  }
+
+  /**
+   * Efface et prépare la vue au dessin.
+   * @param {number} viewIndex - L'index de la vue à effacer/dessiner.
+   */
+  clear(viewIndex) {
+    let view = this.views[viewIndex];
+    let viewport = view.getViewport();
+    let x = this.canvas.clientWidth * viewport.xFactor;
+    let y = this.canvas.clientHeight * viewport.yFactor;
+    let width = this.canvas.clientWidth * viewport.widthFactor;
+    let height = this.canvas.clientHeight * viewport.heightFactor;
+    let clipMatrix = view.getClipMatrix();
+    let projectionMatrix = this.getProjectionMatrix(viewIndex);
+    let viewMatrix = view.getCameraViewMatrix();
+    let backgroundColor = view.getBackgroundColor();
 
     this.gl.viewport(x, y, width, height);
     this.gl.scissor(x, y, width, height);
@@ -192,10 +226,12 @@ class GfxManager {
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
     this.gl.useProgram(this.defaultShader);
+    this.gl.uniformMatrix4fv(this.defaultShaderUniforms.cMatrix, false, clipMatrix);
     this.gl.uniformMatrix4fv(this.defaultShaderUniforms.pMatrix, false, projectionMatrix);
     this.gl.uniformMatrix4fv(this.defaultShaderUniforms.vMatrix, false, viewMatrix);
 
     this.gl.useProgram(this.debugShader);
+    this.gl.uniformMatrix4fv(this.debugShaderUniforms.cMatrix, false, clipMatrix);
     this.gl.uniformMatrix4fv(this.debugShaderUniforms.pMatrix, false, projectionMatrix);
     this.gl.uniformMatrix4fv(this.debugShaderUniforms.vMatrix, false, viewMatrix);
   }
@@ -237,6 +273,79 @@ class GfxManager {
     }
 
     this.gl.drawArrays(this.gl.TRIANGLES, 0, numVertices);
+  }
+
+  /**
+   * Dessine un cercle de debug.
+   * @param {array} matrix - La matrix de modèle (16 entrées).
+   * @param {number} radius - Le rayon.
+   * @param {array} step - Le nombre de pas.
+   * @param {array} color - La couleur (3 entrées).
+   */
+  drawDebugCircle(matrix, radius, step, color) {
+    if (!this.showDebug) {
+      return;
+    }
+
+    let angleStep = (Math.PI * 2) / step;
+    let vertices = [];
+    let numVertices = 0;
+
+    for (let i = 0; i < step; i++) {
+      let x = Math.cos(i * angleStep) * radius;
+      let y = Math.sin(i * angleStep) * radius;
+      let z = 0;
+      vertices.push(x, y, z);
+      numVertices++;
+    }
+
+    this.gl.useProgram(this.debugShader);
+    this.gl.uniformMatrix4fv(this.gl.getUniformLocation(this.debugShader, 'u_model'), false, matrix);
+
+    let vertexBuffer = this.gl.createBuffer();
+    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, vertexBuffer);
+    this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(vertices), this.gl.STATIC_DRAW);
+    this.gl.vertexAttribPointer(this.gl.getAttribLocation(this.debugShader, 'a_position'), 3, this.gl.FLOAT, false, 0, 0);
+    this.gl.enableVertexAttribArray(this.gl.getAttribLocation(this.debugShader, 'a_position'));
+
+    if (color) {
+      this.gl.uniform3fv(this.gl.getUniformLocation(this.debugShader, 'u_color'), color);
+    }
+
+    this.gl.drawArrays(this.gl.LINES, 0, numVertices);
+  }
+
+  /**
+   * Dessine un rectangle englobant de debug.
+   * @param {array} matrix - La matrix de modèle (16 entrées).
+   * @param {array} min - Point minimum (2 entrées).
+   * @param {array} max - Point maximum (2 entrées).
+   * @param {array} color - La couleur (3 entrées).
+   */
+  drawDebugBoundingRect(matrix, min, max, color = [1, 1, 1]) {
+    if (!this.showDebug) {
+      return;
+    }
+
+    let a = [min[0], min[1], 0];
+    let b = [min[0], max[1], 0];
+    let c = [max[0], min[1], 0];
+    let d = [max[0], max[1], 0];
+
+    let vertices = [];
+    vertices.push(...a, ...b, ...c);
+    vertices.push(...a, ...d, ...c);
+
+    this.gl.useProgram(this.debugShader);
+    this.gl.uniformMatrix4fv(this.debugShaderUniforms.mMatrix, false, matrix);
+
+    let vertexBuffer = this.gl.createBuffer();
+    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, vertexBuffer);
+    this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(vertices), this.gl.STATIC_DRAW);
+    this.gl.vertexAttribPointer(this.debugShaderUniforms.position, 3, this.gl.FLOAT, false, 0, 0);
+    this.gl.enableVertexAttribArray(this.debugShaderUniforms.position);
+    this.gl.uniform3fv(this.debugShaderUniforms.color, color);
+    this.gl.drawArrays(this.gl.TRIANGLES, 0, 6);
   }
 
   /**

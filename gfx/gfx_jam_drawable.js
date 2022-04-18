@@ -13,14 +13,14 @@ class JAM {
   }
 }
 
-class Frame {
+class JAMFrame {
   constructor() {
     this.vertices = [];
     this.normals = [];
   }
 }
 
-class Animation {
+class JAMAnimation {
   constructor() {
     this.name = '';
     this.startFrame = 0;
@@ -161,13 +161,14 @@ class GfxJAMDrawable extends GfxDrawable {
    */
   loadFromFile(path) {
     let json = JSON.parse(fs.readFileSync(path));
-    if (!json.hasOwnProperty('Ident') || json['Ident'] != 'GfxJAMDrawable') {
+    if (!json.hasOwnProperty('Ident') || json['Ident'] != 'JAM') {
       throw new Error('GfxJAMDrawable::loadFromFile(): File not valid !');
     }
 
-    this.jam.frames = [];
+    this.jam = new JAM();
+
     for (let obj of json['Frames']) {
-      let frame = new Frame();
+      let frame = new JAMFrame();
       frame.vertices = obj['Vertices'];
       frame.normals = obj['Normals'];
       this.jam.frames.push(frame);
@@ -175,9 +176,8 @@ class GfxJAMDrawable extends GfxDrawable {
 
     this.jam.textureCoords = json['TextureCoords'];
 
-    this.jam.animations = [];
     for (let obj of json['Animations']) {
-      let animation = new Animation();
+      let animation = new JAMAnimation();
       animation.name = obj['Name'];
       animation.startFrame = parseInt(obj['StartFrame']);
       animation.endFrame = parseInt(obj['EndFrame']);

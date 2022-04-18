@@ -1,4 +1,19 @@
 class Utils {
+  static BIND(fn, ctx) {
+    return fn.bind(ctx);
+  }
+  static BIND_1(fn, ctx, a) {
+    return fn.bind(ctx, a);
+  }
+
+  static BIND_2(fn, ctx, a, b) {
+    return fn.bind(ctx, a, b);
+  }
+
+  static BIND_3(fn, ctx, a, b, c) {
+    return fn.bind(ctx, a, b, c);
+  }
+
   static SHUFFLE(arr) {
     let res = arr.slice();
     let tmp, cur, tp = res.length;
@@ -47,6 +62,12 @@ class Utils {
     return [x, y];
   }
 
+  static VEC2_DISTANCE(a, b) {
+    let x = b[0] - a[0];
+    let y = b[1] - a[1];
+    return Math.sqrt((x * x) + (y * y));
+  }
+
   static VEC2_LENGTH(a) {
     return Math.sqrt(a[0] * a[0] + a[1] * a[1]);
   }
@@ -91,11 +112,11 @@ class Utils {
     return [x, y];
   }
 
-  static VEC2_ANGLE(a, b) {
+  static VEC2_ANGLE_BETWEEN(a, b) {
     return Math.acos(Utils.VEC2_DOT(a, b) / (Utils.VEC2_LENGTH(a) * Utils.VEC2_LENGTH(b)));
   }
 
-  static VEC2_ATAN2_ABS(a) {
+  static VEC2_ANGLE(a) {
     let angle = Math.atan2(a[1], a[0]);
     return (angle > 0) ? angle : (angle + Math.PI * 2);
   }
@@ -108,6 +129,13 @@ class Utils {
 
   static VEC3_CREATE(x = 0, y = 0, z = 0) {
     return [x, y, z];
+  }
+
+  static VEC3_DISTANCE(a, b) {
+    let x = b[0] - a[0];
+    let y = b[1] - a[1];
+    let z = b[2] - a[2];
+    return Math.sqrt((x * x) + (y * y) + (z * z));
   }
 
   static VEC3_LENGTH(a) {

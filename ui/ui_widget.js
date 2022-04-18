@@ -10,12 +10,13 @@ class UIWidget {
    */
   constructor(options = {}) {
     this.id = '';
-    this.focused = false;
     this.className = options.className != undefined ? options.className : '';
     this.template = options.template != undefined ? options.template : '';
     this.node = document.createElement('div');
     this.node.className = this.className;
     this.node.innerHTML = this.template;
+
+    this.node.addEventListener('animationend', () => eventManager.emit(this, 'E_ANIMATION_FINISHED'));
   }
 
   /**
@@ -38,11 +39,27 @@ class UIWidget {
   }
 
   /**
-   * Définit un identifiant.
+   * Retourne l'identifiant.
+   * @return {string} L'Identifiant.
+   */
+  getId() {
+    return this.id;
+  }
+
+  /**
+   * Définit l'identifiant.
    * @param {string} id - L'Identifiant.
    */
   setId(id) {
     this.id = id;
+  }
+
+  /**
+   * Vérifie si le widget est focus.
+   * @return {boolean} Vrai si le widget est focus.
+   */
+  isFocus() {
+    return this.node.classList.contains('focused') == true;
   }
 
   /**
@@ -53,7 +70,6 @@ class UIWidget {
     eventManager.subscribe(inputManager, 'E_KEYDOWN', this, this.onKeyDown);
     eventManager.subscribe(inputManager, 'E_KEYDOWN_ONCE', this, this.onKeyDownOnce);
     this.node.classList.add('focused');
-    this.focused = true;
     eventManager.emit(this, 'E_FOCUSED');
   }
 
@@ -65,8 +81,15 @@ class UIWidget {
     eventManager.unsubscribe(inputManager, 'E_KEYDOWN', this);
     eventManager.unsubscribe(inputManager, 'E_KEYDOWN_ONCE', this);
     this.node.classList.remove('focused');
-    this.focused = false;
     eventManager.emit(this, 'E_UNFOCUSED');
+  }
+
+  /**
+   * Vérifie si le widget est visible.
+   * @return {boolean} Vrai si le widget est visible.
+   */
+  isShow() {
+    return this.node.classList.contains('u-hidden') == false;
   }
 
   /**
@@ -84,11 +107,55 @@ class UIWidget {
   }
 
   /**
-   * Vérifie si le widget est visible.
-   * @return {boolean} Vrai si le widget est visible.
+   * Vérifie si le widget est activé.
+   * @return {boolean} Vrai si le widget est activé.
    */
-  isShow() {
-    return this.node.classList.contains('u-hidden') == false;
+  isEnabled() {
+    return this.node.classList.contains('u-disabled') == false;
+  }
+
+  /**
+   * Définit l'activation.
+   * Nota bene: Ajoute la classe 'u-disabled'.
+   * @param {boolean} enabled - Si vrai, le widget est activé.
+   */
+  setEnabled(enabled) {
+    if (enabled) {
+      this.node.classList.remove('u-disabled');
+    }
+    else {
+      this.node.classList.add('u-disabled');
+    }
+  }
+
+  /**
+   * Vérifie si le widget est selectionné.
+   * @return {boolean} Vrai si le widget est selectionné.
+   */
+  isSelected() {
+    return this.node.classList.contains('u-selected') == true;
+  }
+
+  /**
+   * Définit la selection.
+   * Nota bene: Ajoute la classe 'u-selected'.
+   * @param {boolean} selected - Si vrai, le widget est selectionné.
+   */
+  setSelected(selected) {
+    if (selected) {
+      this.node.classList.remove('u-selected');
+    }
+    else {
+      this.node.classList.add('u-selected');
+    }
+  }
+
+  /**
+   * Applique une animation css.
+   * @param {string} animation - Description de l'animation.
+   */
+  animate(animation) {
+    this.node.style.animation = animation;
   }
 
   /**

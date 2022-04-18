@@ -5,8 +5,8 @@ let { Utils } = require('../helpers');
  * Type de projection.
  */
 let ProjectionModeEnum = {
-  PERSPECTIVE: 0,
-  ORTHOGRAPHIC: 1
+  PERSPECTIVE: 'PERSPECTIVE',
+  ORTHOGRAPHIC: 'ORTHOGRAPHIC'
 };
 
 /**
@@ -20,8 +20,10 @@ class GfxView {
     this.position = [0.0, 0.0, 0.0];
     this.rotation = [0.0, 0.0, 0.0];
     this.scale = [1.0, 1.0, 1.0];
+    this.clipOffset = [0.0, 0.0];
+    this.cameraMatrix = Utils.MAT4_IDENTITY();
     this.viewport = new GfxViewport();
-    this.backgroundColor = [0.0, 0.0, 0.0, 1.0];    
+    this.backgroundColor = [0.0, 0.0, 0.0, 1.0];
     this.projectionMode = ProjectionModeEnum.PERSPECTIVE;
     this.perspectiveFovy = Math.PI / 4;
     this.perspectiveNear = 2;
@@ -43,6 +45,7 @@ class GfxView {
    */
   setPosition(position) {
     this.position = position;
+    this.updateCameraMatrix();
   }
 
   /**
@@ -55,6 +58,7 @@ class GfxView {
     this.position[0] += x;
     this.position[1] += y;
     this.position[2] += z;
+    this.updateCameraMatrix();
   }
 
   /**
@@ -71,6 +75,7 @@ class GfxView {
    */
   setRotation(rotation) {
     this.rotation = rotation;
+    this.updateCameraMatrix();
   }
 
   /**
@@ -83,6 +88,7 @@ class GfxView {
     this.rotation[0] += x;
     this.rotation[1] += y;
     this.rotation[2] += z;
+    this.updateCameraMatrix();
   }
 
   /**
@@ -99,6 +105,7 @@ class GfxView {
    */
   setScale(scale) {
     this.scale = scale;
+    this.updateCameraMatrix();
   }
 
   /**
@@ -111,6 +118,31 @@ class GfxView {
     this.scale[0] += x;
     this.scale[1] += y;
     this.scale[2] += z;
+    this.updateCameraMatrix();
+  }
+
+  /**
+   * Retourne le décalage de l'espace de clip.
+   * @return {array} Le décalage de l'espace de clip (2 entrées).
+   */
+  getClipOffset() {
+    return this.clipOffset;
+  }
+
+  /**
+   * Définit le décalage de l'espace de clip.
+   * @param {array} clipOffset - Le décalage de l'espace de clip (2 entrées).
+   */
+  setClipOffset(clipOffset) {
+    this.clipOffset = clipOffset;
+  }
+
+  /**
+   * Retourne la matrice de clip.
+   * @return {array} Matrice de clip.
+   */
+  getClipMatrix() {
+    return Utils.MAT4_INVERT(Utils.MAT4_TRANSLATE(this.clipOffset[0], this.clipOffset[1], 0));
   }
 
   /**
@@ -118,13 +150,15 @@ class GfxView {
    * @return {array} Matrice de camera.
    */
   getCameraMatrix() {
-    let matrix = Utils.MAT4_IDENTITY();
-    matrix = Utils.MAT4_MULTIPLY(matrix, Utils.MAT4_TRANSLATE(this.position[0], this.position[1], this.position[2]));
-    matrix = Utils.MAT4_MULTIPLY(matrix, Utils.MAT4_ROTATE_Y(this.rotation[1]));
-    matrix = Utils.MAT4_MULTIPLY(matrix, Utils.MAT4_ROTATE_X(this.rotation[0])); // y -> x -> z
-    matrix = Utils.MAT4_MULTIPLY(matrix, Utils.MAT4_ROTATE_Z(this.rotation[2]));
-    matrix = Utils.MAT4_MULTIPLY(matrix, Utils.MAT4_SCALE(this.scale[0], this.scale[1], this.scale[2]));
-    return matrix;
+    return this.cameraMatrix;
+  }
+
+  /**
+   * Définit la matrice de caméra.
+   * @param {array} cameraMatrix - La matrice de caméra.
+   */
+  setCameraMatrix(cameraMatrix) {
+    this.cameraMatrix = cameraMatrix;
   }
 
   /**
@@ -132,7 +166,7 @@ class GfxView {
    * @return {array} Matrice de vue.
    */
   getCameraViewMatrix() {
-    return Utils.MAT4_INVERT(this.getCameraMatrix());
+    return Utils.MAT4_INVERT(this.cameraMatrix);
   }
 
   /**
@@ -251,6 +285,17 @@ class GfxView {
    */
   setOrthographicDepth(orthographicDepth) {
     this.orthographicDepth = orthographicDepth;
+  }
+
+  /**
+   * Mets à jour la matrice de caméra à partir de la position, rotation et mise à l'echelle.
+   */
+  updateCameraMatrix() {
+    this.cameraMatrix = Utils.MAT4_MULTIPLY(this.cameraMatrix, Utils.MAT4_TRANSLATE(this.position[0], this.position[1], this.position[2]));
+    this.cameraMatrix = Utils.MAT4_MULTIPLY(this.cameraMatrix, Utils.MAT4_ROTATE_Y(this.rotation[1]));
+    this.cameraMatrix = Utils.MAT4_MULTIPLY(this.cameraMatrix, Utils.MAT4_ROTATE_X(this.rotation[0])); // y -> x -> z
+    this.cameraMatrix = Utils.MAT4_MULTIPLY(this.cameraMatrix, Utils.MAT4_ROTATE_Z(this.rotation[2]));
+    this.cameraMatrix = Utils.MAT4_MULTIPLY(this.cameraMatrix, Utils.MAT4_SCALE(this.scale[0], this.scale[1], this.scale[2]));
   }
 }
 

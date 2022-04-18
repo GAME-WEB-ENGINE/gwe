@@ -52,7 +52,7 @@ class TextureManager {
 
         this.gl.generateMipmap(this.gl.TEXTURE_2D);
         this.textures[path] = texture;
-        resolve();
+        resolve(texture);
       });
     });
   }

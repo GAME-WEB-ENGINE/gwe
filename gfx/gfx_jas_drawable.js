@@ -6,7 +6,14 @@ let { gfxManager } = require('./gfx_manager');
 let { textureManager } = require('../texture/texture_manager');
 let { eventManager } = require('../event/event_manager');
 
-class Frame {
+class JAS {
+  constructor() {
+    this.frames = [];
+    this.animations = [];
+  }
+}
+
+class JASFrame {
   constructor() {
     this.name = '';
     this.x = 0;
@@ -16,7 +23,7 @@ class Frame {
   }
 }
 
-class Animation {
+class JASAnimation {
   constructor() {
     this.name = '';
     this.frames = [];
@@ -34,8 +41,7 @@ class GfxJASDrawable extends GfxDrawable {
    */
   constructor() {
     super();
-    this.frames = [];    
-    this.animations = [];
+    this.jas = new JAS();
     this.offset = [0, 0];
     this.texture = textureManager.getTexture('');
     this.boundingBox = new BoundingBox();
@@ -50,12 +56,12 @@ class GfxJASDrawable extends GfxDrawable {
    * @param {number} ts - Temps passé depuis la dernière mise à jour.
    */
   update(ts) {
-    let currentAnimation = this.animations.find(animation => animation.name == this.currentAnimationName);
+    let currentAnimation = this.jas.animations.find(animation => animation.name == this.currentAnimationName);
     if (!currentAnimation) {
       return;
     }
 
-    let currentFrame = this.frames.find(frame => frame.name == currentAnimation.frames[this.currentAnimationFrameIndex]);
+    let currentFrame = this.jas.frames.find(frame => frame.name == currentAnimation.frames[this.currentAnimationFrameIndex]);
     if (!currentFrame) {
       return;
     }
@@ -182,28 +188,28 @@ class GfxJASDrawable extends GfxDrawable {
    */
   loadFromFile(path) {
     let json = JSON.parse(fs.readFileSync(path));
-    if (!json.hasOwnProperty('Ident') || json['Ident'] != 'GfxJASDrawable') {
+    if (!json.hasOwnProperty('Ident') || json['Ident'] != 'JAS') {
       throw new Error('GfxJASDrawable::loadFromFile(): File not valid !');
     }
 
-    this.frames = [];
+    this.jas = new JAS();
+
     for (let obj of json['Frames']) {
-      let frame = new Frame();
+      let frame = new JASFrame();
       frame.name = obj['Name'];
       frame.x = obj['X'];
       frame.y = obj['Y'];
       frame.width = obj['Width'];
       frame.height = obj['Height'];
-      this.frames.push(frame);
+      this.jas.frames.push(frame);
     }
 
-    this.animations = [];
     for (let obj of json['Animations']) {
-      let animation = new Animation();
+      let animation = new JASAnimation();
       animation.name = obj['Name'];
       animation.frames = obj['Frames'];
       animation.frameDuration = parseInt(obj['FrameDuration']);
-      this.animations.push(animation);
+      this.jas.animations.push(animation);
     }
 
     this.currentAnimationName = '';
@@ -217,11 +223,10 @@ class GfxJASDrawable extends GfxDrawable {
    * @param {boolean} isLooped - Si vrai, l'animation est en boucle.
    */
   play(animationName, isLooped) {
-    let animation = this.animations.find(animation => animation.name == animationName);
+    let animation = this.jas.animations.find(animation => animation.name == animationName);
     if (!animation) {
       throw new Error('GfxJASDrawable::play: animation not found.');
     }
-
 
     this.boundingBox = new BoundingBox([0, 0], [animation.frames[0].width, animation.frames[0].height]);
     this.currentAnimationName = animationName;

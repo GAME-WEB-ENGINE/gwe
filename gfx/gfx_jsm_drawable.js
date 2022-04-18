@@ -101,10 +101,11 @@ class GfxJSMDrawable extends GfxDrawable {
    */
   loadFromFile(path) {
     let json = JSON.parse(fs.readFileSync(path));
-    if (!json.hasOwnProperty('Ident') || json['Ident'] != 'GfxJSMDrawable') {
+    if (!json.hasOwnProperty('Ident') || json['Ident'] != 'JSM') {
       throw new Error('GfxJSMDrawable::loadFromFile(): File not valid !');
     }
 
+    this.jsm = new JSM();
     this.jsm.vertices = json['Vertices'];
     this.jsm.normals = json['Normals'];
     this.jsm.textureCoords = json['TextureCoords'];

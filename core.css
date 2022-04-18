@@ -188,11 +188,12 @@ template {
 html {
   font-size: 1em;
   line-height: 1.5;
-  overflow-y: scroll;
   min-height: 100%;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  overflow: hidden;
+  background-color: rgb(143, 143, 143);
 }
 
 body {
@@ -258,6 +259,67 @@ label {
   cursor: default;
 }
 
+a, a:hover {
+  text-decoration: none;
+}
+
+button {
+  background: none;
+  border: 0;
+  color: #fff;
+  line-height: 1.5;
+}
+
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 8px blue;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: white;
+  border: 3px solid blue;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b30000;
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+  margin: 18px 0;
+  width: 100%;
+}
+
+input[type=range]:focus {
+  outline: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  background: #3071a9;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  border: 1px solid #000000;
+  height: 24px;
+  width: 16px;
+  background: #ffffff;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -8px;
+}
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #367ebd;
+}
+
 /*---------------------------------------------------------------------------------------------*/
 /* UTILS
 /*---------------------------------------------------------------------------------------------*/
@@ -265,9 +327,9 @@ label {
   display: none !important;
 }
 
-/*---------------------------------------------------------------------------------------------*/
+/*#############################################################################################*/
 /* CORE ENGINE CLASS
-/*---------------------------------------------------------------------------------------------*/
+/*#############################################################################################*/
 
 #APP {
   position: relative;
@@ -320,4 +382,351 @@ label {
   background: rgba(0, 0, 0, 0.7);
   opacity:0;
   z-index: 10;
+}
+
+/*#############################################################################################*/
+/* WIDGETS
+/*#############################################################################################*/
+
+/*---------------------------------------------------------------------------------------------*/
+/* UI BUBBLE WIDGET
+/*---------------------------------------------------------------------------------------------*/
+.UIBubbleWidget {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  padding-top: 5px;
+  padding-left: 10px;
+  z-index: 12;
+  border: 10px solid;
+  border-image: url(../../assets/textures/ui_border.png) 3 fill;
+}
+.UIBubbleWidget-text {
+  display: block;
+  margin-bottom: 8px;
+  line-height: 2;
+  white-space: pre-line;
+}
+
+/*---------------------------------------------------------------------------------------------*/
+/* UI DESCRIPTION LIST WIDGET
+/*---------------------------------------------------------------------------------------------*/
+.UIDescriptionListWidget {
+  display: flex;
+  flex-direction: column;
+  border: 10px solid;
+  border-image: url(../../assets/textures/ui_border.png) 3 fill;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.UIDescriptionListWidget-item {
+  display: flex;
+  justify-content: space-between;
+  line-height: 32px;
+}
+.UIDescriptionListWidget-item-label {
+  color: #ccccff;
+}
+.UIDescriptionListWidget-item-value {
+  color: #fff;
+  margin-left: 15px;
+}
+
+/*---------------------------------------------------------------------------------------------*/
+/* UI DIALOG WIDGET
+/*---------------------------------------------------------------------------------------------*/
+.UIDialogWidget {
+  display: block;
+  position: absolute;
+  right: 80px;
+  bottom: 10px;
+  left: 80px;
+  z-index: 12;
+}
+.UIDialogWidget-author {
+  display: inline-block;
+  padding: 10px;
+  margin-bottom: 5px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.UIDialogWidget-textbox {
+  position: relative;
+  min-height: 128px;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.UIDialogWidget-textbox-text {
+  line-height: 1.6;
+  white-space: pre-line;
+}
+.UIDialogWidget-textbox-next {
+  display: none;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+	width: 11px;
+  height: 8px;
+  background: transparent url(../../assets/textures/ui_next_icon_sprite.png) 0 0 no-repeat;	
+  animation: ui-dialog-widget-textbox-next 1s steps(6) infinite;
+}
+
+@keyframes ui-dialog-widget-textbox-next {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -66px 0;
+  }
+}
+
+/*---------------------------------------------------------------------------------------------*/
+/* UI INPUT RANGE WIDGET
+/*---------------------------------------------------------------------------------------------*/
+.UIInputRangeWidget {
+  display: flex;
+  align-items: center;
+}
+.UIInputRangeWidget-prevIcon {
+  display: block;
+}
+.UIInputRangeWidget-value {
+  margin-left: 16px;
+  margin-right: 16px;
+}
+.UIInputRangeWidget-nextIcon {
+  display: block;
+}
+
+/*---------------------------------------------------------------------------------------------*/
+/* UI INPUT SELECT WIDGET
+/*---------------------------------------------------------------------------------------------*/
+.UIInputSelectWidget {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.UIInputSelectWidget.focused .UIMenuTextWidget.focused {
+  color: rgb(98, 211, 255);
+}
+
+/*---------------------------------------------------------------------------------------------*/
+/* UI INPUT SELECT MULTIPLE WIDGET
+/*---------------------------------------------------------------------------------------------*/
+.UIInputSelectMultipleWidget {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.UIInputSelectMultipleWidget.focused .UIMenuTextWidget.focused {
+  color: rgb(98, 211, 255);
+}
+
+/*---------------------------------------------------------------------------------------------*/
+/* UI INPUT SLIDER WIDGET
+/*---------------------------------------------------------------------------------------------*/
+.UIInputSliderWidget {
+  display: flex;
+  align-items: center;
+}
+.UIInputSliderWidget-range {
+  display: block;
+}
+.UIInputSliderWidget-value {
+  margin-left: 16px;
+  min-width: 64px;
+}
+
+/*---------------------------------------------------------------------------------------------*/
+/* UI KEYBOARD WIDGET
+/*---------------------------------------------------------------------------------------------*/
+.UIKeyboardWidget {
+  padding-top: 10px;
+  border: 10px solid;
+  border-image: url(../../assets/textures/ui_border.png) 3 fill;
+}
+.UIKeyboardWidget-value {
+  background-color: blue;
+  padding: 0 8px;
+  height: 32px;
+  line-height: 32px;
+  margin-bottom: 16px;
+}
+.UIKeyboardWidget-row {
+  display: flex;
+  flex-direction: row;
+}
+.UIKeyboardWidget-row-item {
+  position: relative;
+  flex: 1;
+  padding: 8px;
+}
+.UIKeyboardWidget.focused .UIKeyboardWidget-row-item.focused {
+  background-color: rgb(98, 211, 255);
+}
+
+/*---------------------------------------------------------------------------------------------*/
+/* UI MENU TEXT WIDGET
+/*---------------------------------------------------------------------------------------------*/
+.UIMenuTextWidget {
+  display: flex;
+  padding: 8px;
+}
+.UIMenuTextWidget.u-selected {
+  background-color: rgb(98, 255, 106);
+}
+.UIMenuTextWidget.u-disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/*---------------------------------------------------------------------------------------------*/
+/* UI MENU WIDGET
+/*---------------------------------------------------------------------------------------------*/
+.UIMenuWidget {
+  display: grid;
+  border: 10px solid;
+  border-image: url(../../assets/textures/ui_border.png) 3 fill;
+}
+.UIMenuWidget.focused .UIMenuTextWidget.focused {
+  background-color: rgb(98, 211, 255);
+}
+
+/*---------------------------------------------------------------------------------------------*/
+/* UI MESSAGE WIDGET
+/*---------------------------------------------------------------------------------------------*/
+.UIMessageWidget {
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 10px;
+  left: 0;  
+  z-index: 12;
+}
+.UIMessageWidget-inner {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.UIMessageWidget-picture {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.UIMessageWidget-picture-img {
+  width: 132px;
+}
+.UIMessageWidget-textbox {
+  position: relative;
+  margin-left: 160px;
+  margin-right: 80px;
+  padding-top: 10px;
+  min-height: 150px;
+  max-height: 150px;
+  overflow: hidden;
+}
+.UIMessageWidget-textbox-text {
+  line-height: 1.6;
+  white-space: pre-line;
+}
+.UIMessageWidget-textbox-author {
+  font-size: 12px;
+  margin-bottom: 10px;
+  color: yellow;
+}
+.UIMessageWidget-textbox-next {
+  display: none;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+	width: 11px;
+  height: 8px;
+  background: transparent url(../../assets/textures/UINextIconSprite.png) 0 0 no-repeat;	
+  animation: ui-message-widget-textbox-next 1s steps(6) infinite;
+}
+
+@keyframes ui-message-widget-textbox-next {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -66px 0;
+  }
+}
+
+/*---------------------------------------------------------------------------------------------*/
+/* UI PRINT WIDGET
+/*---------------------------------------------------------------------------------------------*/
+.UIPrintWidget {
+  display: block;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  bottom: 10px;
+  left: 10px;
+  z-index: 12;
+}
+.UIPrintWidget-textbox {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.UIPrintWidget-textbox-text {
+  line-height: 1.6;
+  white-space: pre-line;
+}
+.UIPrintWidget-textbox-next {
+  display: none;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+	width: 11px;
+  height: 8px;
+  background: transparent url(../../assets/textures/UINextIconSprite.png) 0 0 no-repeat;	
+  animation: ui-print-widget-textbox-next 1s steps(6) infinite;
+}
+
+@keyframes ui-print-widget-textbox-next {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -66px 0;
+  }
+}
+
+/*---------------------------------------------------------------------------------------------*/
+/* UI PROMPT WIDGET
+/*---------------------------------------------------------------------------------------------*/
+.UIPromptWidget {
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
+  border: 10px solid;
+  border-image: url(../../assets/textures/ui_border.png) 3 fill;
+}
+.UIPromptWidget-text {
+  display: block;
+  line-height: 24px;
+  margin-bottom: 16px;
+  white-space: pre;
+  text-align: center;
+}
+.UIPromptWidget .UIMenuWidget {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  border:0;
+  border-image: none;
+}
+
+/*---------------------------------------------------------------------------------------------*/
+/* UI SPRITE WIDGET
+/*---------------------------------------------------------------------------------------------*/
+.UISpriteWidget {
+  background-repeat: no-repeat;
+  background-position: 0px 0px;
 }
