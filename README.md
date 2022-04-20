@@ -1,11 +1,10 @@
+
 ![Drag Racing](https://img.shields.io/badge/lang-javascript-f39f37) ![Drag Racing](https://img.shields.io/badge/npm-v0.0.4-blue) ![Drag Racing](https://img.shields.io/badge/release-v0.0.4-blue) ![Drag Racing](https://img.shields.io/badge/dependencies-electron-brightgreen) 
 
 Copyright © 2020-2022 [Raijin].
 
 Nombreux sont les **développeurs web** qui souhaite créer leurs propre **jeu vidéo**, c'est maintenant possible grâce à **WGE**, un **moteur de jeu 2D/3D** basé sur les technologies du **web**.  
 Pas besoin d'apprendre un nouvelle technologies, si vous maitrisez **HTML/JS/CSS** alors ce moteur est fait pour vous.
-
-Chers développeurs web, n'ayez pas d'appréhension, le code est documenté et **plusieurs exemples** de projets sont présents sur mon site web.
 
 De plus, grâce à son projet de démarrage, ce moteur intègre tout le nécessaire pour commencer à développer un jeu vidéo avec un **minimum d'efforts**.
 
@@ -80,7 +79,7 @@ window.addEventListener('load', async () => {
 });
 ```
 
-Dernière étape, créer et ajouter votre premier écran.
+### src/main_screen.js
 ```js
 let { GWE } = require('gwe');
 
@@ -111,13 +110,12 @@ module.exports.MainScreen = MainScreen;
 
 Dans le fichier **app.js** ajouter l'écran au gestionnaire d'écran afin que celui-ci soit exécuté via la ligne suivante ```GWE.screenManager.requestSetScreen(new  MainScreen(app));```.  
 
-## C'est à vous de jouer !
-Félicitation, vous êtes prêt à commencer votre jeu.  
-Je vous invite à regarder les quelques projets d'exemples livré avec le moteur:
- - [Boilerplate](https://github.com/ra1jin/gwe-boilerplate): *Projet minimal idéal pour commencer un nouveau concept.*
- - WorldSample: *Navigation type RPG en 3D pré-calculer.*
- - BattleSample: *Gestion d'une équipe et combat tour par tour en 2D/3D.*
- - GotaSample: *Jeu de carte en 2D très inspiré de la saga YuGiOh.*
+## Documentation
+Une documentation complète est disponible ici: https://ra1jin.github.io/gwe-doc/.
+
+## Exemples
+- [Boilerplate](https://github.com/ra1jin/gwe-boilerplate)
+- [RolePlayingGame2000](https://github.com/ra1jin/gwe-boilerplate)
 
 ## Comment intégrer vos modèles 3D ?
-C'est très simple, [blender-gwe-exporter](https://github.com/ra1jin/blender-gwe-exporter) vous permet d'exporter vos modèles Blender (statiques et animés) dans les formats compatible GWE !
+L'extension Blender [blender-gwe-exporter](https://github.com/ra1jin/blender-gwe-exporter) vous permet d'exporter vos modèles statiques et animés dans les formats compatible GWE !
