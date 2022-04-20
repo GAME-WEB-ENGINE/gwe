@@ -4,7 +4,7 @@
 Copyright © 2020-2022 [Raijin].
 
 Nombreux sont les **développeurs web** qui souhaite créer leurs propre **jeu vidéo**, c'est maintenant possible grâce à **GWE** alias **Game Web Engine**, un **moteur de jeu 2D/3D** basé sur les technologies du **web**.  
-Pas besoin d'apprendre un nouvelle technologies, si vous maitrisez **HTML/JS/CSS** alors ce moteur est fait pour vous.
+Pas besoin d'apprendre un nouveau langage, si vous maitrisez **HTML/JS/CSS** alors ce moteur est fait pour vous.
 
 De plus, grâce à son projet de démarrage, ce moteur intègre tout le nécessaire pour commencer à développer un jeu vidéo avec un **minimum d'efforts**.
 
