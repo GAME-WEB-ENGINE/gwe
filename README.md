@@ -3,10 +3,32 @@
 
 Copyright © 2020-2022 [Raijin].
 
-Nombreux sont les **développeurs web** qui souhaite créer leurs propre **jeu vidéo**, c'est maintenant possible grâce à **WGE**, un **moteur de jeu 2D/3D** basé sur les technologies du **web**.  
+Nombreux sont les **développeurs web** qui souhaite créer leurs propre **jeu vidéo**, c'est maintenant possible grâce à **GWE** alias **Game Web Engine**, un **moteur de jeu 2D/3D** basé sur les technologies du **web**.  
 Pas besoin d'apprendre un nouvelle technologies, si vous maitrisez **HTML/JS/CSS** alors ce moteur est fait pour vous.
 
 De plus, grâce à son projet de démarrage, ce moteur intègre tout le nécessaire pour commencer à développer un jeu vidéo avec un **minimum d'efforts**.
+
+## Fonctionnalités générales
+- Un gestionnaire graphique
+- Un gestionaire des différents "écrans" du jeu
+- Un gestionaire des ressources de texture
+- Un gestionnaire des ressources de son
+- Un gestionnaire des évènements
+- Un gestionnaire des entrés clavier/souris
+- Un gestionnaire de l'interface utilisateur à base de "widget" (plus de 16 widgets de bases)
+- Un gestionnaire de script
+- Support de plusieurs vues caméra 2D et 3D
+- Support des meshs de navigation (JWM)
+- Support des images statique (JSS)
+- Support des images animées (JAS)
+- Support des meshes texturés statique (JSM)
+- Support des meshes texturés animé statique (JAM)
+- Support des formes géométriques de debug
+
+## Quelques parties pris concernant ce travail
+- Utiliser le DOM pour les éléments UI
+- Utiliser un format 3D dédié au moteur (voir exportateurs Blender)
+- Utiliser un format 3D avec des animations frame par frame
 
 ## Installation
 Tout d'abord, vérifier que Node.js est bien installé sur votre environnement.  
@@ -114,6 +136,7 @@ Dans le fichier **app.js** ajouter l'écran au gestionnaire d'écran afin que ce
 Une documentation complète est disponible ici: https://ra1jin.github.io/gwe-doc/.
 
 ## Exemples
+Voici plusieurs projets créés grâce à Game Web Engine:
 - [Boilerplate](https://github.com/ra1jin/gwe-boilerplate)
 - [RolePlayingGame2000](https://github.com/ra1jin/gwe-boilerplate)
 
