@@ -291,6 +291,7 @@ class GfxView {
    * Mets à jour la matrice de caméra à partir de la position, rotation et mise à l'echelle.
    */
   updateCameraMatrix() {
+    this.cameraMatrix = Utils.MAT4_IDENTITY();
     this.cameraMatrix = Utils.MAT4_MULTIPLY(this.cameraMatrix, Utils.MAT4_TRANSLATE(this.position[0], this.position[1], this.position[2]));
     this.cameraMatrix = Utils.MAT4_MULTIPLY(this.cameraMatrix, Utils.MAT4_ROTATE_Y(this.rotation[1]));
     this.cameraMatrix = Utils.MAT4_MULTIPLY(this.cameraMatrix, Utils.MAT4_ROTATE_X(this.rotation[0])); // y -> x -> z
