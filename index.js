@@ -27,7 +27,6 @@ let { UIDialogWidget } = require('./ui/ui_dialog_widget');
 let { UIInputRangeWidget } = require('./ui/ui_input_range_widget');
 let { UIInputSelectWidget } = require('./ui/ui_input_select_widget');
 let { UIInputSelectMultipleWidget } = require('./ui/ui_input_select_widget');
-
 let { UIInputSliderWidget } = require('./ui/ui_input_slider_widget');
 let { UIInputTextWidget } = require('./ui/ui_input_text_widget');
 let { UIKeyboardWidget } = require('./ui/ui_keyboard_widget');
@@ -38,6 +37,7 @@ let { UIMessageWidget } = require('./ui/ui_message_widget');
 let { UIPrintWidget } = require('./ui/ui_print_widget');
 let { UIPromptWidget } = require('./ui/ui_prompt_widget');
 let { UISpriteWidget } = require('./ui/ui_sprite_widget');
+let { UITextWidget } = require('./ui/ui_text_widget');
 let { UIWidget } = require('./ui/ui_widget');
 let { Utils } = require('./helpers');
 
@@ -94,6 +94,7 @@ module.exports.GWE = {
   UIPrintWidget,
   UIPromptWidget,
   UISpriteWidget,
+  UITextWidget,
   UIWidget,
   Utils,
   SizeModeEnum,
