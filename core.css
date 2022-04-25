@@ -732,14 +732,14 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 }
 
 /*---------------------------------------------------------------------------------------------*/
-/* UI TEXT WIDGET
+/* UI TEXT VIEW WIDGET
 /*---------------------------------------------------------------------------------------------*/
-.UITextWidget {
+.UITextViewWidget {
   display: flex;
   border: 10px solid;
-  border-image: url(../Textures/UIBorder.png) 3 fill;
+  border-image: url(../../assets/textures/ui_border.png) 3 fill;
 }
-.UITextWidget-text {
+.UITextViewWidget-text {
   display: inline-flex;
   align-items: center;
   padding: 8px;

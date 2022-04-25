@@ -37,7 +37,7 @@ let { UIMessageWidget } = require('./ui/ui_message_widget');
 let { UIPrintWidget } = require('./ui/ui_print_widget');
 let { UIPromptWidget } = require('./ui/ui_prompt_widget');
 let { UISpriteWidget } = require('./ui/ui_sprite_widget');
-let { UITextWidget } = require('./ui/ui_text_widget');
+let { UITextViewWidget } = require('./ui/ui_text_view_widget');
 let { UIWidget } = require('./ui/ui_widget');
 let { Utils } = require('./helpers');
 
@@ -94,7 +94,7 @@ module.exports.GWE = {
   UIPrintWidget,
   UIPromptWidget,
   UISpriteWidget,
-  UITextWidget,
+  UITextViewWidget,
   UIWidget,
   Utils,
   SizeModeEnum,
