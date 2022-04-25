@@ -58,29 +58,29 @@ class UIWidget {
    * Vérifie si le widget est focus.
    * @return {boolean} Vrai si le widget est focus.
    */
-  isFocus() {
-    return this.node.classList.contains('focused') == true;
+  isFocused() {
+    return this.node.classList.contains('u-focused') == true;
   }
 
   /**
    * Donne le focus.
-   * Nota bene: Souscription aux évènements utilisateur et ajout de la classe 'focused'.
+   * Nota bene: Souscription aux évènements utilisateur et ajout de la classe 'u-focused'.
    */
   focus() {
     eventManager.subscribe(inputManager, 'E_KEYDOWN', this, this.onKeyDown);
     eventManager.subscribe(inputManager, 'E_KEYDOWN_ONCE', this, this.onKeyDownOnce);
-    this.node.classList.add('focused');
+    this.node.classList.add('u-focused');
     eventManager.emit(this, 'E_FOCUSED');
   }
 
   /**
    * Enlève le focus.
-   * Nota bene: Désinscription aux évènements utilisateur et suppréssion de la classe 'focused'.
+   * Nota bene: Désinscription aux évènements utilisateur et suppréssion de la classe 'u-focused'.
    */
   unfocus() {
     eventManager.unsubscribe(inputManager, 'E_KEYDOWN', this);
     eventManager.unsubscribe(inputManager, 'E_KEYDOWN_ONCE', this);
-    this.node.classList.remove('focused');
+    this.node.classList.remove('u-focused');
     eventManager.emit(this, 'E_UNFOCUSED');
   }
 
@@ -143,10 +143,10 @@ class UIWidget {
    */
   setSelected(selected) {
     if (selected) {
-      this.node.classList.remove('u-selected');
+      this.node.classList.add('u-selected');
     }
     else {
-      this.node.classList.add('u-selected');
+      this.node.classList.remove('u-selected');
     }
   }
 

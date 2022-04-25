@@ -19,7 +19,6 @@ class UIMenuWidget extends UIWidget {
     this.selectable = options.selectable != undefined ? options.selectable : true;
     this.itemWidgets = [];
     this.focusedItemWidget = null;
-    this.selectedItemWidgets = [];
 
     if (this.columns == Infinity) {
       this.node.style.grid = 'repeat(' + this.rows + ', auto) / auto-flow';
@@ -29,6 +28,12 @@ class UIMenuWidget extends UIWidget {
     }
     else {
       this.node.style.grid = 'repeat(' + this.rows + ', auto) / repeat(' + this.columns + ', auto)';
+    }
+  }
+
+  update(ts) {
+    for (let itemWidget of this.itemWidgets) {
+      itemWidget.update(ts);
     }
   }
 
@@ -51,11 +56,11 @@ class UIMenuWidget extends UIWidget {
   }
 
   getSelectedItemWidgetIndex() {
-    return this.itemWidgets.indexOf(this.selectedItemWidgets[0]);
+    return this.itemWidgets.findIndex(itemWidget => itemWidget.isSelected());
   }
 
   getSelectedItemWidgetIndexes() {
-    return this.selectedItemWidgets.map((itemWidget) => this.itemWidgets.indexOf(itemWidget));
+    return this.itemWidgets.map(itemWidget => itemWidget.isSelected());
   }
 
   addItemWidget(itemWidget, enabled = true, index = -1) {
@@ -68,7 +73,7 @@ class UIMenuWidget extends UIWidget {
       this.node.insertBefore(itemWidget.node, this.node.children[index]);
     }
 
-    this.setItemWidgetEnabled(index == -1 ? this.node.children.length - 1 : index, enabled);
+    itemWidget.setEnabled(enabled);
   }
 
   removeItemWidget(index) {
@@ -77,9 +82,6 @@ class UIMenuWidget extends UIWidget {
       throw new Error('UIMenuWidget::removeItemWidget(): itemWidget not found !');
     }
 
-    if (this.selectedItemWidgets.indexOf(itemWidget) != -1) {
-      this.selectedItemWidgets.splice(this.selectedItemWidgets.indexOf(itemWidget), 1);
-    }
     if (this.focusedItemWidget == itemWidget) {
       this.focusedItemWidget = null;
     }
@@ -104,7 +106,7 @@ class UIMenuWidget extends UIWidget {
       }
     }
 
-    this.unfocusItemWidget();
+    this.focusedItemWidget.unfocus();
     itemWidget.focus();
     this.focusedItemWidget = itemWidget;
 
@@ -135,17 +137,16 @@ class UIMenuWidget extends UIWidget {
       return;
     }
 
-    if (this.multiple && this.selectedItemWidgets.indexOf(itemWidget) != -1) {
-      this.unselectItemWidget(index);
+    if (this.multiple && itemWidget.isSelected()) {
+      itemWidget.setSelected(false);
       return;
     }
 
     if (!this.multiple) {
-      this.unselectItemWidgets();
+      this.itemWidgets.forEach(itemWidget => itemWidget.setSelected(false));
     }
 
     itemWidget.setSelected(true);
-    this.selectedItemWidgets.push(itemWidget);
 
     if (emit) {
       eventManager.emit(this, 'E_MENU_ITEM_SELECTED', { itemWidget: itemWidget, index: index });
@@ -162,7 +163,6 @@ class UIMenuWidget extends UIWidget {
     }
 
     itemWidget.setSelected(false);
-    this.selectedItemWidgets.splice(this.selectedItemWidgets.indexOf(itemWidget), 1);
 
     if (emit) {
       eventManager.emit(this, 'E_MENU_ITEM_UNSELECTED', { itemWidget: itemWidget, index: index });
@@ -170,8 +170,7 @@ class UIMenuWidget extends UIWidget {
   }
 
   unselectItemWidgets(emit = true) {
-    this.selectedItemWidgets.forEach((itemWidget) => itemWidget.setSelected(false));
-    this.selectedItemWidgets = [];
+    this.itemWidgets.forEach(itemWidget => itemWidget.setSelected(false));
     
     if (emit) {
       eventManager.emit(this, 'E_MENU_UNSELECTED');
@@ -185,6 +184,7 @@ class UIMenuWidget extends UIWidget {
     }
 
     itemWidget.setEnabled(enabled);
+
     if (emit) {
       eventManager.emit(this, enabled ? 'E_MENU_ITEM_ENABLED' : 'E_MENU_ITEM_DISABLED', { itemWidget: itemWidget, index: index });
     }
@@ -200,10 +200,9 @@ class UIMenuWidget extends UIWidget {
   }
 
   clear() {
-    this.itemWidgets.forEach((itemWidget) => itemWidget.delete());
+    this.itemWidgets.forEach(itemWidget => itemWidget.delete());
     this.itemWidgets = [];
     this.focusedItemWidget = null;
-    this.selectedItemWidgets = [];
     this.node.innerHTML = '';
   }
 

@@ -505,7 +505,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
   flex-direction: row;
   justify-content: space-between;
 }
-.UIInputSelectWidget.focused .UIMenuTextWidget.focused {
+.UIInputSelectWidget.u-focused .UIMenuTextWidget.u-focused {
   color: rgb(98, 211, 255);
 }
 
@@ -517,7 +517,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
   flex-direction: row;
   justify-content: space-between;
 }
-.UIInputSelectMultipleWidget.focused .UIMenuTextWidget.focused {
+.UIInputSelectMultipleWidget.u-focused .UIMenuTextWidget.u-focused {
   color: rgb(98, 211, 255);
 }
 
@@ -560,7 +560,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
   flex: 1;
   padding: 8px;
 }
-.UIKeyboardWidget.focused .UIKeyboardWidget-row-item.focused {
+.UIKeyboardWidget.u-focused .UIKeyboardWidget-row-item.u-focused {
   background-color: rgb(98, 211, 255);
 }
 
@@ -587,7 +587,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
   border: 10px solid;
   border-image: url(../../assets/textures/ui_border.png) 3 fill;
 }
-.UIMenuWidget.focused .UIMenuTextWidget.focused {
+.UIMenuWidget.u-focused .UIMenuTextWidget.u-focused {
   background-color: rgb(98, 211, 255);
 }
 
