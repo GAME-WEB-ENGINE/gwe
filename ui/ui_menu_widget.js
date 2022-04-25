@@ -106,7 +106,10 @@ class UIMenuWidget extends UIWidget {
       }
     }
 
-    this.focusedItemWidget.unfocus();
+    if (this.focusedItemWidget) {
+      this.focusedItemWidget.unfocus();
+    }
+    
     itemWidget.focus();
     this.focusedItemWidget = itemWidget;
 
