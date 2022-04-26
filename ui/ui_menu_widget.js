@@ -13,7 +13,7 @@ class UIMenuWidget extends UIWidget {
       className: options.className || 'UIMenuWidget'
     });
 
-    this.rows = options.rows != undefined ? options.rows : 1;
+    this.rows = options.rows != undefined ? options.rows : Infinity;
     this.columns = options.columns != undefined ? options.columns : 1;
     this.multiple = options.multiple != undefined ? options.multiple : false;
     this.selectable = options.selectable != undefined ? options.selectable : true;
