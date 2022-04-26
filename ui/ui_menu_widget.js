@@ -21,12 +21,15 @@ class UIMenuWidget extends UIWidget {
     this.focusedItemWidget = null;
 
     if (this.columns == Infinity) {
-      this.node.style.grid = 'repeat(' + this.rows + ', auto) / auto-flow';
+      this.node.style.display = 'flex';
+      this.node.style.flexDirection = 'row';
     }
     else if (this.rows == Infinity) {
-      this.node.style.grid = 'auto-flow / repeat(' + this.columns + ', auto)';
+      this.node.style.display = 'flex';
+      this.node.style.flexDirection = 'column';
     }
     else {
+      this.node.style.display = 'grid';
       this.node.style.grid = 'repeat(' + this.rows + ', auto) / repeat(' + this.columns + ', auto)';
     }
   }
