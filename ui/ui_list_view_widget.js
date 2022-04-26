@@ -6,7 +6,7 @@ class UIListViewWidget extends UIMenuWidget {
   constructor(options = {}) {
     super(options);
     this.collection = new ArrayCollection();
-    this.items = [];
+    this.views = [];
     this.sortPredicate = () => true;
     this.filterPredicate = () => true;
     this.enablePredicate = () => true;
@@ -24,16 +24,17 @@ class UIListViewWidget extends UIMenuWidget {
     this.clear();
 
     if (collection) {
-      let items = collection.sort(this.sortPredicate).filter(this.filterPredicate);
-      items.forEach(item => this.addItem(item, this.enablePredicate(item)));
+      let items = collection.getItems();
+      let views = items.sort(this.sortPredicate).filter(this.filterPredicate);
+      views.forEach(item => this.addItem(item, this.enablePredicate(item)));
       eventManager.subscribe(collection, 'E_ITEM_ADDED', this, this.handleItemAdded);
       eventManager.subscribe(collection, 'E_ITEM_REMOVED', this, this.handleItemRemoved);
       this.collection = collection;
-      this.items = items;
+      this.views = views;
     }
     else {
       this.collection = new ArrayCollection();
-      this.items = [];
+      this.views = [];
     }
   }
 
@@ -42,18 +43,20 @@ class UIListViewWidget extends UIMenuWidget {
   }
 
   getFocusedItem() {
-    return this.items[this.getFocusedItemWidgetIndex()];
+    return this.views[this.getFocusedItemWidgetIndex()];
   }
 
   getSelectedItem() {
-    return this.items[this.getSelectedItemWidgetIndex()];
+    return this.views[this.getSelectedItemWidgetIndex()];
   }
 
   setSortPredicate(sortPredicate) {
     if (this.collection) {
+      let items = this.collection.getItems();
+      this.views = items.sort(sortPredicate).filter(this.filterPredicate);
+
       this.clear();
-      this.items = this.collection.sort(sortPredicate).filter(this.filterPredicate);
-      this.items.forEach(item => this.addItem(item, this.enablePredicate(item)));
+      this.views.forEach(item => this.addItem(item, this.enablePredicate(item)));
     }
 
     this.sortPredicate = sortPredicate;
@@ -61,9 +64,11 @@ class UIListViewWidget extends UIMenuWidget {
 
   setFilterPredicate(filterPredicate) {
     if (this.collection) {
+      let items = this.collection.getItems();
+      this.views = items.sort(this.sortPredicate).filter(filterPredicate);
+
       this.clear();
-      this.items = this.collection.sort(this.sortPredicate).filter(filterPredicate);
-      this.items.forEach(item => this.addItem(item, this.enablePredicate(item)));
+      this.views.forEach(item => this.addItem(item, this.enablePredicate(item)));
     }
 
     this.filterPredicate = filterPredicate;
@@ -71,24 +76,30 @@ class UIListViewWidget extends UIMenuWidget {
 
   setEnablePredicate(enablePredicate) {
     if (this.collection) {
+      let items = this.collection.getItems();
+      this.views = items.sort(this.sortPredicate).filter(this.filterPredicate);
+
       this.clear();
-      this.items = this.collection.sort(this.sortPredicate).filter(this.filterPredicate);
-      this.items.forEach(item => this.addItem(item, enablePredicate(item)));
+      this.views.forEach(item => this.addItem(item, enablePredicate(item)));
     }
 
     this.enablePredicate = enablePredicate;
   }
 
   handleItemAdded(data) {
-    this.items = this.collection.sort(this.sortPredicate).filter(this.filterPredicate);
-    let index = this.items.indexOf(data.item);
+    let items = this.collection.getItems();
+    this.views = items.sort(this.sortPredicate).filter(this.filterPredicate);
+
+    let index = this.views.indexOf(data.item);
     this.addItem(data.item, this.enablePredicate(data.item), index);
   }
 
   handleItemRemoved(data) {
-    let index = this.items.indexOf(data.item);
-    this.items = this.collection.sort(this.sortPredicate).filter(this.filterPredicate);
-    this.removeItem(index);
+    let index = this.views.indexOf(data.item);
+    this.removeItemWidget(index);
+
+    let items = this.collection.getItems();
+    this.views = items.sort(this.sortPredicate).filter(this.filterPredicate);    
   }
 }
 
