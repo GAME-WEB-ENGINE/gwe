@@ -45,6 +45,7 @@ let { SizeModeEnum } = require('./application');
 let { ProjectionModeEnum } = require('./gfx/gfx_view');
 let { InputKeyEnum } = require('./input/input_enums');
 let { MenuFocusEnum } = require('./ui/ui_menu_widget');
+let { MenuAxisEnum } = require('./ui/ui_menu_widget');
 
 let { gfxManager } = require('./gfx/gfx_manager');
 let { eventManager } = require('./event/event_manager');
@@ -101,6 +102,7 @@ module.exports.GWE = {
   ProjectionModeEnum,
   InputKeyEnum,
   MenuFocusEnum,
+  MenuAxisEnum,
   gfxManager,
   eventManager,
   inputManager,

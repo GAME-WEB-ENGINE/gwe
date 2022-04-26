@@ -7,24 +7,35 @@ let MenuFocusEnum = {
   NONE: 1
 };
 
+let MenuAxisEnum = {
+  X: 0,
+  Y: 1,
+  XY: 2
+};
+
 class UIMenuWidget extends UIWidget {
   constructor(options = {}) {
     super({
       className: options.className || 'UIMenuWidget'
     });
 
-    this.rows = options.rows != undefined ? options.rows : Infinity;
-    this.columns = options.columns != undefined ? options.columns : 1;
+    this.axis = options.axis != undefined ? options.axis : MenuAxisEnum.Y;
+    this.rows = options.rows != undefined ? options.rows : 0;
+    this.columns = options.columns != undefined ? options.columns : 0;
     this.multiple = options.multiple != undefined ? options.multiple : false;
     this.selectable = options.selectable != undefined ? options.selectable : true;
     this.itemWidgets = [];
     this.focusedItemWidget = null;
 
-    if (this.columns == Infinity) {
+    if (this.axis == MenuAxisEnum.X) {
+      this.rows = 1;
+      this.columns = Infinity;
       this.node.style.display = 'flex';
       this.node.style.flexDirection = 'row';
     }
-    else if (this.rows == Infinity) {
+    else if (this.axis == MenuAxisEnum.Y) {
+      this.rows = Infinity;
+      this.columns = 1;
       this.node.style.display = 'flex';
       this.node.style.flexDirection = 'column';
     }
@@ -256,4 +267,5 @@ class UIMenuWidget extends UIWidget {
 }
 
 module.exports.MenuFocusEnum = MenuFocusEnum;
+module.exports.MenuAxisEnum = MenuAxisEnum;
 module.exports.UIMenuWidget = UIMenuWidget;
