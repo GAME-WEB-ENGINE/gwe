@@ -6,10 +6,10 @@ let fs = require('fs');
 let { eventManager } = require('../event/event_manager');
 let { UIWidget } = require('./ui_widget');
 
-class UISpriteWidget extends UIWidget {
+class UISprite extends UIWidget {
   constructor(options = {}) {
     super({
-      className: options.className || 'UISpriteWidget'
+      className: options.className || 'UISprite'
     });
 
     this.frames = [];
@@ -56,7 +56,7 @@ class UISpriteWidget extends UIWidget {
   play(animationName, isLooped = false) {
     let animation = this.animations.find(animation => animation.name == animationName);
     if (!animation) {
-      throw new Error('UISpriteWidget::play: animation not found.');
+      throw new Error('UISprite::play: animation not found.');
     }
 
     this.currentAnimationName = animationName;
@@ -68,7 +68,7 @@ class UISpriteWidget extends UIWidget {
   loadFromFile(path) {
     let json = JSON.parse(fs.readFileSync(path));
     if (!json.hasOwnProperty('ImageFile')) {
-      throw new Error('UISpriteWidget::loadFromFile(): Missing "ImageFile" property');
+      throw new Error('UISprite::loadFromFile(): Missing "ImageFile" property');
     }
 
     this.frames = [];
@@ -98,4 +98,4 @@ class UISpriteWidget extends UIWidget {
   }
 }
 
-module.exports.UISpriteWidget = UISpriteWidget;
+module.exports.UISprite = UISprite;

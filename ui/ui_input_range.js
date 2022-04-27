@@ -2,13 +2,14 @@ let { eventManager } = require('../event/event_manager');
 let { InputKeyEnum } = require('../input/input_enums');
 let { UIWidget } = require('./ui_widget');
 
-class UIInputSliderWidget extends UIWidget {
+class UIInputRange extends UIWidget {
   constructor() {
     super({
-      className: 'UIInputSliderWidget',
+      className: 'UIInputRange',
       template: `
-      <input class="UIInputSliderWidget-range" type="range" min="0" max="0" step="1" value="0">
-      <div class="UIInputSliderWidget-value">0</div>`
+      <div class="UIInputRange-prevIcon"><</div>
+      <div class="UIInputRange-value">0</div>
+      <div class="UIInputRange-nextIcon">></div>`
     });
 
     this.value = 0;
@@ -22,23 +23,19 @@ class UIInputSliderWidget extends UIWidget {
       return;
     }
 
-    this.node.querySelector('.UIInputSliderWidget-range').value = value;
-    this.node.querySelector('.UIInputSliderWidget-value').textContent = value;
-    this.value = value;    
+    this.node.querySelector('.UIInputRange-value').textContent = value;
+    this.value = value;
   }
 
   setMin(min) {
-    this.node.querySelector('.UIInputSliderWidget-range').min = min;
     this.min = min;
   }
 
   setMax(max) {
-    this.node.querySelector('.UIInputSliderWidget-range').max = max;
     this.max = max;
   }
 
   setStep(step) {
-    this.node.querySelector('.UIInputSliderWidget-range').step = step;
     this.step = step;
   }
 
@@ -52,9 +49,8 @@ class UIInputSliderWidget extends UIWidget {
       eventManager.emit(this, 'E_VALUE_CHANGED', { value: this.value });
     }
 
-    this.node.querySelector('.UIInputSliderWidget-range').value = this.value;
-    this.node.querySelector('.UIInputSliderWidget-value').textContent = this.value;
+    this.node.querySelector('.UIInputRange-value').textContent = this.value;
   }
 }
 
-module.exports.UIInputSliderWidget = UIInputSliderWidget;
+module.exports.UIInputRange = UIInputRange;

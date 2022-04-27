@@ -65,7 +65,7 @@ class JWMSector {
  * Classe représentant un mesh de navigation (alias walkmesh).
  * @extends GfxDrawable
  */
-class GfxJWMDrawable extends GfxDrawable {
+class GfxJWM extends GfxDrawable {
   /**
    * Créer un mesh de navigation.
    */
@@ -89,7 +89,7 @@ class GfxJWMDrawable extends GfxDrawable {
   loadFromFile(path) {
     let json = JSON.parse(fs.readFileSync(path));
     if (!json.hasOwnProperty('Ident') || json['Ident'] != 'JWM') {
-      throw new Error('GfxJWMDrawable::loadFromFile(): File not valid !');
+      throw new Error('GfxJWM::loadFromFile(): File not valid !');
     }
 
     this.clearVertices();
@@ -140,4 +140,4 @@ class GfxJWMDrawable extends GfxDrawable {
   }
 }
 
-module.exports.GfxJWMDrawable = GfxJWMDrawable;
+module.exports.GfxJWM = GfxJWM;

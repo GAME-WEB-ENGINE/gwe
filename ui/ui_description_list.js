@@ -1,9 +1,9 @@
 let { UIWidget } = require('./ui_widget');
 
-class UIDescriptionListWidget extends UIWidget {
+class UIDescriptionList extends UIWidget {
   constructor(options = {}) {
     super({
-      className: options.className || 'UIDescriptionListWidget'
+      className: options.className || 'UIDescriptionList'
     });
   }
 
@@ -21,7 +21,7 @@ class UIDescriptionListWidget extends UIWidget {
   removeItem(index) {
     let item = this.node.children[index];
     if (!item) {
-      throw new Error('UIDescriptionListWidget::removeItem(): item not found !');
+      throw new Error('UIDescriptionList::removeItem(): item not found !');
     }
 
     this.node.removeChild(item);
@@ -30,7 +30,7 @@ class UIDescriptionListWidget extends UIWidget {
   setItem(index, value) {
     let item = this.node.children[index];
     if (!item) {
-      throw new Error('UIDescriptionListWidget::setItem(): item not found !');
+      throw new Error('UIDescriptionList::setItem(): item not found !');
     }
 
     item.querySelector(`.${this.className}-item-value`).textContent = value;
@@ -39,7 +39,7 @@ class UIDescriptionListWidget extends UIWidget {
   setItemVisible(index, visible) {
     let item = this.node.children[index];
     if (!item) {
-      throw new Error('UIDescriptionListWidget::setItemVisible(): item not found !');
+      throw new Error('UIDescriptionList::setItemVisible(): item not found !');
     }
 
     item.style.display = (visible) ? 'block' : 'none';
@@ -48,7 +48,7 @@ class UIDescriptionListWidget extends UIWidget {
   getItemVisible(index) {
     let item = this.node.children[index];
     if (!item) {
-      throw new Error('UIDescriptionListWidget::getItemVisible(): item not found !');
+      throw new Error('UIDescriptionList::getItemVisible(): item not found !');
     }
 
     return item.style.display == 'block';
@@ -57,7 +57,7 @@ class UIDescriptionListWidget extends UIWidget {
   getItemValue(index) {
     let item = this.node.children[index];
     if (!item) {
-      throw new Error('UIDescriptionListWidget::getItemValue(): item not found !');
+      throw new Error('UIDescriptionList::getItemValue(): item not found !');
     }
 
     return item.querySelector(`.${this.className}-item-value`).textContent;
@@ -68,4 +68,4 @@ class UIDescriptionListWidget extends UIWidget {
   }
 }
 
-module.exports.UIDescriptionListWidget = UIDescriptionListWidget;
+module.exports.UIDescriptionList = UIDescriptionList;

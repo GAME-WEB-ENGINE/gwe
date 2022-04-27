@@ -1,15 +1,16 @@
 let { eventManager } = require('../event/event_manager');
 let { InputKeyEnum } = require('../input/input_enums');
 let { UIWidget } = require('./ui_widget');
-let { UIMenuWidget } = require('./ui_menu_widget');
+let { UIMenu } = require('./ui_menu');
+let { UIMenuText } = require('./ui_menu_text');
 
-class UIBubbleWidget extends UIWidget {
+class UIBubble extends UIWidget {
   constructor() {
     super({
-      className: 'UIBubbleWidget',
+      className: 'UIBubble',
       template: `
-      <div class="UIBubbleWidget-text"></div>
-      <div class="UIBubbleWidget-menu"></div>`
+      <div class="UIBubble-text"></div>
+      <div class="UIBubble-menu"></div>`
     });
 
     this.text = '';
@@ -21,8 +22,8 @@ class UIBubbleWidget extends UIWidget {
     this.timeElapsed = 0;
     this.isFinished = false;
 
-    this.menuWidget = new UIMenuWidget();
-    this.node.querySelector('.UIBubbleWidget-menu').replaceWith(this.menuWidget.node);
+    this.menuWidget = new UIMenu();
+    this.node.querySelector('.UIBubble-menu').replaceWith(this.menuWidget.node);
     eventManager.subscribe(this.menuWidget, 'E_MENU_ITEM_SELECTED', this, this.handleMenuItemSelected);
   }
 
@@ -37,12 +38,12 @@ class UIBubbleWidget extends UIWidget {
 
     if (this.timeElapsed >= this.stepDuration) {
       if (this.currentTextOffset < this.text.length) {
-        this.node.querySelector('.UIBubbleWidget-text').textContent = this.text.substring(0, this.currentTextOffset + 1);
+        this.node.querySelector('.UIBubble-text').textContent = this.text.substring(0, this.currentTextOffset + 1);
         this.currentTextOffset++;
       }
       else if (this.currentActionIndex < this.actions.length) {
         if (this.currentActionTextOffset == 0) {
-          this.menuWidget.addItemWidget(new UIMenuTextWidget({ text: '' }));
+          this.menuWidget.addWidget(new UIMenuText({ text: '' }));
         }
         else if (this.currentActionTextOffset < this.actions[this.currentActionIndex].length) {
           this.menuWidget.itemWidgets[this.currentActionIndex].setText(this.actions[this.currentActionIndex].substring(0, this.currentActionTextOffset + 1));
@@ -109,4 +110,4 @@ class UIBubbleWidget extends UIWidget {
   }
 }
 
-module.exports.UIBubbleWidget = UIBubbleWidget;
+module.exports.UIBubble = UIBubble;

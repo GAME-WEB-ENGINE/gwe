@@ -6,11 +6,11 @@ let { EventSubscriber } = require('./event/event_subscriber');
 let { GfxCollisionBox2D } = require('./gfx/gfx_collisionbox_2d');
 let { GfxCollisionBox3D } = require('./gfx/gfx_collisionbox_2d');
 let { GfxDrawable } = require('./gfx/gfx_drawable');
-let { GfxJAMDrawable } = require('./gfx/gfx_jam_drawable');
-let { GfxJASDrawable } = require('./gfx/gfx_jas_drawable');
-let { GfxJSMDrawable } = require('./gfx/gfx_jsm_drawable');
-let { GfxJSSDrawable } = require('./gfx/gfx_jss_drawable');
-let { GfxJWMDrawable } = require('./gfx/gfx_jwm_drawable');
+let { GfxJAM } = require('./gfx/gfx_jam');
+let { GfxJAS } = require('./gfx/gfx_jas');
+let { GfxJSM } = require('./gfx/gfx_jsm');
+let { GfxJSS } = require('./gfx/gfx_jss');
+let { GfxJWM } = require('./gfx/gfx_jwm');
 let { GfxMover } = require('./gfx/gfx_mover');
 let { GfxShader } = require('./gfx/gfx_shaders');
 let { GfxView } = require('./gfx/gfx_view');
@@ -21,23 +21,23 @@ let { IOJSONSerializer } = require('./io/io_json_serializer');
 let { Screen } = require('./screen/screen');
 let { ScriptMachine } = require('./script/script_machine');
 let { Texture } = require('./texture/texture');
-let { UIBubbleWidget } = require('./ui/ui_bubble_widget');
-let { UIDescriptionListWidget } = require('./ui/ui_description_list_widget');
-let { UIDialogWidget } = require('./ui/ui_dialog_widget');
-let { UIInputRangeWidget } = require('./ui/ui_input_range_widget');
-let { UIInputSelectWidget } = require('./ui/ui_input_select_widget');
-let { UIInputSelectMultipleWidget } = require('./ui/ui_input_select_widget');
-let { UIInputSliderWidget } = require('./ui/ui_input_slider_widget');
-let { UIInputTextWidget } = require('./ui/ui_input_text_widget');
-let { UIKeyboardWidget } = require('./ui/ui_keyboard_widget');
-let { UIListViewMenu } = require('./ui/ui_list_view_menu');
-let { UIMenuTextWidget } = require('./ui/ui_menu_text_widget');
-let { UIMenuWidget } = require('./ui/ui_menu_widget');
-let { UIMessageWidget } = require('./ui/ui_message_widget');
-let { UIPrintWidget } = require('./ui/ui_print_widget');
-let { UIPromptWidget } = require('./ui/ui_prompt_widget');
-let { UISpriteWidget } = require('./ui/ui_sprite_widget');
-let { UITextWidget } = require('./ui/ui_text_widget');
+let { UIBubble } = require('./ui/ui_bubble');
+let { UIDescriptionList } = require('./ui/ui_description_list');
+let { UIDialog } = require('./ui/ui_dialog');
+let { UIInputRange } = require('./ui/ui_input_range');
+let { UIInputSelect } = require('./ui/ui_input_select');
+let { UIInputSelectMultiple } = require('./ui/ui_input_select');
+let { UIInputSlider } = require('./ui/ui_input_slider');
+let { UIInputText } = require('./ui/ui_input_text');
+let { UIKeyboard } = require('./ui/ui_keyboard');
+let { UIListView } = require('./ui/ui_list_view');
+let { UIMenuText } = require('./ui/ui_menu_text');
+let { UIMenu } = require('./ui/ui_menu');
+let { UIMessage } = require('./ui/ui_message');
+let { UIPrint } = require('./ui/ui_print');
+let { UIPrompt } = require('./ui/ui_prompt');
+let { UISprite } = require('./ui/ui_sprite');
+let { UIText } = require('./ui/ui_text');
 let { UIWidget } = require('./ui/ui_widget');
 let { Utils } = require('./helpers');
 
@@ -64,11 +64,11 @@ module.exports.GWE = {
   GfxCollisionBox2D,
   GfxCollisionBox3D,
   GfxDrawable,
-  GfxJAMDrawable,
-  GfxJASDrawable,
-  GfxJSMDrawable,
-  GfxJSSDrawable,
-  GfxJWMDrawable,
+  GfxJAM,
+  GfxJAS,
+  GfxJSM,
+  GfxJSS,
+  GfxJWM,
   GfxMover,
   GfxShader,
   GfxView,
@@ -79,23 +79,23 @@ module.exports.GWE = {
   Screen,
   ScriptMachine,
   Texture,
-  UIBubbleWidget,
-  UIDescriptionListWidget,
-  UIDialogWidget,
-  UIInputRangeWidget,
-  UIInputSelectWidget,
-  UIInputSelectMultipleWidget,
-  UIInputSliderWidget,
-  UIInputTextWidget,
-  UIKeyboardWidget,
-  UIListViewMenu,
-  UIMenuTextWidget,
-  UIMenuWidget,
-  UIMessageWidget,
-  UIPrintWidget,
-  UIPromptWidget,
-  UISpriteWidget,
-  UITextWidget,
+  UIBubble,
+  UIDescriptionList,
+  UIDialog,
+  UIInputRange,
+  UIInputSelect,
+  UIInputSelectMultiple,
+  UIInputSlider,
+  UIInputText,
+  UIKeyboard,
+  UIListView,
+  UIMenuText,
+  UIMenu,
+  UIMessage,
+  UIPrint,
+  UIPrompt,
+  UISprite,
+  UIText,
   UIWidget,
   Utils,
   SizeModeEnum,

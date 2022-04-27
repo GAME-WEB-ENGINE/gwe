@@ -2,15 +2,14 @@ let { eventManager } = require('../event/event_manager');
 let { InputKeyEnum } = require('../input/input_enums');
 let { UIWidget } = require('./ui_widget');
 
-class UIDialogWidget extends UIWidget {
+class UIPrint extends UIWidget {
   constructor() {
     super({
-      className: 'UIDialogWidget',
+      className: 'UIPrint',
       template: `
-      <div class="UIDialogWidget-author"></div>
-      <div class="UIDialogWidget-textbox">
-        <div class="UIDialogWidget-textbox-text"></div>
-        <div class="UIDialogWidget-textbox-next"></div>
+      <div class="UIPrint-textbox">
+        <div class="UIPrint-textbox-text"></div>
+        <div class="UIPrint-textbox-next"></div>
       </div>`
     });
 
@@ -26,18 +25,18 @@ class UIDialogWidget extends UIWidget {
       return;
     }
 
-    this.node.querySelector('.UIDialogWidget-textbox-next').style.display = 'none';
+    this.node.querySelector('.UIPrint-textbox-next').style.display = 'none';
 
     if (!this.isFinished && this.currentTextOffset == this.text.length) {
       this.isFinished = true;
-      this.node.querySelector('.UIDialogWidget-textbox-next').style.display = 'block';
+      this.node.querySelector('.UIPrint-textbox-next').style.display = 'block';
       eventManager.emit(this, 'E_PRINT_FINISHED');
       return;
     }
 
     if (this.timeElapsed >= this.stepDuration) {
       if (this.currentTextOffset < this.text.length) {
-        this.node.querySelector('.UIDialogWidget-textbox-text').textContent = this.text.substring(0, this.currentTextOffset + 1);
+        this.node.querySelector('.UIPrint-textbox-text').textContent = this.text.substring(0, this.currentTextOffset + 1);
         this.currentTextOffset++;
       }
 
@@ -46,10 +45,6 @@ class UIDialogWidget extends UIWidget {
     else {
       this.timeElapsed += ts;
     }
-  }
-
-  setAuthor(author) {
-    this.node.querySelector('.UIDialogWidget-author').textContent = author;
   }
 
   setText(text) {
@@ -69,4 +64,4 @@ class UIDialogWidget extends UIWidget {
   }
 }
 
-module.exports.UIDialogWidget = UIDialogWidget;
+module.exports.UIPrint = UIPrint;

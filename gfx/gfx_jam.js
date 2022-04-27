@@ -32,7 +32,7 @@ class JAMAnimation {
 /**
  * Classe représentant un modèle animé.
  */
-class GfxJAMDrawable extends GfxDrawable {
+class GfxJAM extends GfxDrawable {
   /**
    * Créer un modèle animé.
    */
@@ -162,7 +162,7 @@ class GfxJAMDrawable extends GfxDrawable {
   loadFromFile(path) {
     let json = JSON.parse(fs.readFileSync(path));
     if (!json.hasOwnProperty('Ident') || json['Ident'] != 'JAM') {
-      throw new Error('GfxJAMDrawable::loadFromFile(): File not valid !');
+      throw new Error('GfxJAM::loadFromFile(): File not valid !');
     }
 
     this.jam = new JAM();
@@ -204,7 +204,7 @@ class GfxJAMDrawable extends GfxDrawable {
 
     let animation = this.jam.animations.find(animation => animation.name == animationName);
     if (!animation) {
-      throw new Error('GfxJAMDrawable::play: animation not found !');
+      throw new Error('GfxJAM::play: animation not found !');
     }
 
     this.currentAnimationName = animationName;
@@ -214,4 +214,4 @@ class GfxJAMDrawable extends GfxDrawable {
   }
 }
 
-module.exports.GfxJAMDrawable = GfxJAMDrawable;
+module.exports.GfxJAM = GfxJAM;

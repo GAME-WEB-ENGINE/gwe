@@ -1,11 +1,11 @@
 let { eventManager } = require('../event/event_manager');
-let { UIMenuTextWidget } = require('./ui_menu_text_widget');
-let { UIMenuWidget } = require('./ui_menu_widget');
+let { UIMenuText } = require('./ui_menu_text');
+let { UIMenu } = require('./ui_menu');
 
-class UIInputSelectWidget extends UIMenuWidget {
+class UIInputSelect extends UIMenu {
   constructor() {
     super({
-      className: 'UIInputSelectWidget',
+      className: 'UIInputSelect',
       columns: Infinity
     });
 
@@ -18,25 +18,25 @@ class UIInputSelectWidget extends UIMenuWidget {
       return;
     }
 
-    this.unselectItemWidgets();
-    this.selectItemWidget(index, false);
+    this.unselectWidgets();
+    this.selectWidget(index, false);
     this.index = index;
   }
 
   addItem(text) {
-    this.addItemWidget(new UIMenuTextWidget({ text: text }));
+    this.addWidget(new UIMenuText({ text: text }));
   }
 
   handleMenuItemSelected() {
-    this.index = this.getSelectedItemWidgetIndex();
+    this.index = this.getSelectedWidgetIndex();
     eventManager.emit(this, 'E_VALUE_CHANGED', { index: this.index });
   }
 }
 
-class UIInputSelectMultipleWidget extends UIMenuWidget {
+class UIInputSelectMultiple extends UIMenu {
   constructor() {
     super({
-      className: 'UIInputSelectMultipleWidget',
+      className: 'UIInputSelectMultiple',
       columns: Infinity,
       multiple: true
     });
@@ -50,20 +50,20 @@ class UIInputSelectMultipleWidget extends UIMenuWidget {
       return;
     }
 
-    this.unselectItemWidgets();
-    indexes.forEach(index => this.selectItemWidget(index, false));
+    this.unselectWidgets();
+    indexes.forEach(index => this.selectWidget(index, false));
     this.indexes = indexes;
   }
 
   addItem(text) {
-    super.addItemWidget(new UIMenuTextWidget({ text: text }));
+    super.addWidget(new UIMenuText({ text: text }));
   }
 
   handleMenuItemSelected() {
-    this.indexes = this.getSelectedItemWidgetIndexes();
+    this.indexes = this.getSelectedWidgetIndexes();
     eventManager.emit(this, 'E_VALUES_CHANGED', { indexes: this.indexes });
   }
 }
 
-module.exports.UIInputSelectWidget = UIInputSelectWidget;
-module.exports.UIInputSelectMultipleWidget = UIInputSelectMultipleWidget;
+module.exports.UIInputSelect = UIInputSelect;
+module.exports.UIInputSelectMultiple = UIInputSelectMultiple;

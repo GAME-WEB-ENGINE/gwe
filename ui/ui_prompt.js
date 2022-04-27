@@ -1,19 +1,20 @@
 let { eventManager } = require('../event/event_manager');
 let { UIWidget } = require('./ui_widget');
-let { UIMenuTextWidget } = require('./ui_menu_text_widget');
-let { UIMenuWidget } = require('./ui_menu_widget');
+let { UIMenuText } = require('./ui_menu_text');
+let { UIMenu } = require('./ui_menu');
+let { MenuAxisEnum } = require('./ui_menu');
 
-class UIPromptWidget extends UIWidget {
+class UIPrompt extends UIWidget {
   constructor() {
     super({
-      className: 'UIPromptWidget',
+      className: 'UIPrompt',
       template: `
-      <div class="UIPromptWidget-text"></div>
-      <div class="UIPromptWidget-menu"></div>`
+      <div class="UIPrompt-text"></div>
+      <div class="UIPrompt-menu"></div>`
     });
 
-    this.menu = new UIMenuWidget({ columns: Infinity });
-    this.node.querySelector('.UIPromptWidget-menu').replaceWith(this.menu.node);
+    this.menu = new UIMenu({ axis: MenuAxisEnum.X });
+    this.node.querySelector('.UIPrompt-menu').replaceWith(this.menu.node);
     eventManager.subscribe(this.menu, 'E_MENU_ITEM_SELECTED', this, this.handleMenuItemSelected);
   }
 
@@ -37,13 +38,13 @@ class UIPromptWidget extends UIWidget {
   }
 
   setText(text) {
-    this.node.querySelector('.UIPromptWidget-text').textContent = text;
+    this.node.querySelector('.UIPrompt-text').textContent = text;
   }
 
   setActions(actions) {
     this.menu.clear();
     for (let action of actions) {
-      this.menu.addItemWidget(new UIMenuTextWidget({ text: action }));
+      this.menu.addItemWidget(new UIMenuText({ text: action }));
     }
   }
 
@@ -52,4 +53,4 @@ class UIPromptWidget extends UIWidget {
   }
 }
 
-module.exports.UIPromptWidget = UIPromptWidget;
+module.exports.UIPrompt = UIPrompt;

@@ -8,7 +8,7 @@ let { textureManager } = require('../texture/texture_manager');
  * Classe représentant un sprite static.
  * @extends GfxDrawable
  */
-class GfxJSSDrawable extends GfxDrawable {
+class GfxJSS extends GfxDrawable {
   /**
    * Créer un sprite static.
    */
@@ -148,4 +148,4 @@ class GfxJSSDrawable extends GfxDrawable {
   }
 }
 
-module.exports.GfxJSSDrawable = GfxJSSDrawable;
+module.exports.GfxJSS = GfxJSS;

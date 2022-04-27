@@ -16,7 +16,7 @@ class JSM {
  * Classe représentant un modèle static.
  * @extends GfxDrawable
  */
-class GfxJSMDrawable extends GfxDrawable {
+class GfxJSM extends GfxDrawable {
   /**
    * Créer un modèle static.
    */
@@ -102,7 +102,7 @@ class GfxJSMDrawable extends GfxDrawable {
   loadFromFile(path) {
     let json = JSON.parse(fs.readFileSync(path));
     if (!json.hasOwnProperty('Ident') || json['Ident'] != 'JSM') {
-      throw new Error('GfxJSMDrawable::loadFromFile(): File not valid !');
+      throw new Error('GfxJSM::loadFromFile(): File not valid !');
     }
 
     this.jsm = new JSM();
@@ -113,4 +113,4 @@ class GfxJSMDrawable extends GfxDrawable {
   }
 }
 
-module.exports.GfxJSMDrawable = GfxJSMDrawable;
+module.exports.GfxJSM = GfxJSM;

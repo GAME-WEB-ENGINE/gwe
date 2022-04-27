@@ -1,9 +1,9 @@
 let { UIWidget } = require('./ui_widget');
 
-class UIMenuTextWidget extends UIWidget {
+class UIMenuText extends UIWidget {
   constructor(options = {}) {
     super({
-      className: 'UIMenuTextWidget'
+      className: 'UIMenuText'
     });
 
     this.node.textContent = options.text;
@@ -14,4 +14,4 @@ class UIMenuTextWidget extends UIWidget {
   }
 }
 
-module.exports.UIMenuTextWidget = UIMenuTextWidget;
+module.exports.UIMenuText = UIMenuText;

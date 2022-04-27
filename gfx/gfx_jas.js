@@ -35,7 +35,7 @@ class JASAnimation {
  * Classe représentant un sprite animé.
  * @extends GfxDrawable
  */
-class GfxJASDrawable extends GfxDrawable {
+class GfxJAS extends GfxDrawable {
   /**
    * Créer un sprite animé.
    */
@@ -189,7 +189,7 @@ class GfxJASDrawable extends GfxDrawable {
   loadFromFile(path) {
     let json = JSON.parse(fs.readFileSync(path));
     if (!json.hasOwnProperty('Ident') || json['Ident'] != 'JAS') {
-      throw new Error('GfxJASDrawable::loadFromFile(): File not valid !');
+      throw new Error('GfxJAS::loadFromFile(): File not valid !');
     }
 
     this.jas = new JAS();
@@ -225,7 +225,7 @@ class GfxJASDrawable extends GfxDrawable {
   play(animationName, isLooped) {
     let animation = this.jas.animations.find(animation => animation.name == animationName);
     if (!animation) {
-      throw new Error('GfxJASDrawable::play: animation not found.');
+      throw new Error('GfxJAS::play: animation not found.');
     }
 
     this.boundingBox = new BoundingBox([0, 0], [animation.frames[0].width, animation.frames[0].height]);
@@ -236,4 +236,4 @@ class GfxJASDrawable extends GfxDrawable {
   }
 }
 
-module.exports.GfxJASDrawable = GfxJASDrawable;
+module.exports.GfxJAS = GfxJAS;
