@@ -23,7 +23,7 @@ class Screen {
    * Fonction appelée lors de la phase d'évènements d'entrées utilisateur.
    * @param {InputEvent} event - Evènement d'entrée utilisateur.
    */
-   handleEvent(event) {
+  handleEvent(event) {
     // virtual method called during event pulling phase !
   }
 

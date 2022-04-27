@@ -2,7 +2,7 @@ let { eventManager } = require('../event/event_manager');
 let { ArrayCollection } = require('../array/array_collection');
 let { UIMenuWidget } = require('./ui_menu_widget');
 
-class UIListViewWidget extends UIMenuWidget {
+class UIListViewMenu extends UIMenuWidget {
   constructor(options = {}) {
     super(options);
     this.collection = new ArrayCollection();
@@ -103,4 +103,4 @@ class UIListViewWidget extends UIMenuWidget {
   }
 }
 
-module.exports.UIListViewWidget = UIListViewWidget;
+module.exports.UIListViewMenu = UIListViewMenu;

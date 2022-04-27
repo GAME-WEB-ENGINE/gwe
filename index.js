@@ -30,14 +30,14 @@ let { UIInputSelectMultipleWidget } = require('./ui/ui_input_select_widget');
 let { UIInputSliderWidget } = require('./ui/ui_input_slider_widget');
 let { UIInputTextWidget } = require('./ui/ui_input_text_widget');
 let { UIKeyboardWidget } = require('./ui/ui_keyboard_widget');
-let { UIListViewWidget } = require('./ui/ui_list_view_widget');
+let { UIListViewMenu } = require('./ui/ui_list_view_menu');
 let { UIMenuTextWidget } = require('./ui/ui_menu_text_widget');
 let { UIMenuWidget } = require('./ui/ui_menu_widget');
 let { UIMessageWidget } = require('./ui/ui_message_widget');
 let { UIPrintWidget } = require('./ui/ui_print_widget');
 let { UIPromptWidget } = require('./ui/ui_prompt_widget');
 let { UISpriteWidget } = require('./ui/ui_sprite_widget');
-let { UITextViewWidget } = require('./ui/ui_text_view_widget');
+let { UITextWidget } = require('./ui/ui_text_widget');
 let { UIWidget } = require('./ui/ui_widget');
 let { Utils } = require('./helpers');
 
@@ -88,14 +88,14 @@ module.exports.GWE = {
   UIInputSliderWidget,
   UIInputTextWidget,
   UIKeyboardWidget,
-  UIListViewWidget,
+  UIListViewMenu,
   UIMenuTextWidget,
   UIMenuWidget,
   UIMessageWidget,
   UIPrintWidget,
   UIPromptWidget,
   UISpriteWidget,
-  UITextViewWidget,
+  UITextWidget,
   UIWidget,
   Utils,
   SizeModeEnum,

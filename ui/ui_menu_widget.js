@@ -77,6 +77,10 @@ class UIMenuWidget extends UIWidget {
     return this.itemWidgets.map(itemWidget => itemWidget.isSelected());
   }
 
+  getItemWidgets() {
+    return this.itemWidgets;
+  }
+
   addItemWidget(itemWidget, enabled = true, index = -1) {
     if (index == -1) {
       this.itemWidgets.push(itemWidget);
