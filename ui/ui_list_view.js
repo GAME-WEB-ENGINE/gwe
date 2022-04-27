@@ -43,11 +43,11 @@ class UIListView extends UIMenu {
   }
 
   getFocusedItem() {
-    return this.views[this.getFocusedItemWidgetIndex()];
+    return this.views[this.getFocusedWidgetIndex()];
   }
 
   getSelectedItem() {
-    return this.views[this.getSelectedItemWidgetIndex()];
+    return this.views[this.getSelectedWidgetIndex()];
   }
 
   setSortPredicate(sortPredicate) {
@@ -96,7 +96,7 @@ class UIListView extends UIMenu {
 
   handleItemRemoved(data) {
     let index = this.views.indexOf(data.item);
-    this.removeItemWidget(index);
+    this.removeWidget(index);
 
     let items = this.collection.getItems();
     this.views = items.sort(this.sortPredicate).filter(this.filterPredicate);    
