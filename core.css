@@ -391,7 +391,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 /*---------------------------------------------------------------------------------------------*/
 /* UI BUBBLE WIDGET
 /*---------------------------------------------------------------------------------------------*/
-.UIBubbleWidget {
+.UIBubble {
   display: flex;
   position: absolute;
   flex-direction: column;
@@ -401,7 +401,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
   border: 10px solid;
   border-image: url(../../assets/textures/ui_border.png) 3 fill;
 }
-.UIBubbleWidget-text {
+.UIBubble-text {
   display: block;
   margin-bottom: 8px;
   line-height: 2;
@@ -411,7 +411,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 /*---------------------------------------------------------------------------------------------*/
 /* UI DESCRIPTION LIST WIDGET
 /*---------------------------------------------------------------------------------------------*/
-.UIDescriptionListWidget {
+.UIDescriptionList {
   display: flex;
   flex-direction: column;
   border: 10px solid;
@@ -419,15 +419,15 @@ input[type=range]:focus::-webkit-slider-runnable-track {
   padding-left: 10px;
   padding-right: 10px;
 }
-.UIDescriptionListWidget-item {
+.UIDescriptionList-item {
   display: flex;
   justify-content: space-between;
   line-height: 32px;
 }
-.UIDescriptionListWidget-item-label {
+.UIDescriptionList-item-label {
   color: #ccccff;
 }
-.UIDescriptionListWidget-item-value {
+.UIDescriptionList-item-value {
   color: #fff;
   margin-left: 15px;
 }
@@ -435,7 +435,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 /*---------------------------------------------------------------------------------------------*/
 /* UI DIALOG WIDGET
 /*---------------------------------------------------------------------------------------------*/
-.UIDialogWidget {
+.UIDialog {
   display: block;
   position: absolute;
   right: 80px;
@@ -443,23 +443,23 @@ input[type=range]:focus::-webkit-slider-runnable-track {
   left: 80px;
   z-index: 12;
 }
-.UIDialogWidget-author {
+.UIDialog-author {
   display: inline-block;
   padding: 10px;
   margin-bottom: 5px;
   background-color: rgba(0, 0, 0, 0.5);
 }
-.UIDialogWidget-textbox {
+.UIDialog-textbox {
   position: relative;
   min-height: 128px;
   padding: 10px;
   background-color: rgba(0, 0, 0, 0.5);
 }
-.UIDialogWidget-textbox-text {
+.UIDialog-textbox-text {
   line-height: 1.6;
   white-space: pre-line;
 }
-.UIDialogWidget-textbox-next {
+.UIDialog-textbox-next {
   display: none;
   position: absolute;
   right: 10px;
@@ -482,56 +482,56 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 /*---------------------------------------------------------------------------------------------*/
 /* UI INPUT RANGE WIDGET
 /*---------------------------------------------------------------------------------------------*/
-.UIInputRangeWidget {
+.UIInputRange {
   display: flex;
   align-items: center;
 }
-.UIInputRangeWidget-prevIcon {
+.UIInputRange-prevIcon {
   display: block;
 }
-.UIInputRangeWidget-value {
+.UIInputRange-value {
   margin-left: 16px;
   margin-right: 16px;
 }
-.UIInputRangeWidget-nextIcon {
+.UIInputRange-nextIcon {
   display: block;
 }
 
 /*---------------------------------------------------------------------------------------------*/
 /* UI INPUT SELECT WIDGET
 /*---------------------------------------------------------------------------------------------*/
-.UIInputSelectWidget {
+.UIInputSelect {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-.UIInputSelectWidget.u-focused .UIMenuTextWidget.u-focused {
+.UIInputSelect.u-focused .UIMenuText.u-focused {
   color: rgb(98, 211, 255);
 }
 
 /*---------------------------------------------------------------------------------------------*/
 /* UI INPUT SELECT MULTIPLE WIDGET
 /*---------------------------------------------------------------------------------------------*/
-.UIInputSelectMultipleWidget {
+.UIInputSelectMultiple {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-.UIInputSelectMultipleWidget.u-focused .UIMenuTextWidget.u-focused {
+.UIInputSelectMultiple.u-focused .UIMenuText.u-focused {
   color: rgb(98, 211, 255);
 }
 
 /*---------------------------------------------------------------------------------------------*/
 /* UI INPUT SLIDER WIDGET
 /*---------------------------------------------------------------------------------------------*/
-.UIInputSliderWidget {
+.UIInputSlider {
   display: flex;
   align-items: center;
 }
-.UIInputSliderWidget-range {
+.UIInputSlider-range {
   display: block;
 }
-.UIInputSliderWidget-value {
+.UIInputSlider-value {
   margin-left: 16px;
   min-width: 64px;
 }
@@ -539,42 +539,42 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 /*---------------------------------------------------------------------------------------------*/
 /* UI KEYBOARD WIDGET
 /*---------------------------------------------------------------------------------------------*/
-.UIKeyboardWidget {
+.UIKeyboard {
   padding-top: 10px;
   border: 10px solid;
   border-image: url(../../assets/textures/ui_border.png) 3 fill;
 }
-.UIKeyboardWidget-value {
+.UIKeyboard-value {
   background-color: blue;
   padding: 0 8px;
   height: 32px;
   line-height: 32px;
   margin-bottom: 16px;
 }
-.UIKeyboardWidget-row {
+.UIKeyboard-row {
   display: flex;
   flex-direction: row;
 }
-.UIKeyboardWidget-row-item {
+.UIKeyboard-row-item {
   position: relative;
   flex: 1;
   padding: 8px;
 }
-.UIKeyboardWidget.u-focused .UIKeyboardWidget-row-item.u-focused {
+.UIKeyboard.u-focused .UIKeyboard-row-item.u-focused {
   background-color: rgb(98, 211, 255);
 }
 
 /*---------------------------------------------------------------------------------------------*/
 /* UI MENU TEXT WIDGET
 /*---------------------------------------------------------------------------------------------*/
-.UIMenuTextWidget {
+.UIMenuText {
   display: flex;
   padding: 8px;
 }
-.UIMenuTextWidget.u-selected {
+.UIMenuText.u-selected {
   background-color: rgb(98, 255, 106);
 }
-.UIMenuTextWidget.u-disabled {
+.UIMenuText.u-disabled {
   pointer-events: none;
   opacity: 0.5;
 }
@@ -582,19 +582,19 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 /*---------------------------------------------------------------------------------------------*/
 /* UI MENU WIDGET
 /*---------------------------------------------------------------------------------------------*/
-.UIMenuWidget {
+.UIMenu {
   display: grid;
   border: 10px solid;
   border-image: url(../../assets/textures/ui_border.png) 3 fill;
 }
-.UIMenuWidget.u-focused .UIMenuTextWidget.u-focused {
+.UIMenu.u-focused .UIMenuText.u-focused {
   background-color: rgb(98, 211, 255);
 }
 
 /*---------------------------------------------------------------------------------------------*/
 /* UI MESSAGE WIDGET
 /*---------------------------------------------------------------------------------------------*/
-.UIMessageWidget {
+.UIMessage {
   display: block;
   position: absolute;
   right: 0;
@@ -602,20 +602,20 @@ input[type=range]:focus::-webkit-slider-runnable-track {
   left: 0;  
   z-index: 12;
 }
-.UIMessageWidget-inner {
+.UIMessage-inner {
   background-color: rgba(0, 0, 0, 0.5);
 }
-.UIMessageWidget-picture {
+.UIMessage-picture {
   position: absolute;
   bottom: 0;
   left: 0;
   padding-left: 10px;
   padding-right: 10px;
 }
-.UIMessageWidget-picture-img {
+.UIMessage-picture-img {
   width: 132px;
 }
-.UIMessageWidget-textbox {
+.UIMessage-textbox {
   position: relative;
   margin-left: 160px;
   margin-right: 80px;
@@ -624,16 +624,16 @@ input[type=range]:focus::-webkit-slider-runnable-track {
   max-height: 150px;
   overflow: hidden;
 }
-.UIMessageWidget-textbox-text {
+.UIMessage-textbox-text {
   line-height: 1.6;
   white-space: pre-line;
 }
-.UIMessageWidget-textbox-author {
+.UIMessage-textbox-author {
   font-size: 12px;
   margin-bottom: 10px;
   color: yellow;
 }
-.UIMessageWidget-textbox-next {
+.UIMessage-textbox-next {
   display: none;
   position: absolute;
   right: 10px;
@@ -656,7 +656,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 /*---------------------------------------------------------------------------------------------*/
 /* UI PRINT WIDGET
 /*---------------------------------------------------------------------------------------------*/
-.UIPrintWidget {
+.UIPrint {
   display: block;
   position: absolute;
   top: 10px;
@@ -665,7 +665,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
   left: 10px;
   z-index: 12;
 }
-.UIPrintWidget-textbox {
+.UIPrint-textbox {
   position: absolute;
   top: 0;
   right: 0;
@@ -674,11 +674,11 @@ input[type=range]:focus::-webkit-slider-runnable-track {
   padding: 10px;
   background-color: rgba(0, 0, 0, 0.5);
 }
-.UIPrintWidget-textbox-text {
+.UIPrint-textbox-text {
   line-height: 1.6;
   white-space: pre-line;
 }
-.UIPrintWidget-textbox-next {
+.UIPrint-textbox-next {
   display: none;
   position: absolute;
   right: 10px;
@@ -701,21 +701,21 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 /*---------------------------------------------------------------------------------------------*/
 /* UI PROMPT WIDGET
 /*---------------------------------------------------------------------------------------------*/
-.UIPromptWidget {
+.UIPrompt {
   padding-top: 10px;
   padding-right: 10px;
   padding-left: 10px;
   border: 10px solid;
   border-image: url(../../assets/textures/ui_border.png) 3 fill;
 }
-.UIPromptWidget-text {
+.UIPrompt-text {
   display: block;
   line-height: 24px;
   margin-bottom: 16px;
   white-space: pre;
   text-align: center;
 }
-.UIPromptWidget .UIMenuWidget {
+.UIPrompt .UIMenu {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -726,7 +726,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 /*---------------------------------------------------------------------------------------------*/
 /* UI SPRITE WIDGET
 /*---------------------------------------------------------------------------------------------*/
-.UISpriteWidget {
+.UISprite {
   background-repeat: no-repeat;
   background-position: 0px 0px;
 }
@@ -734,12 +734,12 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 /*---------------------------------------------------------------------------------------------*/
 /* UI TEXT WIDGET
 /*---------------------------------------------------------------------------------------------*/
-.UITextWidget {
+.UIText {
   display: flex;
   border: 10px solid;
   border-image: url(../../assets/textures/ui_border.png) 3 fill;
 }
-.UITextWidget-text {
+.UIText-text {
   display: inline-flex;
   align-items: center;
   padding: 8px;
