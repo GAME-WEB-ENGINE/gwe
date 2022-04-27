@@ -130,7 +130,7 @@ class MainScreen  extends  GWE.Screen {
 module.exports.MainScreen = MainScreen;
 ```
 
-Dans le fichier **app.js** ajouter l'écran au gestionnaire d'écran afin que celui-ci soit exécuté via la ligne suivante ```GWE.screenManager.requestSetScreen(new  MainScreen(app));```.  
+Ajouter et charger l'écran "MainScreen" afin que celui-ci soit exécuté via la ligne suivante ```GWE.screenManager.requestSetScreen(new  MainScreen(app));``` dans le fichier **app.js**.  
 
 ## Documentation
 Une documentation complète est disponible ici: https://ra1jin.github.io/gwe-doc/.
