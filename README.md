@@ -1,4 +1,6 @@
 
+![Logo](https://ra1jin.github.io/images/gwe_logo.png)
+
 ![Drag Racing](https://img.shields.io/badge/lang-javascript-f39f37) ![Drag Racing](https://img.shields.io/badge/npm-v1.0.1-blue) ![Drag Racing](https://img.shields.io/badge/release-v1.0.1-blue) ![Drag Racing](https://img.shields.io/badge/dependencies-electron-brightgreen) 
 
 Copyright © 2020-2022 [Raijin].
