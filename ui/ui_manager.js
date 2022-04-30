@@ -42,6 +42,14 @@ class UIManager {
   }
 
   /**
+   * Récupère les widgets.
+   * @return {array} Le tableau des widgets.
+   */
+  getWidgets() {
+    return this.widgets;
+  }
+
+  /**
    * Donne le focus à {widget}.
    * @param {UIWidget} widget - L'élément d'interface utilisateur.
    */
