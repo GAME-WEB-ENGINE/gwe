@@ -135,11 +135,19 @@ Ajouter et charger l'écran "MainScreen" afin que celui-ci soit exécuté via la
 
 ## Documentation
 Une documentation complète est disponible ici: https://ra1jin.github.io/gwe-doc/.
+Un exemple de démarrage est également disponible ici : https://github.com/ra1jin/gwe-boilerplate
 
-## Exemples
-Voici plusieurs projets créés grâce à Game Web Engine:
-- [Boilerplate](https://github.com/ra1jin/gwe-boilerplate)
-- [RolePlayingGame2000](https://github.com/ra1jin/gwe-boilerplate)
+## Templates
+L'atout principal de GWE est son nombre conséquent de **projets de template**.
+Ce sont des **projets génériques** basés sur des **genres spécifiques** comme par ex: j-rpg, ccg, board, visual novel, etc...
+L'intêret est de vous permettre de partir d'une **base solide** et de rajouter ou enlevé des choses afin de créer votre propre jeu vidéo.
+Les templates sont payantes mais le **gain de temps** est énorme et le prix plus que raisonnable.
+
+Voici la liste des templates actuellement disponibles:
+- **gwe-template-rpg-scene** - Module de navigation en trois dimensions avec fond pré-calculé + gestion des évènements via des scripts.
+- **gwe-template-rpg-battle** - Module de combat tour par tour en deux dimensions + menu complet.
+- **gwe-template-ccg** - Module intégrant les incontournables d'un ccg.
+- **gwe-template-visual-novel** - Module visual novel.
 
 ## Comment intégrer vos modèles 3D ?
 L'extension Blender [blender-gwe-exporter](https://github.com/ra1jin/blender-gwe-exporter) vous permet d'exporter vos modèles statiques et animés dans les formats compatible GWE !

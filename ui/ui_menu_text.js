@@ -6,7 +6,7 @@ class UIMenuText extends UIWidget {
       className: 'UIMenuText'
     });
 
-    this.node.textContent = options.text;
+    this.node.textContent = options.text ? options.text : '';
   }
 
   setText(text) {
