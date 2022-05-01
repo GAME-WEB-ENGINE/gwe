@@ -148,6 +148,7 @@ Voici la liste des templates actuellement disponibles:
 - **gwe-template-rpg-battle** - Module de combat tour par tour en deux dimensions + menu complet.
 - **gwe-template-ccg** - Module intégrant les incontournables d'un ccg.
 - **gwe-template-visual-novel** - Module visual novel.
+- **gwe-template-board** - Module conçu pour les jeux de plateau avec comme exemple: un jeu d'echec + jeu de dames (pas encore dispo)
 
 ## Comment intégrer vos modèles 3D ?
 L'extension Blender [blender-gwe-exporter](https://github.com/ra1jin/blender-gwe-exporter) vous permet d'exporter vos modèles statiques et animés dans les formats compatible GWE !
