@@ -1,6 +1,6 @@
 {
   "name": "gwe",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "Moteur multimédia 2D/3D philosophiquement simple et léger !",
   "main": "index.js",
   "scripts": {
@@ -11,14 +11,10 @@
     "url": "git+https://github.com/ra1jin/gwe.git"
   },
   "keywords": [
-    "moteur",
-    "graphique",
-    "moteur",
-    "2d",
-    "moteur",
+    "game engine",
     "3d",
-    "moteur",
-    "webg"
+    "webgl",
+    "graphics engine"
   ],
   "author": "raijin",
   "license": "ISC",
