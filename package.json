@@ -1,6 +1,6 @@
 {
   "name": "gwe",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "description": "Moteur multimédia 2D/3D philosophiquement simple et léger !",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,9 @@
     "game engine",
     "3d",
     "webgl",
-    "graphics engine"
+    "graphics engine",
+    "game web engine",
+    "moteur de jeux web"
   ],
   "author": "raijin",
   "license": "ISC",
