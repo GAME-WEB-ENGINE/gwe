@@ -1,34 +1,37 @@
-<img src="https://ra1jin.github.io/images/gwe_logo_borderless.png" alt="logo" width="400"/>
+<img src="https://ra1jin.github.io/images/gwe_logo.png" alt="logo" width="400"/>
 
 ![Drag Racing](https://img.shields.io/badge/lang-javascript-f39f37) ![Drag Racing](https://img.shields.io/badge/npm-v1.0.1-blue) ![Drag Racing](https://img.shields.io/badge/release-v1.0.1-blue) ![Drag Racing](https://img.shields.io/badge/dependencies-electron-brightgreen) 
 
 Copyright © 2020-2022 [Raijin].
 
-Nombreux sont les **développeurs web** qui souhaite créer leurs propre **jeu vidéo**, c'est maintenant possible grâce à **GWE** alias **Game Web Engine**, un **moteur de jeu 2D/3D** basé sur les technologies du **web**.  
-Pas besoin d'apprendre un nouveau langage, si vous maitrisez **HTML/JS/CSS** alors ce moteur est fait pour vous.
+Nombreux sont les **développeurs web** qui souhaitent créer leurs propres **jeux vidéo**, c'est maintenant possible grâce à **GWE** alias **Game Web Engine**, un **moteur de jeu 2D/3D** basé sur les technologies du **web**.  
+Pas besoin d'apprendre un nouveau langage, si vous maîtrisez **HTML/JS/CSS** alors ce moteur est fait pour vous.
 
 De plus, grâce à son projet de démarrage, ce moteur intègre tout le nécessaire pour commencer à développer un jeu vidéo avec un **minimum d'efforts**.
+
+## Demo
+Un exemple de démarrage est disponible ici : https://github.com/ra1jin/gwe-template-boilerplate
 
 ## Fonctionnalités générales
 - Un gestionnaire graphique
 - Un gestionaire des différents "écrans" du jeu
-- Un gestionaire des ressources de texture
-- Un gestionnaire des ressources de son
+- Un gestionaire des ressources texture
+- Un gestionnaire des ressources son
 - Un gestionnaire des évènements
-- Un gestionnaire des entrés clavier/souris
+- Un gestionnaire des entrées clavier/souris
 - Un gestionnaire de l'interface utilisateur à base de "widget" (plus de 16 widgets de bases)
 - Un gestionnaire de script
 - Support de plusieurs vues caméra 2D et 3D
 - Support des meshs de navigation (JWM)
-- Support des images statique (JSS)
+- Support des images statiques (JSS)
 - Support des images animées (JAS)
-- Support des meshes texturés statique (JSM)
-- Support des meshes texturés animé statique (JAM)
+- Support des meshs texturés statiques (JSM)
+- Support des meshs texturés animés (JAM)
 - Support des formes géométriques de debug
 
 ## Quelques parties pris concernant ce travail
 - Utiliser le DOM pour les éléments UI
-- Utiliser un format 3D dédié au moteur (voir exportateurs Blender)
+- Utiliser un format 3D dédié au moteur (voir exportateur Blender)
 - Utiliser un format 3D avec des animations frame par frame
 
 ## Installation
@@ -131,17 +134,18 @@ class MainScreen  extends  GWE.Screen {
 module.exports.MainScreen = MainScreen;
 ```
 
-Ajouter et charger l'écran "MainScreen" afin que celui-ci soit exécuté via la ligne suivante ```GWE.screenManager.requestSetScreen(new  MainScreen(app));``` dans le fichier **app.js**.  
+Ajouter et charger l'écran "MainScreen" afin que celui-ci soit lancé via la ligne suivante ```GWE.screenManager.requestSetScreen(new  MainScreen(app));``` dans le fichier **app.js**.  
 
 ## Documentation
-Une documentation complète est disponible ici: https://ra1jin.github.io/gwe-doc/.
-Un exemple de démarrage est également disponible ici : https://github.com/ra1jin/gwe-boilerplate
+Une documentation est disponible ici: https://ra1jin.github.io/gwe-doc/ (bientot en anglais).
 
 ## Templates
-L'atout principal de GWE est son nombre conséquent de **projets de template**.
+L'atout principal de GWE est son nombre conséquent de **projets template**.
 Une template est un **projet générique** basé sur un **genre spécifique** comme par ex: j-rpg, ccg, board, visual novel, etc...
-L'intêret est de de partir d'une **base solide** et d'adapter la template afin de créer votre propre jeu vidéo.
+L'intêret est de partir d'une **base solide** et de l'adapter afin de créer votre propre jeu vidéo.
 Les templates sont payantes mais le **gain de temps** est énorme et le prix plus que raisonnable.
+
+![Drag Racing](https://ra1jin.github.io/images/gwe_board.png)
 
 Voici la liste des templates actuellement disponibles:
 - **gwe-template-thunar** - Module de scène (JRPG 3D Pré-calc)
