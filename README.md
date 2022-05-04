@@ -10,7 +10,7 @@ Pas besoin d'apprendre un nouveau langage, si vous maîtrisez **HTML/JS/CSS** al
 De plus, grâce à son projet de démarrage, ce moteur intègre tout le nécessaire pour commencer à développer un jeu vidéo avec un **minimum d'efforts**.
 
 ## Demo
-Un exemple de démarrage est disponible ici : https://github.com/ra1jin/gwe-template-boilerplate
+Un exemple de démarrage est disponible [ici](https://github.com/ra1jin/gwe-template-boilerplate)    
 
 ## Fonctionnalités générales
 - Un gestionnaire graphique
