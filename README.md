@@ -144,11 +144,15 @@ L'intêret est de de partir d'une **base solide** et d'adapter la template afin 
 Les templates sont payantes mais le **gain de temps** est énorme et le prix plus que raisonnable.
 
 Voici la liste des templates actuellement disponibles:
-- **gwe-template-rpg-scene** - Module de navigation en trois dimensions avec fond pré-calculé + gestion des évènements via des scripts.
-- **gwe-template-rpg-battle** - Module de combat tour par tour en deux dimensions + menu complet.
-- **gwe-template-ccg** - Module intégrant les incontournables d'un ccg.
-- **gwe-template-visual-novel** - Module visual novel.
-- **gwe-template-flexiblerules** - Module conçu pour les jeux de société en introduisant un modèle de programmation simplifié.
+- **gwe-template-thunar** - Module de scène (JRPG 3D Pré-calc)
+- **gwe-template-odin** - Module de combat deux dimensions tour par tour + menu (JRPG).
+- **gwe-template-sai** - Module jeu de carte à collectionner (CCG).
+- **gwe-template-edgar** - Module visual novel (VN).
+- **gwe-template-manua** - Module conçu pour les jeux de société en introduisant un modèle de programmation simplifié.
+
+Template à venir:
+- **gwe-template-bestla** - Module de combat trois dimensions tour par tour + menu (JRPG)
+- **gwe-template-hades**- Module quake-like basique (FPS)
 
 ## Comment intégrer vos modèles 3D ?
 L'extension Blender [blender-gwe-exporter](https://github.com/ra1jin/blender-gwe-exporter) vous permet d'exporter vos modèles statiques et animés dans les formats compatible GWE !
