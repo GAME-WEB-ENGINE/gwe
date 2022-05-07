@@ -28,6 +28,7 @@ class GfxView {
     this.perspectiveFovy = Math.PI / 4;
     this.perspectiveNear = 2;
     this.perspectiveFar = 2000;
+    this.orthographicSize = 1;
     this.orthographicDepth = 700;
   }
 
@@ -269,6 +270,22 @@ class GfxView {
    */
   setPerspectiveFar(perspectiveFar) {
     this.perspectiveFar = perspectiveFar;
+  }
+
+  /**
+   * Retourne la taille du cube de vision dans le mode orthographic.
+   * @return {number} La taille du cube de vision.
+   */
+   getOrthographicSize() {
+    return this.orthographicSize;
+  }
+
+  /**
+   * Définit la taille du cube de vision dans le mode orthographic.
+   * @param {number} orthographicSize - La taille du cube de vision.
+   */
+  setOrthographicSize(orthographicSize) {
+    this.orthographicSize = orthographicSize;
   }
 
   /**

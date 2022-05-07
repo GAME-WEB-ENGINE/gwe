@@ -571,12 +571,12 @@ class Utils {
     return matrix;
   }
 
-  static MAT4_ORTHOGRAPHIC(width, height, depth) {
+  static MAT4_ORTHOGRAPHIC(size, depth) {
     return [
-      2 / width, 0, 0, 0,
-      0, 2 / height, 0, 0,
-      0, 0, 2 / depth, 0,
-      -1, -1, 0, 1
+      2 / size, 0, 0, 0,
+      0, 2 / size, 0, 0,
+      0, 0, -2 / depth, 0,
+      0, 0, 0, 1
     ];
   }
 

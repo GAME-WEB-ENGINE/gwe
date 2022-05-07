@@ -177,18 +177,19 @@ class GfxManager {
     let view = this.views[viewIndex];
     let viewport = view.getViewport();
     let projectionMode = view.getProjectionMode();
-    let perspectiveFovy = view.getPerspectiveFovy();
-    let perspectiveNear = view.getPerspectiveNear();
-    let perspectiveFar = view.getPerspectiveFar();
-    let orthographicDepth = view.getOrthographicDepth();
-    let width = this.canvas.clientWidth * viewport.widthFactor;
-    let height = this.canvas.clientHeight * viewport.heightFactor;
 
     if (projectionMode == ProjectionModeEnum.PERSPECTIVE) {
+      let width = this.canvas.clientWidth * viewport.widthFactor;
+      let height = this.canvas.clientHeight * viewport.heightFactor;
+      let perspectiveFovy = view.getPerspectiveFovy();
+      let perspectiveNear = view.getPerspectiveNear();
+      let perspectiveFar = view.getPerspectiveFar();
       projectionMatrix = Utils.MAT4_PERSPECTIVE(perspectiveFovy, width / height, perspectiveNear, perspectiveFar);
     }
     else if (projectionMode == ProjectionModeEnum.ORTHOGRAPHIC) {
-      projectionMatrix = Utils.MAT4_ORTHOGRAPHIC(width, height, orthographicDepth);
+      let orthographicSize = view.getOrthographicSize();
+      let orthographicDepth = view.getOrthographicDepth();
+      projectionMatrix = Utils.MAT4_ORTHOGRAPHIC(orthographicSize, orthographicDepth);
     }
     else {
       throw new Error('GfxManager::setView(): ProjectionMode not valid !');
