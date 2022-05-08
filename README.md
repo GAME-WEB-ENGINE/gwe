@@ -160,3 +160,7 @@ Template à venir:
 
 ## Comment intégrer vos modèles 3D ?
 L'extension Blender [blender-gwe-exporter](https://github.com/ra1jin/blender-gwe-exporter) vous permet d'exporter vos modèles statiques et animés dans les formats compatible GWE !
+
+## Todos
+- Passer les éléments GFX 2D du plan xy vers le plan xz.
+- Créer JAPS alias JSON Animated Polygon Sprite.

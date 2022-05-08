@@ -16,6 +16,7 @@ class GfxJSS extends GfxDrawable {
     super();
     this.textureRect = [0, 0, 0, 0];
     this.offset = [0, 0];
+    this.pixelsPerUnit = 100;
     this.texture = textureManager.getTexture('');
     this.boundingBox = new BoundingBox();
   }
@@ -73,7 +74,13 @@ class GfxJSS extends GfxDrawable {
    * @return {array} Matrice de modèle.
    */
   getModelMatrix() {
-    let matrix = super.getModelMatrix();
+    let matrix = Utils.MAT4_IDENTITY();
+    matrix = Utils.MAT4_MULTIPLY(matrix, Utils.MAT4_TRANSLATE(this.position[0], this.position[1], this.position[2]));
+    matrix = Utils.MAT4_MULTIPLY(matrix, Utils.MAT4_ROTATE_Y(this.rotation[1]));
+    matrix = Utils.MAT4_MULTIPLY(matrix, Utils.MAT4_ROTATE_X(this.rotation[0])); // y -> x -> z
+    matrix = Utils.MAT4_MULTIPLY(matrix, Utils.MAT4_ROTATE_Z(this.rotation[2]));
+    matrix = Utils.MAT4_MULTIPLY(matrix, Utils.MAT4_SCALE(this.scale[0], this.scale[1], this.scale[2]));
+    matrix = Utils.MAT4_MULTIPLY(matrix, Utils.MAT4_SCALE(1 / this.pixelsPerUnit, 1 / this.pixelsPerUnit, 0));
     matrix = Utils.MAT4_MULTIPLY(matrix, Utils.MAT4_TRANSLATE(-this.offset[0], -this.offset[1], 0));
     return matrix;
   }
@@ -113,6 +120,22 @@ class GfxJSS extends GfxDrawable {
    */
   setOffset(offsetX, offsetY) {
     this.offset = [offsetX, offsetY];
+  }
+
+  /**
+   * Retourne la valeur de conversion px vers unité du monde.
+   * @return {array} La valeur de conversion.
+   */
+  getPixelsPerUnit() {
+    return this.pixelsPerUnit;
+  }
+
+  /**
+   * Définit la valeur de conversion px vers unité du monde.
+   * @param {number} pixelsPerUnit - La valeur de conversion.
+   */
+  setPixelsPerUnit(pixelsPerUnit) {
+    this.pixelsPerUnit = pixelsPerUnit;
   }
 
   /**
