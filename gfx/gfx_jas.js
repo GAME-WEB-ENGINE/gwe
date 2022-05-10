@@ -1,6 +1,6 @@
 let fs = require('fs');
 let { GfxDrawable } = require('./gfx_drawable');
-let { BoundingBox } = require('../bounding/bounding_box');
+let { BoundingRect } = require('../bounding/bounding_rect');
 let { Utils } = require('../helpers');
 let { gfxManager } = require('./gfx_manager');
 let { textureManager } = require('../texture/texture_manager');
@@ -8,14 +8,12 @@ let { eventManager } = require('../event/event_manager');
 
 class JAS {
   constructor() {
-    this.frames = [];
     this.animations = [];
   }
 }
 
 class JASFrame {
   constructor() {
-    this.name = '';
     this.x = 0;
     this.y = 0;
     this.width = 0;
@@ -45,7 +43,7 @@ class GfxJAS extends GfxDrawable {
     this.offset = [0, 0];
     this.pixelsPerUnit = 100;
     this.texture = textureManager.getTexture('');
-    this.boundingBox = new BoundingBox();
+    this.boundingRect = new BoundingRect();
     this.currentAnimationName = '';
     this.currentAnimationFrameIndex = 0;
     this.isLooped = false;
@@ -62,7 +60,7 @@ class GfxJAS extends GfxDrawable {
       return;
     }
 
-    let currentFrame = this.jas.frames.find(frame => frame.name == currentAnimation.frames[this.currentAnimationFrameIndex]);
+    let currentFrame = currentAnimation.frames[this.currentAnimationFrameIndex];
     if (!currentFrame) {
       return;
     }
@@ -121,7 +119,7 @@ class GfxJAS extends GfxDrawable {
    * @param {number} viewIndex - Index de la vue en cours.
    */
   draw(viewIndex) {
-    gfxManager.drawDebugBoundingBox(this.getModelMatrix(), this.boundingBox.min, this.boundingBox.max, [1.0, 1.0, 0.0]);
+    gfxManager.drawDebugBoundingRect(this.getModelMatrix(), this.boundingRect.min, this.boundingRect.max, [1.0, 1.0, 0.0]);
     gfxManager.drawMesh(this.getModelMatrix(), this.vertexCount, this.vertices, this.normals, this.textureCoords, this.texture);
   }
 
@@ -192,18 +190,18 @@ class GfxJAS extends GfxDrawable {
 
   /**
    * Retourne la boite englobante.
-   * @return {BoundingBox} La boite englobante.
+   * @return {BoundingRect} La boite englobante.
    */
-  getBoundingBox() {
-    return this.boundingBox;
+  getBoundingRect() {
+    return this.boundingRect;
   }
 
   /**
    * Retourne la boite englobante avec les transformations du modèle.
-   * @return {BoundingBox} La boite englobante.
+   * @return {BoundingRect} La boite englobante.
    */
-  getWorldBoundingBox() {
-    return this.boundingBox.transform(this.getModelMatrix());
+  getWorldBoundingRect() {
+    return this.boundingRect.transform(this.getModelMatrix());
   }
 
   /**
@@ -217,21 +215,20 @@ class GfxJAS extends GfxDrawable {
 
     this.jas = new JAS();
 
-    for (let obj of json['Frames']) {
-      let frame = new JASFrame();
-      frame.name = obj['Name'];
-      frame.x = obj['X'];
-      frame.y = obj['Y'];
-      frame.width = obj['Width'];
-      frame.height = obj['Height'];
-      this.jas.frames.push(frame);
-    }
-
     for (let obj of json['Animations']) {
       let animation = new JASAnimation();
       animation.name = obj['Name'];
-      animation.frames = obj['Frames'];
       animation.frameDuration = parseInt(obj['FrameDuration']);
+
+      for (let objFrame of obj['Frames']) {
+        let frame = new JASFrame();
+        frame.x = objFrame['X'];
+        frame.y = objFrame['Y'];
+        frame.width = objFrame['Width'];
+        frame.height = objFrame['Height'];
+        animation.frames.push(frame);
+      }
+
       this.jas.animations.push(animation);
     }
 
@@ -246,12 +243,16 @@ class GfxJAS extends GfxDrawable {
    * @param {boolean} isLooped - Si vrai, l'animation est en boucle.
    */
   play(animationName, isLooped) {
+    if (animationName == this.currentAnimationName) {
+      return;
+    }
+
     let animation = this.jas.animations.find(animation => animation.name == animationName);
     if (!animation) {
       throw new Error('GfxJAS::play: animation not found.');
     }
 
-    this.boundingBox = new BoundingBox([0, 0], [animation.frames[0].width, animation.frames[0].height]);
+    this.boundingRect = new BoundingRect([0, 0], [animation.frames[0].width, animation.frames[0].height]);
     this.currentAnimationName = animationName;
     this.currentAnimationFrameIndex = 0;
     this.isLooped = isLooped;

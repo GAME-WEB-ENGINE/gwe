@@ -12,7 +12,6 @@ class UISprite extends UIWidget {
       className: options.className || 'UISprite'
     });
 
-    this.frames = [];
     this.animations = [];
     this.currentAnimationName = '';
     this.currentAnimationFrameIndex = 0;
@@ -26,7 +25,7 @@ class UISprite extends UIWidget {
       return;
     }
 
-    let currentFrame = this.frames.find(frame => frame.name == currentAnimation.frames[this.currentAnimationFrameIndex]);
+    let currentFrame = currentAnimation.frames[this.currentAnimationFrameIndex];
     if (!currentFrame) {
       return;
     }
@@ -54,6 +53,10 @@ class UISprite extends UIWidget {
   }
 
   play(animationName, isLooped = false) {
+    if (animationName == this.currentAnimationName) {
+      return;
+    }
+
     let animation = this.animations.find(animation => animation.name == animationName);
     if (!animation) {
       throw new Error('UISprite::play: animation not found.');
@@ -71,23 +74,23 @@ class UISprite extends UIWidget {
       throw new Error('UISprite::loadFromFile(): Missing "ImageFile" property');
     }
 
-    this.frames = [];
-    for (let obj of json['Frames']) {
-      let frame = {};
-      frame.name = obj['Name'];
-      frame.x = obj['X'];
-      frame.y = obj['Y'];
-      frame.width = obj['Width'];
-      frame.height = obj['Height'];
-      this.frames.push(frame);
-    }
-
     this.animations = [];
+
     for (let obj of json['Animations']) {
       let animation = {};
       animation.name = obj['Name'];
-      animation.frames = obj['Frames'];
+      animation.frames = [];
       animation.frameDuration = parseInt(obj['FrameDuration']);
+
+      for (let objFrame of obj['Frames']) {
+        let frame = {};
+        frame.x = objFrame['X'];
+        frame.y = objFrame['Y'];
+        frame.width = objFrame['Width'];
+        frame.height = objFrame['Height'];
+        animation.frames.push(frame);
+      }
+
       this.animations.push(animation);
     }
 

@@ -1,5 +1,5 @@
 let { GfxDrawable } = require('./gfx_drawable');
-let { BoundingBox } = require('../bounding/bounding_box');
+let { BoundingRect } = require('../bounding/bounding_rect');
 let { Utils } = require('../helpers');
 let { gfxManager } = require('./gfx_manager');
 let { textureManager } = require('../texture/texture_manager');
@@ -18,7 +18,7 @@ class GfxJSS extends GfxDrawable {
     this.offset = [0, 0];
     this.pixelsPerUnit = 100;
     this.texture = textureManager.getTexture('');
-    this.boundingBox = new BoundingBox();
+    this.boundingRect = new BoundingRect();
   }
 
   /**
@@ -65,7 +65,7 @@ class GfxJSS extends GfxDrawable {
    * @param {number} viewIndex - Index de la vue en cours.
    */
   draw(viewIndex) {
-    gfxManager.drawDebugBoundingBox(this.getModelMatrix(), this.boundingBox.min, this.boundingBox.max, [1.0, 1.0, 0.0]);
+    gfxManager.drawDebugBoundingRect(this.getModelMatrix(), this.boundingRect.min, this.boundingRect.max, [1.0, 1.0, 0.0]);
     gfxManager.drawMesh(this.getModelMatrix(), this.vertexCount, this.vertices, this.normals, this.textureCoords, this.texture);
   }
 
@@ -102,7 +102,7 @@ class GfxJSS extends GfxDrawable {
    */
   setTextureRect(left, top, width, height) {
     this.textureRect = [left, top, width, height];
-    this.boundingBox = new BoundingBox([0, 0], [width, height]);
+    this.boundingRect = new BoundingRect([0, 0], [width, height]);
   }
 
   /**
@@ -156,18 +156,18 @@ class GfxJSS extends GfxDrawable {
 
   /**
    * Retourne la boite englobante.
-   * @return {BoundingBox} La boite englobante.
+   * @return {BoundingRect} La boite englobante.
    */
-  getBoundingBox() {
-    return this.boundingBox;
+  getBoundingRect() {
+    return this.boundingRect;
   }
 
   /**
    * Retourne la boite englobante avec les transformations du modèle.
-   * @return {BoundingBox} La boite englobante.
+   * @return {BoundingRect} La boite englobante.
    */
-  getWorldBoundingBox() {
-    return this.boundingBox.transform(this.getModelMatrix());
+  getWorldBoundingRect() {
+    return this.boundingRect.transform(this.getModelMatrix());
   }
 }
 

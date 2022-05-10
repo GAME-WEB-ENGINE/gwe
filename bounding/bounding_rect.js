@@ -17,25 +17,21 @@ class BoundingRect {
   /**
    * Créer un rectangle englobante à partir d'un ensemble de points.
    * @param {array} vertices - Ensemble de points.
-   * @return {BoundingBox} Le rectangle englobant.
+   * @return {BoundingRect} Le rectangle englobant.
    */
   static createFromVertices(vertices) {
     let min = vertices.slice(0, 2);
     let max = vertices.slice(0, 2);
+
     for (let i = 0; i < vertices.length; i += 3) {
-
-      min[j] = Math.min(v, min[j]);
-      max[j] = Math.max(v, max[j]);
-
-
-      for (let j = 0; j < 3; j++) {
+      for (let j = 0; j < 2; j++) {
         let v = vertices[i + j];
         min[j] = Math.min(v, min[j]);
         max[j] = Math.max(v, max[j]);
       }
     }
 
-    return new BoundingBox(min, max);
+    return new BoundingRect(min, max);
   }
 
   /**
@@ -93,17 +89,18 @@ class BoundingRect {
    */
   transform(matrix) {
     let points = [];
-    points.push(this.min[0], this.min[1]);
-    points.push(this.max[0], this.min[1]);
-    points.push(this.max[0], this.max[1]);
-    points.push(this.min[0], this.max[1]);
+    points.push([this.min[0], this.min[1]]);
+    points.push([this.max[0], this.min[1]]);
+    points.push([this.max[0], this.max[1]]);
+    points.push([this.min[0], this.max[1]]);
 
     let transformedPoints = points.map((p) => {
       return Utils.MAT4_MULTIPLY_BY_VEC4(matrix, [p[0], p[1], 0, 1]);
     });
 
-    let min = transformedPoints[0].slice();
-    let max = transformedPoints[0].slice();
+    let min = [transformedPoints[0][0], transformedPoints[0][1]];
+    let max = [transformedPoints[0][0], transformedPoints[0][1]];
+
     for (let i = 0; i < transformedPoints.length; i++) {
       for (let j = 0; j < 2; j++) {
         let v = transformedPoints[i][j];

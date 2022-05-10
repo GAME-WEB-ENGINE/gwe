@@ -91,21 +91,22 @@ class BoundingBox {
    */
   transform(matrix) {
     let points = [];
-    points.push(this.min[0], this.min[1], this.min[2]);
-    points.push(this.max[0], this.min[1], this.min[2]);
-    points.push(this.max[0], this.max[1], this.min[2]);
-    points.push(this.min[0], this.max[1], this.min[2]);
-    points.push(this.min[0], this.max[1], this.max[2]);
-    points.push(this.max[0], this.max[1], this.max[2]);
-    points.push(this.max[0], this.min[1], this.max[2]);
-    points.push(this.min[0], this.min[1], this.max[2]);
+    points.push([this.min[0], this.min[1], this.min[2]]);
+    points.push([this.max[0], this.min[1], this.min[2]]);
+    points.push([this.max[0], this.max[1], this.min[2]]);
+    points.push([this.min[0], this.max[1], this.min[2]]);
+    points.push([this.min[0], this.max[1], this.max[2]]);
+    points.push([this.max[0], this.max[1], this.max[2]]);
+    points.push([this.max[0], this.min[1], this.max[2]]);
+    points.push([this.min[0], this.min[1], this.max[2]]);
 
     let transformedPoints = points.map((p) => {
       return Utils.MAT4_MULTIPLY_BY_VEC4(matrix, [p[0], p[1], p[2], 1]);
     });
 
-    let min = transformedPoints[0].slice();
-    let max = transformedPoints[0].slice();
+    let min = [transformedPoints[0][0], transformedPoints[0][1], transformedPoints[0][2]];
+    let max = [transformedPoints[0][0], transformedPoints[0][1], transformedPoints[0][2]];
+
     for (let i = 0; i < transformedPoints.length; i++) {
       for (let j = 0; j < 3; j++) {
         let v = transformedPoints[i][j];
