@@ -1,6 +1,6 @@
 let fs = require('fs');
 let { GfxDrawable } = require('./gfx_drawable');
-let { BoundingRect } = require('../bounding/bounding_rect');
+let { BoundingBox } = require('../bounding/bounding_box');
 let { Utils } = require('../helpers');
 let { gfxManager } = require('./gfx_manager');
 let { textureManager } = require('../texture/texture_manager');
@@ -43,7 +43,7 @@ class GfxJAS extends GfxDrawable {
     this.offset = [0, 0];
     this.pixelsPerUnit = 100;
     this.texture = textureManager.getTexture('');
-    this.boundingRect = new BoundingRect();
+    this.boundingBox = new BoundingBox();
     this.currentAnimationName = '';
     this.currentAnimationFrameIndex = 0;
     this.isLooped = false;
@@ -119,7 +119,8 @@ class GfxJAS extends GfxDrawable {
    * @param {number} viewIndex - Index de la vue en cours.
    */
   draw(viewIndex) {
-    gfxManager.drawDebugBoundingRect(this.getModelMatrix(), this.boundingRect.min, this.boundingRect.max, [1.0, 1.0, 0.0]);
+    let worldBoundingBox = this.boundingBox.transform(this.getModelMatrix());
+    gfxManager.drawDebugBoundingBox(worldBoundingBox.min, worldBoundingBox.max, [1.0, 1.0, 0.0]);
     gfxManager.drawMesh(this.getModelMatrix(), this.vertexCount, this.vertices, this.normals, this.textureCoords, this.texture);
   }
 
@@ -190,18 +191,18 @@ class GfxJAS extends GfxDrawable {
 
   /**
    * Retourne la boite englobante.
-   * @return {BoundingRect} La boite englobante.
+   * @return {BoundingBox} La boite englobante.
    */
-  getBoundingRect() {
-    return this.boundingRect;
+  getBoundingBox() {
+    return this.boundingBox;
   }
 
   /**
    * Retourne la boite englobante avec les transformations du modèle.
-   * @return {BoundingRect} La boite englobante.
+   * @return {BoundingBox} La boite englobante.
    */
-  getWorldBoundingRect() {
-    return this.boundingRect.transform(this.getModelMatrix());
+  getWorldBoundingBox() {
+    return this.boundingBox.transform(this.getModelMatrix());
   }
 
   /**
@@ -252,7 +253,7 @@ class GfxJAS extends GfxDrawable {
       throw new Error('GfxJAS::play: animation not found.');
     }
 
-    this.boundingRect = new BoundingRect([0, 0], [animation.frames[0].width, animation.frames[0].height]);
+    this.boundingBox = new BoundingBox([0, 0, 0], [animation.frames[0].width, animation.frames[0].height, 0]);
     this.currentAnimationName = animationName;
     this.currentAnimationFrameIndex = 0;
     this.isLooped = isLooped;

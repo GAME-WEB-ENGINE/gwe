@@ -1,5 +1,5 @@
 let { GfxDrawable } = require('./gfx_drawable');
-let { BoundingRect } = require('../bounding/bounding_rect');
+let { BoundingBox } = require('../bounding/bounding_box');
 let { Utils } = require('../helpers');
 let { gfxManager } = require('./gfx_manager');
 let { textureManager } = require('../texture/texture_manager');
@@ -18,7 +18,7 @@ class GfxJSS extends GfxDrawable {
     this.offset = [0, 0];
     this.pixelsPerUnit = 100;
     this.texture = textureManager.getTexture('');
-    this.boundingRect = new BoundingRect();
+    this.boundingBox = new BoundingBox();
   }
 
   /**
@@ -65,7 +65,8 @@ class GfxJSS extends GfxDrawable {
    * @param {number} viewIndex - Index de la vue en cours.
    */
   draw(viewIndex) {
-    gfxManager.drawDebugBoundingRect(this.getModelMatrix(), this.boundingRect.min, this.boundingRect.max, [1.0, 1.0, 0.0]);
+    let worldBoundingBox = this.boundingBox.transform(this.getModelMatrix());
+    gfxManager.drawDebugBoundingBox(worldBoundingBox.min, worldBoundingBox.max, [1.0, 1.0, 0.0]);
     gfxManager.drawMesh(this.getModelMatrix(), this.vertexCount, this.vertices, this.normals, this.textureCoords, this.texture);
   }
 
@@ -102,7 +103,7 @@ class GfxJSS extends GfxDrawable {
    */
   setTextureRect(left, top, width, height) {
     this.textureRect = [left, top, width, height];
-    this.boundingRect = new BoundingRect([0, 0], [width, height]);
+    this.boundingBox = new BoundingBox([0, 0, 0], [width, height, 0]);
   }
 
   /**
@@ -156,18 +157,18 @@ class GfxJSS extends GfxDrawable {
 
   /**
    * Retourne la boite englobante.
-   * @return {BoundingRect} La boite englobante.
+   * @return {BoundingBox} La boite englobante.
    */
-  getBoundingRect() {
-    return this.boundingRect;
+  getBoundingBox() {
+    return this.boundingBox;
   }
 
   /**
    * Retourne la boite englobante avec les transformations du modèle.
-   * @return {BoundingRect} La boite englobante.
+   * @return {BoundingBox} La boite englobante.
    */
-  getWorldBoundingRect() {
-    return this.boundingRect.transform(this.getModelMatrix());
+  getWorldBoundingBox() {
+    return this.boundingBox.transform(this.getModelMatrix());
   }
 }
 

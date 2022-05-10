@@ -318,12 +318,11 @@ class GfxManager {
 
   /**
    * Dessine un rectangle englobant de debug.
-   * @param {array} matrix - La matrix de modèle (16 entrées).
    * @param {array} min - Point minimum (2 entrées).
    * @param {array} max - Point maximum (2 entrées).
    * @param {array} color - La couleur (3 entrées).
    */
-  drawDebugBoundingRect(matrix, min, max, color = [1, 1, 1]) {
+  drawDebugBoundingRect(min, max, color = [1, 1, 1]) {
     if (!this.showDebug) {
       return;
     }
@@ -338,7 +337,7 @@ class GfxManager {
     vertices.push(...a, ...d, ...c);
 
     this.gl.useProgram(this.debugShader);
-    this.gl.uniformMatrix4fv(this.debugShaderUniforms.mMatrix, false, matrix);
+    this.gl.uniformMatrix4fv(this.debugShaderUniforms.mMatrix, false, Utils.MAT4_IDENTITY());
 
     let vertexBuffer = this.gl.createBuffer();
     this.gl.bindBuffer(this.gl.ARRAY_BUFFER, vertexBuffer);
@@ -483,12 +482,11 @@ class GfxManager {
 
   /**
    * Dessine une boite englobante de debug.
-   * @param {array} matrix - La matrix de modèle (16 entrées).
    * @param {array} min - Point minimum (3 entrées).
    * @param {array} max - Point maximum (3 entrées).
    * @param {array} color - La couleur (3 entrées).
    */
-  drawDebugBoundingBox(matrix, min, max, color = [1, 1, 1]) {
+  drawDebugBoundingBox(min, max, color = [1, 1, 1]) {
     if (!this.showDebug) {
       return;
     }
@@ -511,7 +509,7 @@ class GfxManager {
     vertices.push(...a, ...h, ...b, ...g);
 
     this.gl.useProgram(this.debugShader);
-    this.gl.uniformMatrix4fv(this.debugShaderUniforms.mMatrix, false, matrix);
+    this.gl.uniformMatrix4fv(this.debugShaderUniforms.mMatrix, false, Utils.MAT4_IDENTITY());
 
     let vertexBuffer = this.gl.createBuffer();
     this.gl.bindBuffer(this.gl.ARRAY_BUFFER, vertexBuffer);

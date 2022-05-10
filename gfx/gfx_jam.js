@@ -120,7 +120,8 @@ class GfxJAM extends GfxDrawable {
    * @param {number} viewIndex - Index de la vue en cours.
    */
   draw(viewIndex) {
-    gfxManager.drawDebugBoundingBox(this.getModelMatrix(), this.boundingBox.min, this.boundingBox.max, [1.0, 1.0, 0.0]);
+    let worldBoundingBox = this.boundingBox.transform(this.getModelMatrix());
+    gfxManager.drawDebugBoundingBox(worldBoundingBox.min, worldBoundingBox.max, [1.0, 1.0, 0.0]);
     gfxManager.drawMesh(this.getModelMatrix(), this.vertexCount, this.vertices, this.normals, this.textureCoords, this.texture);
   }
 
