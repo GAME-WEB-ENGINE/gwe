@@ -14,8 +14,8 @@ Un exemple de démarrage est disponible [ici](https://github.com/ra1jin/gwe-temp
 
 ## Fonctionnalités générales
 - Un gestionnaire graphique
-- Un gestionaire des différents "écrans" du jeu
-- Un gestionaire des ressources texture
+- Un gestionnaire des différents "écrans" du jeu
+- Un gestionnaire des ressources texture
 - Un gestionnaire des ressources son
 - Un gestionnaire des évènements
 - Un gestionnaire des entrées clavier/souris
