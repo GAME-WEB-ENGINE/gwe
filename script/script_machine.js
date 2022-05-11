@@ -69,7 +69,7 @@ class ScriptMachine {
 
     let currentCall = currentBlock.calls[this.currentCallIndex];
     let jumpto = this.runCommand(currentCall.commandName, currentCall.commandArgs);
-    if (jumpto) {
+    if (typeof jumpto === 'string') {
       this.currentBlockId = jumpto;
       this.currentCallIndex = 0;
       return;
