@@ -29,7 +29,7 @@ Un exemple de démarrage est disponible [ici](https://github.com/ra1jin/gwe-temp
 - Support des meshs texturés animés (JAM)
 - Support des formes géométriques de debug
 
-## Quelques parties pris concernant ce travail
+## Quelques partis pris concernant ce travail
 - Utiliser le DOM pour les éléments UI
 - Utiliser un format 3D dédié au moteur (voir exportateur Blender)
 - Utiliser un format 3D avec des animations frame par frame
