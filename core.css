@@ -371,6 +371,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
   opacity: 0;
   transition: opacity 1s;
   z-index: 10;
+  pointer-events: none;
 }
 
 #UI_OVERLAYER {
@@ -382,6 +383,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
   background: rgba(0, 0, 0, 0.7);
   opacity:0;
   z-index: 10;
+  pointer-events: none;
 }
 
 /*#############################################################################################*/
