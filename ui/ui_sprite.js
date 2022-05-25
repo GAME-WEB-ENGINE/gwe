@@ -26,9 +26,6 @@ class UISprite extends UIWidget {
     }
 
     let currentFrame = currentAnimation.frames[this.currentAnimationFrameIndex];
-    if (!currentFrame) {
-      return;
-    }
 
     this.node.style.backgroundPositionX = -currentFrame.x + 'px';
     this.node.style.backgroundPositionY = -currentFrame.y + 'px';
@@ -38,7 +35,7 @@ class UISprite extends UIWidget {
     if (this.timeElapsed >= currentAnimation.frameDuration) {
       if (this.currentAnimationFrameIndex == currentAnimation.frames.length - 1) {
         eventManager.emit(this, 'E_SPRITE_COMPLETE');
-        this.currentAnimationFrameIndex = this.isLooped ? 0 : -1;
+        this.currentAnimationFrameIndex = this.isLooped ? 0 : currentAnimation.frames.length - 1;
         this.timeElapsed = 0;
       }
       else {
@@ -53,10 +50,6 @@ class UISprite extends UIWidget {
   }
 
   play(animationName, isLooped = false) {
-    if (animationName == this.currentAnimationName) {
-      return;
-    }
-
     let animation = this.animations.find(animation => animation.name == animationName);
     if (!animation) {
       throw new Error('UISprite::play: animation not found.');

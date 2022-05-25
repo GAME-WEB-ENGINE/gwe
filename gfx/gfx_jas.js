@@ -61,9 +61,6 @@ class GfxJAS extends GfxDrawable {
     }
 
     let currentFrame = currentAnimation.frames[this.currentAnimationFrameIndex];
-    if (!currentFrame) {
-      return;
-    }
 
     this.clearVertices();
     this.clearNormals();
@@ -244,10 +241,6 @@ class GfxJAS extends GfxDrawable {
    * @param {boolean} isLooped - Si vrai, l'animation est en boucle.
    */
   play(animationName, isLooped) {
-    if (animationName == this.currentAnimationName) {
-      return;
-    }
-
     let animation = this.jas.animations.find(animation => animation.name == animationName);
     if (!animation) {
       throw new Error('GfxJAS::play: animation not found.');

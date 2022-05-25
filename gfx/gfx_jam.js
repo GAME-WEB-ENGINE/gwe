@@ -199,10 +199,6 @@ class GfxJAM extends GfxDrawable {
    * @param {boolean} isLooped - Si vrai, l'animation est en boucle.
    */
   play(animationName, isLooped) {
-    if (animationName == this.currentAnimationName) {
-      return;
-    }
-
     let animation = this.jam.animations.find(animation => animation.name == animationName);
     if (!animation) {
       throw new Error('GfxJAM::play: animation not found !');
