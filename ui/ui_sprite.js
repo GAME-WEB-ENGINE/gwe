@@ -39,14 +39,22 @@ class UISprite extends UIWidget {
         this.timeElapsed = 0;
       }
       else {
-        eventManager.emit(this, 'E_SPRITE_NEW_FRAME', { frameIndex: this.currentAnimationFrameIndex + 1});
+        eventManager.emit(this, 'E_SPRITE_NEW_FRAME', { frameIndex: this.currentAnimationFrameIndex + 1 });
         this.currentAnimationFrameIndex = this.currentAnimationFrameIndex + 1;
         this.timeElapsed = 0;
-      }   
+      }
     }
     else {
       this.timeElapsed += ts;
     }
+  }
+
+  /**
+   * Retourne le nom de l'animation en cours.
+   * @return {string} Le nom de l'animation.
+   */
+  getCurrentAnimationName() {
+    return this.currentAnimationName;
   }
 
   play(animationName, isLooped = false) {

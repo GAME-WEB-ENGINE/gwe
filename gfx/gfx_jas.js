@@ -203,6 +203,14 @@ class GfxJAS extends GfxDrawable {
   }
 
   /**
+   * Retourne le nom de l'animation en cours.
+   * @return {string} Le nom de l'animation.
+   */
+  getCurrentAnimationName() {
+    return this.currentAnimationName;
+  }
+
+  /**
    * Charge un fichier "jas".
    */
   loadFromFile(path) {
