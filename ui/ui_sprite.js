@@ -57,7 +57,11 @@ class UISprite extends UIWidget {
     return this.currentAnimationName;
   }
 
-  play(animationName, isLooped = false) {
+  play(animationName, isLooped = false, preventSameAnimation = false) {
+    if (preventSameAnimation && animationName == this.currentAnimationName) {
+      return;
+    }
+
     let animation = this.animations.find(animation => animation.name == animationName);
     if (!animation) {
       throw new Error('UISprite::play: animation not found.');

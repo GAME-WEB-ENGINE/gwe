@@ -248,7 +248,11 @@ class GfxJAS extends GfxDrawable {
    * @param {string} animationName - Le nom de l'animation.
    * @param {boolean} isLooped - Si vrai, l'animation est en boucle.
    */
-  play(animationName, isLooped) {
+  play(animationName, isLooped = false, preventSameAnimation = false) {
+    if (preventSameAnimation && animationName == this.currentAnimationName) {
+      return;
+    }
+
     let animation = this.jas.animations.find(animation => animation.name == animationName);
     if (!animation) {
       throw new Error('GfxJAS::play: animation not found.');
