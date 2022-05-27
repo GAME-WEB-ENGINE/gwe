@@ -16,8 +16,7 @@ Une documentation (non complète à ce jour) est disponible sur le site officiel
 L'atout principal de GWE est son nombre conséquent de **projets template**.
 Une template est un **projet générique** basé sur un **genre spécifique** comme par ex: j-rpg, ccg, board, visual novel, etc...
 L'intêret est de partir d'une **base solide** et de l'adapter afin de créer votre propre jeu vidéo.
-Les templates sont payantes mais le **gain de temps** est énorme et le prix plus que raisonnable.
-Cpendant, un exemple de démarrage est disponible gratuitement [ici](https://github.com/ra1jin/gwe-template-boilerplate).    
+Les templates sont payantes mais le **gain de temps** est énorme et le prix plus que raisonnable.  
 
 ## Fonctionnalités générales
 - Un gestionnaire graphique
@@ -46,7 +45,9 @@ Tout d'abord, vérifier que Node.js est bien installé sur votre environnement.
 Si c'est le cas, installer cette librairie dans votre projet avec la commande suivante : ```npm install --save gwe```
 
 ## Commencer
-Voici le minimum requis pour commencer à travailler avec gwe.  
+Pour commencer un nouveau projet vous avez deux solutions.
+Vous pouvez télécharger le boilerplate [ici](https://github.com/ra1jin/gwe-template-boilerplate) ou bien suivre les étapes suivantes
+et créer votre projet de zéro. Voici le minimum requis pour commencer à travailler avec gwe.  
 Commencer par créer un projet avec l'arborescence suivante.
 ```
 ├── assets
