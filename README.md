@@ -9,8 +9,15 @@ Pas besoin d'apprendre un nouveau langage, si vous maîtrisez **HTML/JS/CSS** al
 
 De plus, grâce à son projet de démarrage, ce moteur intègre tout le nécessaire pour commencer à développer un jeu vidéo avec un **minimum d'efforts**.
 
-## Demo
-Un exemple de démarrage est disponible [ici](https://github.com/ra1jin/gwe-template-boilerplate)    
+## Documentation
+Une documentation (non complète à ce jour) est disponible sur le site officiel ici: https://gamewebengine.com/documentation/Application.html.
+
+## Templates
+L'atout principal de GWE est son nombre conséquent de **projets template**.
+Une template est un **projet générique** basé sur un **genre spécifique** comme par ex: j-rpg, ccg, board, visual novel, etc...
+L'intêret est de partir d'une **base solide** et de l'adapter afin de créer votre propre jeu vidéo.
+Les templates sont payantes mais le **gain de temps** est énorme et le prix plus que raisonnable.
+Cpendant, un exemple de démarrage est disponible gratuitement [ici](https://github.com/ra1jin/gwe-template-boilerplate).    
 
 ## Fonctionnalités générales
 - Un gestionnaire graphique
@@ -135,28 +142,6 @@ module.exports.MainScreen = MainScreen;
 ```
 
 Ajouter et charger l'écran "MainScreen" afin que celui-ci soit lancé via la ligne suivante ```GWE.screenManager.requestSetScreen(new  MainScreen(app));``` dans le fichier **app.js**.  
-
-## Documentation
-Une documentation est disponible ici: https://ra1jin.github.io/gwe-doc/ (bientot en anglais).
-
-## Templates
-L'atout principal de GWE est son nombre conséquent de **projets template**.
-Une template est un **projet générique** basé sur un **genre spécifique** comme par ex: j-rpg, ccg, board, visual novel, etc...
-L'intêret est de partir d'une **base solide** et de l'adapter afin de créer votre propre jeu vidéo.
-Les templates sont payantes mais le **gain de temps** est énorme et le prix plus que raisonnable.
-
-![Drag Racing](https://ra1jin.github.io/images/gwe_board.png)
-
-Voici la liste des templates actuellement disponibles:
-- **gwe-template-thunar** - Module de scène (JRPG 3D Pré-calc)
-- **gwe-template-odin** - Module de combat deux dimensions tour par tour + menu (JRPG).
-- **gwe-template-sai** - Module jeu de carte à collectionner (CCG).
-- **gwe-template-edgar** - Module visual novel (VN).
-- **gwe-template-manua** - Module conçu pour les jeux de société en introduisant un modèle de programmation simplifié.
-
-Template à venir:
-- **gwe-template-bestla** - Module de combat trois dimensions tour par tour + menu (JRPG)
-- **gwe-template-hades**- Module quake-like basique (FPS)
 
 ## Comment intégrer vos modèles 3D ?
 L'extension Blender [blender-gwe-exporter](https://github.com/ra1jin/blender-gwe-exporter) vous permet d'exporter vos modèles statiques et animés dans les formats compatible GWE !
