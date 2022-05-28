@@ -13,8 +13,8 @@ De plus, grâce à son projet de démarrage, ce moteur intègre tout le nécessa
 Une documentation (non complète à ce jour) est disponible sur le site officiel ici: https://gamewebengine.com/documentation/Application.html.
 
 ## Templates
-L'atout principal de GWE est son nombre conséquent de **projets template**.
-Une template est un **projet générique** basé sur un **genre spécifique** comme par ex: j-rpg, ccg, board, visual novel, etc...
+L'atout principal de GWE est son nombre conséquent de **projets de démarrage**.
+Chaque projet est basé sur un **genre spécifique** comme par ex: j-rpg, ccg, board, visual novel, etc...
 L'intêret est de partir d'une **base solide** et de l'adapter afin de créer votre propre jeu vidéo.
 Les templates sont payantes mais le **gain de temps** est énorme et le prix plus que raisonnable.  
 
