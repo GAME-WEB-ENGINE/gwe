@@ -11,8 +11,8 @@ De plus, grâce à son projet de démarrage, ce moteur intègre tout le nécessa
 
 ## Installation
 Tout d'abord, vérifier que Node.js est bien installé sur votre environnement.  
-Si c'est le cas, je vous invite à poursuivre sur le site officiel ici: https://gamewebengine.com/getting-started.    
-Une documentation (non complète à ce jour) est également disponible ici: https://gamewebengine.com/documentation/Application.html.
+Si c'est le cas, je vous invite à poursuivre sur le site officiel https://gamewebengine.com/getting-started.    
+Une documentation (non complète à ce jour) est également disponible https://gamewebengine.com/documentation/Application.html.
 
 ## Projets
 L'atout principal de GWE est son nombre conséquent de **projets de démarrage**.
