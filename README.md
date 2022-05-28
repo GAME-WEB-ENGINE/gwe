@@ -1,4 +1,4 @@
-<img src="https://gamewebengine.com/images/home.png" alt="logo" width="400"/>
+<img src="https://gamewebengine.com/images/home.png" alt="logo" width="423"/>
 
 ![Drag Racing](https://img.shields.io/badge/lang-javascript-f39f37) ![Drag Racing](https://img.shields.io/badge/npm-v1.0.1-blue) ![Drag Racing](https://img.shields.io/badge/release-v1.1.3-blue) ![Drag Racing](https://img.shields.io/badge/dependencies-electron-brightgreen) 
 
@@ -9,14 +9,15 @@ Pas besoin d'apprendre un nouveau langage, si vous maîtrisez **HTML/JS/CSS** al
 
 De plus, grâce à son projet de démarrage, ce moteur intègre tout le nécessaire pour commencer à développer un jeu vidéo avec un **minimum d'efforts**.
 
-## Documentation
-Une documentation (non complète à ce jour) est disponible sur le site officiel ici: https://gamewebengine.com/documentation/Application.html.
+## Installation
+Tout d'abord, vérifier que Node.js est bien installé sur votre environnement.  
+Si c'est le cas, je vous invite à poursuivre sur le site officiel ici: https://gamewebengine.com/getting-started.    
+Une documentation (non complète à ce jour) est également disponible ici: https://gamewebengine.com/documentation/Application.html.
 
-## Templates
+## Projets
 L'atout principal de GWE est son nombre conséquent de **projets de démarrage**.
 Chaque projet est basé sur un **genre spécifique** comme par ex: j-rpg, ccg, board, visual novel, etc...
-L'intêret est de partir d'une **base solide** et de l'adapter afin de créer votre propre jeu vidéo.
-Les templates sont payantes mais le **gain de temps** est énorme et le prix plus que raisonnable.  
+L'intêret est de partir d'une **base solide** et de l'adapter afin de créer votre propre jeu vidéo en un temps record.    
 
 ## Fonctionnalités générales
 - Un gestionnaire graphique
@@ -39,110 +40,6 @@ Les templates sont payantes mais le **gain de temps** est énorme et le prix plu
 - Utiliser le DOM pour les éléments UI
 - Utiliser un format 3D dédié au moteur (voir exportateur Blender)
 - Utiliser un format 3D avec des animations frame par frame
-
-## Installation
-Tout d'abord, vérifier que Node.js est bien installé sur votre environnement.  
-Si c'est le cas, installer cette librairie dans votre projet avec la commande suivante : ```npm install --save gwe```
-
-## Commencer
-Pour commencer un nouveau projet vous avez deux solutions.
-Vous pouvez télécharger le boilerplate [ici](https://github.com/ra1jin/gwe-template-boilerplate) ou bien suivre les étapes suivantes
-et créer votre projet de zéro. Voici le minimum requis pour commencer à travailler avec gwe.  
-Commencer par créer un projet avec l'arborescence suivante.
-```
-├── assets
-    ├──
-├── src
-│   ├── app.js
-│   ├── main_screen.js
-├── index.html
-├── main.js
-```
-
-### main.js (electron)
-```js
-const { app, BrowserWindow } = require('electron');
-
-app.whenReady().then(() => {
- createWindow()
-});
-
-function createWindow() {
-  const win = new BrowserWindow({
-    width: 800,
-    height: 600, // +26 for window frame
-    resizable: false,
-    frame: false,
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
-    }
-  });
-
-  win.setMenuBarVisibility(false)
-  win.loadFile('index.html');
-  win.openDevTools();
-}
-```
-
-### index.html
-```html
-<!DOCTYPE html>
-<html lang="fr">
-  <head>
-    <link rel="stylesheet" type="text/css" href="node_modules/gwe/core.css" />
-    <script rel="preload" type="text/javascript" src="src/app.js"></script>
-  </head>
-  <body style="position:relative">
-    <div id="APP">
-      <canvas id="CANVAS" width="1px" height="1px"></canvas>
-      <div id="UI_ROOT"></div>
-      <div id="UI_FADELAYER"></div>
-      <div id="UI_OVERLAYER"></div>
-    </div>
-  </body>
-</html>
-```
-
-### src/app.js
-```js
-window.addEventListener('load', async () => {
-  let { GWE } = require('gwe');
-  let app = new GWE.Application(800, 800, GWE.SizeModeEnum.FIXED);
-  requestAnimationFrame(ts => app.run(ts));
-});
-```
-
-### src/main_screen.js
-```js
-let { GWE } = require('gwe');
-
-class MainScreen  extends  GWE.Screen {
-  constructor(app) {
-    super(app);
-  }
-
-  onEnter() {
-    // votre code d'initialisation doit être ici.
-  }
-
-  onExit() {
-    // votre code de destruction doit être ici.
-  }
-	
-  update(ts) {
-    // votre code logique de mise à jour.
-  }
-
-  draw(viewIndex) {
-    // votre code de dessin.
-  }
-}
-
-module.exports.MainScreen = MainScreen;
-```
-
-Ajouter et charger l'écran "MainScreen" afin que celui-ci soit lancé via la ligne suivante ```GWE.screenManager.requestSetScreen(new  MainScreen(app));``` dans le fichier **app.js**.  
 
 ## Comment intégrer vos modèles 3D ?
 L'extension Blender [blender-gwe-exporter](https://github.com/ra1jin/blender-gwe-exporter) vous permet d'exporter vos modèles statiques et animés dans les formats compatible GWE !
