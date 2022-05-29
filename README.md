@@ -11,10 +11,9 @@ De plus, grâce à son projet de démarrage, ce moteur intègre tout le nécessa
 
 ## Installation
 Tout d'abord, vérifier que Node.js est bien installé sur votre environnement.  
-Si c'est le cas, je vous invite à poursuivre sur le site officiel https://gamewebengine.com/getting-started.    
-Une documentation (non complète à ce jour) est également disponible https://gamewebengine.com/documentation/Application.html.
+Puis rendez-vous sur https://gamewebengine.com/getting-started.    
 
-## Projets
+## Projets de démarrage
 L'atout principal de GWE est son nombre conséquent de **projets de démarrage**.
 Chaque projet est basé sur un **genre spécifique** comme par ex: j-rpg, ccg, board, visual novel, etc...
 L'intêret est de partir d'une **base solide** et de l'adapter afin de créer votre propre jeu vidéo en un temps record.    
